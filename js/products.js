@@ -3,6 +3,8 @@ let currentProduct = null;
 let currentIndex = 0;
 let productImages = {};
 
+console.log('🚀 Script loaded!');
+
 // قراءة باراميتر من الرابط
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -32,8 +34,7 @@ function changeImage(direction) {
 
 // إعداد معرض الصور لكل منتج
 function setupImageGallery(container, images, productId) {
-    // حفظ الصور بدون إضافة ../ لأن المسار في الـ JSON صحيح
-    productImages[productId] = images.map(img => img);
+    productImages[productId] = images;
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
@@ -44,9 +45,16 @@ function setupImageGallery(container, images, productId) {
 
 // تحميل المنتجات
 async function loadProducts() {
+    console.log('📦 loadProducts() called');
+    
     const category = getUrlParameter('category');
+    console.log('📂 Category from URL:', category);
+    
     const categoryTitle = document.getElementById('categoryTitle');
     const productsGrid = document.getElementById('productsGrid');
+
+    console.log('🎯 categoryTitle element:', categoryTitle);
+    console.log('🎯 productsGrid element:', productsGrid);
 
     // تعيين عنوان الصفحة
     if (categoryTitle) {
@@ -58,45 +66,61 @@ async function loadProducts() {
     }
 
     try {
-        // تحميل ملف JSON - المسار الصحيح من مجلد pages
+        console.log('🔄 Fetching products.json...');
+        
+        // تحميل ملف JSON
         const response = await fetch('../products.json');
         
+        console.log('📡 Response status:', response.status);
+        console.log('📡 Response ok:', response.ok);
+        
         if (!response.ok) {
-            throw new Error('فشل تحميل البيانات');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         
         const products = await response.json();
+        console.log('✅ Products loaded:', products.length, 'items');
+        console.log('📦 First product:', products[0]);
 
         // فلترة المنتجات حسب الفئة
         let filteredProducts = products;
         if (category) {
             const decodedCategory = decodeURIComponent(category);
-            filteredProducts = products.filter(product =>
-                product.category && product.category.toLowerCase().includes(decodedCategory.toLowerCase())
-            );
+            console.log('🔍 Filtering by category:', decodedCategory);
+            
+            filteredProducts = products.filter(product => {
+                const matches = product.category && 
+                               product.category.toLowerCase().includes(decodedCategory.toLowerCase());
+                console.log(`Product "${product.product_name}" category "${product.category}" matches:`, matches);
+                return matches;
+            });
         }
+
+        console.log('✅ Filtered products:', filteredProducts.length);
 
         // عرض المنتجات
         if (filteredProducts.length === 0) {
+            console.log('⚠️ No products found');
             productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
         } else {
+            console.log('🎨 Rendering products...');
             productsGrid.innerHTML = '';
+            
             filteredProducts.forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 const productId = `product_${index}`;
 
-                // التأكد من وجود اسم المنتج
                 const productName = product.product_name && product.product_name.trim() 
                     ? product.product_name 
                     : 'منتج بدون اسم';
 
-                // التأكد من وجود صورة
                 const imagePath = product.images && product.images.length > 0 
                     ? '../' + product.images[0] 
                     : 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة';
 
-                // بناء HTML للمنتج
+                console.log(`Product ${index}: ${productName}, Image: ${imagePath}`);
+
                 productCard.innerHTML = `
                     <div class="image-gallery">
                         <img src="${imagePath}" 
@@ -117,7 +141,6 @@ async function loadProducts() {
 
                 productsGrid.appendChild(productCard);
 
-                // إعداد معرض الصور إذا كانت هناك صور
                 if (product.images && product.images.length > 0) {
                     setupImageGallery(
                         productCard.querySelector('.image-gallery'), 
@@ -126,26 +149,29 @@ async function loadProducts() {
                     );
                 }
             });
+            
+            console.log('✅ Products rendered successfully!');
         }
     } catch (error) {
-        console.error('Error loading products:', error);
-        productsGrid.innerHTML = '<div class="no-products">حدث خطأ في تحميل المنتجات. يرجى المحاولة لاحقاً.</div>';
+        console.error('❌ Error loading products:', error);
+        console.error('Error details:', error.message);
+        productsGrid.innerHTML = `<div class="no-products">حدث خطأ في تحميل المنتجات: ${error.message}</div>`;
     }
 }
 
 // تشغيل عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎬 DOMContentLoaded fired!');
+    
     // إعداد اللايت بوكس
     const lightbox = document.getElementById('lightbox');
     if (lightbox) {
-        // إغلاق عند الضغط خارج الصورة
         lightbox.addEventListener('click', function(e) {
             if (e.target === lightbox) {
                 closeLightbox();
             }
         });
 
-        // إغلاق بزر ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeLightbox();
@@ -154,33 +180,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // تحميل المنتجات
+    console.log('🚀 Calling loadProducts()...');
     loadProducts();
 });
 
 // Animation للايت بوكس
-document.addEventListener('DOMContentLoaded', function() {
-    const lightboxImg = document.querySelector('#lightbox-img');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
+const lightboxImg = document.querySelector('#lightbox-img');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
 
-    function animateImageChange(direction) {
-        if (!lightboxImg) return;
-        
-        lightboxImg.style.animation = 'none';
-        setTimeout(() => {
-            if (direction === 'next') {
-                lightboxImg.style.animation = 'fadeSlide 0.4s ease';
-            } else {
-                lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
-            }
-        }, 10);
-    }
+function animateImageChange(direction) {
+    if (!lightboxImg) return;
+    
+    lightboxImg.style.animation = 'none';
+    setTimeout(() => {
+        if (direction === 'next') {
+            lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+        } else {
+            lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+        }
+    }, 10);
+}
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => animateImageChange('prev'));
-    }
+if (prevBtn) {
+    prevBtn.addEventListener('click', () => animateImageChange('prev'));
+}
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => animateImageChange('next'));
-    }
-});
+if (nextBtn) {
+    nextBtn.addEventListener('click', () => animateImageChange('next'));
+}
