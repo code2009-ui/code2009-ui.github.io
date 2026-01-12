@@ -1,31 +1,28 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المنتجات - حرفجية</title>
-    <link rel="stylesheet" href="../style/search.css">
+    <link rel="stylesheet" href="../style/products.css">
     <link rel="stylesheet" href="../style/header.css">
 </head>
-
 <body>
-<header class="header">
+    <header class="header">
+
     <div class="logo">
-        <a href="home.html" class="logo-link">
+        <a href="/pages/home.html" class="logo-link">
             <img src="../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
         </a>
     </div>
- 
+
     <nav class="nav-center">
         <ul class="nav-list">
-            <li><a href="./home.html">الرئيسية</a></li>
-            <li><a href="./about.html">حول المنصة</a></li>
-            <li><a href="./contact.html">تواصل معنا</a></li>
+            <li><a href="/pages/home.html">الرئيسية</a></li>
+            <li><a href="/pages/about.html">حول المنصة</a></li>
+            <li><a href="/pages/contact.html">تواصل معنا</a></li>
         </ul>
     </nav>
-    
-    <div class="search-icon-container">
+        <div class="search-icon-container">
         <button id="search-open-btn" class="search-btn" aria-label="Open search">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -34,14 +31,15 @@
         </button>
     </div>
 
-    <div class="wishlist-icon-container">
-        <a href="wishlist.html" class="wishlist-link" aria-label="Wishlist">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-            <span class="wishlist-count" id="wishlist-count">0</span>
-        </a>
-    </div>
+<!-- أيقونة المفضلة - جديدة -->
+<div class="wishlist-icon-container">
+    <a href="/pages/wishlist.html" class="wishlist-link" aria-label="Wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="wishlist-count" id="wishlist-count">0</span>
+    </a>
+</div>
 
     <div class="hamburger" id="hamburger">
         <span></span>
@@ -49,6 +47,7 @@
         <span></span>
     </div>
 
+    <!-- Search popup window -->
     <div id="search-popup" class="search-popup hidden">
         <div class="search-popup-content">
             <button id="search-close-btn" class="close-btn">✕</button>
@@ -61,66 +60,27 @@
     
     <div class="mobile-menu" id="mobileMenu">
         <ul>
-            <li><a href="./home.html">الرئيسية</a></li>
-            <li><a href="./about.html">حول المنصة</a></li>
-            <li><a href="./contact.html">تواصل معنا</a></li>
+            <li><a href="/pages/home.html">الرئيسية</a></li>
+            <li><a href="/pages/about.html">حول المنصة</a></li>
+            <li><a href="/pages/contact.html">تواصل معنا</a></li>
         </ul>
     </div>
 </header>
 
-    <div class="search-container">
-        <h1 id="categoryTitle">جميع المنتجات</h1>
-        
-        <div id="productsGrid" class="products-grid">
-            <div class="loading">جاري التحميل...</div>
-        </div>
+    <h1 id="categoryTitle">جميع المنتجات</h1>
+    <div id="productsGrid" class="products-grid"></div>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+        <button class="lightbox-nav prev-btn" onclick="changeImage(-1)">&#10094;</button>
+        <button class="lightbox-nav next-btn" onclick="changeImage(1)">&#10095;</button>
     </div>
 
-<div id="lightbox" class="lightbox">
-    <span class="close-lightbox" onclick="closeLightbox()">×</span>
-    <img id="lightbox-img" src="" alt="Lightbox Image">
-    <button class="lightbox-nav prev-btn" onclick="changeImage(-1)">&#10094;</button>
-    <button class="lightbox-nav next-btn" onclick="changeImage(1)">&#10095;</button>
-</div>
-
-    <script src="../js/search-results.js"></script>
+    <script src="../js/products.js"></script>
+    <script src="../js/app.js"></script>
     <script src="../js/search.js"></script>
-    <script>
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobileMenu");
 
-        hamburger.addEventListener("click", () => {
-            hamburger.classList.toggle("active");
 
-            if (mobileMenu.classList.contains("show")) {
-                mobileMenu.classList.remove("show");
-                mobileMenu.classList.add("hide");
-            } else {
-                mobileMenu.classList.remove("hide");
-                mobileMenu.classList.add("show");
-            }
-        });
-
-        window.addEventListener('scroll', function () {
-            const header = document.querySelector('.header');
-
-            if (window.scrollY > 10) {
-                header.style.transform = 'translateY(20px)';
-                header.style.maxWidth = '70%';
-                header.style.borderRadius = '40px';
-                header.style.backgroundColor = 'rgba(215, 207, 196, 0.70)';
-                header.style.backdropFilter = 'blur(10px)';
-                header.style.webkitBackdropFilter = 'blur(1px)';
-            } else {
-                header.style.transform = 'translateY(0)';
-                header.style.maxWidth = '100%';
-                header.style.borderRadius = '2px';
-                header.style.backgroundColor = 'rgb(215, 207, 196)';
-                header.style.backdropFilter = 'none';
-                header.style.webkitBackdropFilter = 'none';
-            }
-        });
-    </script>
 </body>
-
 </html>
