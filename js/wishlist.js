@@ -156,7 +156,7 @@ async function loadWishlistProducts() {
         }
 
         if (wishlistProducts.length === 0) {
-            wishlistGrid.innerHTML = '<div class="no-products">المنتجات المحفوظة غير متوفرة حالياً</div>';
+            wishlistGrid.innerHTML = '<div class="no-products">لا توجد منتجات في المفضلة</div>';
             return;
         }
 
