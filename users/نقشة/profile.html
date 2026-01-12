@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>نقشة - الملف الشخصي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style/profile.css">
+<link rel="stylesheet" href="../../style/header.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        <a href="/pages/home.html" class="logo-link">
+            <img src="../../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
+        </a>
+    </div>
+
+    <nav class="nav-center">
+        <ul class="nav-list">
+            <li><a href="/pages/home.html">الرئيسية</a></li>
+            <li><a href="/pages/about.html">حول المنصة</a></li>
+            <li><a href="/pages/contact.html">تواصل معنا</a></li>
+        </ul>
+    </nav>
+        <div class="search-icon-container">
+        <button id="search-open-btn" class="search-btn" aria-label="Open search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+        </button>
+    </div>
+
+<div class="wishlist-icon-container">
+    <a href="/pages/wishlist.html" class="wishlist-link" aria-label="Wishlist">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span class="wishlist-count" id="wishlist-count">0</span>
+    </a>
+</div>
+
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div id="search-popup" class="search-popup hidden">
+        <div class="search-popup-content">
+            <button id="search-close-btn" class="close-btn">✕</button>
+            <form id="search-form" action="/pages/search.html" method="GET">
+                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
+                <button type="submit" class="search-submit-btn">بحث</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="/pages/home.html">الرئيسية</a></li>
+            <li><a href="/pages/about.html">حول المنصة</a></li>
+            <li><a href="/pages/contact.html">تواصل معنا</a></li>
+        </ul>
+    </div>
+</header>
+
+<div class="profile-wrapper">
+    <div class="profile-card">
+        <div class="profile-cover-box">
+            <img src="images/cover.png" alt="Cover">
+        </div>
+
+        <div class="profile-image-box">
+            <img src="images/profile.png" alt="Profile">
+        </div>
+
+        <div class="profile-info-box">
+
+            <div class="name-and-social">
+                <h1>نقشة</h1>
+                <div class="social-icons">
+                    
+        <a href="https://wa.me/963930308953" target="_blank">
+            <div class="icon whatsapp">
+                <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=ffffff">
+                <span class="tooltip">WhatsApp</span>
+            </div>
+        </a>
+    
+        <a href="https://www.instagram.com/naqs.heh/" target="_blank">
+            <div class="icon instagram">
+                <img src="https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=ffffff">
+                <span class="tooltip">Instagram</span>
+            </div>
+        </a>
+    
+                </div>
+            </div>
+
+            <p>wear what you like to wear</p>
+
+        </div>
+    </div>
+
+    <div class="products-container">
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/1-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/1-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(1,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/2-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/2-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(2,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/3-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/3-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(3,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/4-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/4-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(4,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/5-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/5-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(5,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/6-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/6-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(6,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+    <div class="product-card" data-category="Printing">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'نقشة', 'طباعة على الملابس', 'products/7-1.png', 'Printing')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/7-1.png" alt="طباعة على الملابس" class="product-image" onclick="openLightbox(7,0)">
+        <div class="product-info">
+            <h3>طباعة على الملابس</h3>
+            <p>تيشرت بطباعة عالية الجودة</p>
+        </div>
+    </div>
+    
+</div>
+    
+    </div>
+</div>
+
+<div id="lightbox" class="lightbox">
+    <button class="close-btn" onclick="closeLightbox()">×</button>
+    <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+    <img id="lightbox-img">
+    <button class="next" onclick="changeImage(1)">&#10095;</button>
+</div>
+
+<script>
+let currentProduct = 0;
+let currentIndex = 0;
+
+const productImages = {
+    1: [
+        'products/1-1.png'
+    ],
+    2: [
+        'products/2-1.png'
+    ],
+    3: [
+        'products/3-1.png'
+    ],
+    4: [
+        'products/4-1.png'
+    ],
+    5: [
+        'products/5-1.png'
+    ],
+    6: [
+        'products/6-1.png'
+    ],
+    7: [
+        'products/7-1.png'
+    ]
+};
+</script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/wishlist.js"></script>
+
+</body>
+</html>

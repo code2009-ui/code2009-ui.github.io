@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/home.css">
+    <link rel="stylesheet" href="style/header.css">
+
+</head>
+
+<body>
+<header class="header">
+    <div class="logo">
+        <a href="home.html" class="logo-link">
+            <img src="images/logo.png" alt="Logo" style="height: 50px; width: auto;">
+        </a>
+    </div>
+
+    <nav class="nav-center">
+        <ul class="nav-list">
+            <li><a href="./home.html">الرئيسية</a></li>
+            <li><a href="https://harafjya.pages.dev/about">حول المنصة</a></li>
+            <li><a href="./contact.html">تواصل معنا</a></li>
+
+        </ul>
+    </nav>
+    
+    <div class="search-icon-container">
+        <button id="search-open-btn" class="search-btn" aria-label="Open search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="wishlist-icon-container">
+        <a href="wishlist.html" class="wishlist-link" aria-label="Wishlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="wishlist-count" id="wishlist-count">0</span>
+        </a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div id="search-popup" class="search-popup hidden">
+        <div class="search-popup-content">
+            <button id="search-close-btn" class="close-btn">✕</button>
+            <form id="search-form" action="search.html" method="get">
+                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
+                <button type="submit" class="search-submit-btn">بحث</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="home.html">الرئيسية</a></li>
+            <li><a href="about.html">حول المنصة</a></li>
+            <li><a href="contact.html">تواصل معنا</a></li>
+        </ul>
+    </div>
+</header>
+
+    <div class="big_img"></div>
+    <a class="category visible">...</a>
+
+    
+    <section class="overview">
+        <h1>أقسامنا</h1>
+    </section>
+
+    <section class="category-grid">
+        <a href="products.html?category=Crochet" class="category">
+            <img src="images/Crochet.jpeg" alt="">
+            <div class="overlay">كروشي<br>Crochet</div>
+        </a>
+        <a href="products.html?category=Accessories" class="category">
+            <img src="images/accessories.jpeg" alt="">
+            <div class="overlay">اكسسوارات<br>Accessories</div>
+        </a>
+        <a href="products.html?category=Embroidery" class="category">
+            <img src="images/Event_Planning.jpeg" alt="">
+            <div class="overlay">تطريز<br>Embroidery</div>
+        </a>
+        <a href="products.html?category=Printing" class="category">
+            <img src="images/Printing.jpeg" alt="">
+            <div class="overlay">طباعة<br>Printing</div>
+        </a>
+        <a href="products.html?category=Candles" class="category">
+            <img src="images/candles.jpeg" alt="">
+            <div class="overlay">شموع<br>Candles</div>
+        </a>
+        <a href="products.html?category=Beads" class="category">
+            <img src="images/Beads.jpeg" alt="">
+            <div class="overlay">خرز<br>Beads</div>
+        </a>
+        <a href="products.html?category=Soap" class="category">
+            <img src="images/Soap.jpeg" alt="">
+            <div class="overlay">صابون<br>Soap</div>
+        </a>
+        <a href="products.html?category=>Gift Boxes" class="category">
+            <img src="images/Gift_Boxes.jpeg" alt="">
+            <div class="overlay">بوكسات هدايا<br>Gift Boxes</div>
+        </a>
+        <a href="products.html?category=Event Planning" class="category">
+            <img src="images/Event_Planning.jpeg" alt="">
+            <div class="overlay">تنسيق حفلات<br>Event Planning</div>
+        </a>
+        <a href="products.html?category=Macrame" class="category">
+            <img src="images/Macrame.jpeg" alt="">
+            <div class="overlay">مكرمية<br>Macrame</div>
+        </a>
+        <a href="products.html?category=Concrete" class="category">
+            <img src="images/Concrete.jpeg" alt="">
+            <div class="overlay">كونكريت<br>Concrete</div>
+        </a>
+        <a href="products.html?category=Resin" class="category">
+            <img src="images/Resin.jpeg" alt="">
+            <div class="overlay">ريزن<br>Resin</div>
+        </a>
+    </section>
+
+    <script>
+        // Mobile Animation - Fixed version
+        function revealOnScrollMobile() {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+
+            const categories = document.querySelectorAll('.category');
+
+            for (let i = 0; i < categories.length; i += 2) {
+                const right = categories[i];  // الكارت على اليمين (في RTL)
+                const left = categories[i + 1]; // الكارت على اليسار (في RTL)
+
+                const rect = right.getBoundingClientRect();
+                const trigger = rect.top < window.innerHeight - 100;
+
+                if (trigger) {
+                    if (!right.classList.contains('visible-right')) {
+                        right.classList.add('visible-right');
+                    }
+                    if (left && !left.classList.contains('visible-left')) {
+                        left.classList.add('visible-left');
+                    }
+                }
+            }
+        }
+
+        // Desktop Animation
+        const perRow = 4;
+        const categories = document.querySelectorAll('.category');
+
+        function revealOnScrollDesktop() {
+            const isDesktop = window.innerWidth > 768;
+            if (!isDesktop) return;
+
+            for (let i = 0; i < categories.length; i += perRow) {
+                const rowItems = Array.from(categories).slice(i, i + perRow);
+                const firstItem = rowItems[0];
+                const rect = firstItem.getBoundingClientRect();
+
+                if (rect.top >= 0 && rect.top < window.innerHeight - 100) {
+                    rowItems.forEach((el, index) => {
+                        if (!el.classList.contains('visible')) {
+                            setTimeout(() => {
+                                el.classList.add('visible');
+                            }, index * 200);
+                        }
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            revealOnScrollMobile();
+            revealOnScrollDesktop();
+        });
+
+        window.addEventListener('load', () => {
+            revealOnScrollMobile();
+            revealOnScrollDesktop();
+        });
+        
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header');
+
+            if (window.scrollY > 10) {
+                header.style.transform = 'translateY(20px)';
+                header.style.maxWidth = '70%';
+                header.style.borderRadius = '40px';
+                header.style.backgroundColor = 'rgba(215, 207, 196, 0.70)';
+                header.style.backdropFilter = 'blur(10px)';
+                header.style.webkitBackdropFilter = 'blur(1px)';
+            } else {
+                header.style.transform = 'translateY(0)';
+                header.style.maxWidth = '100%';
+                header.style.borderRadius = '2px';
+                header.style.backgroundColor = 'rgb(215, 207, 196)';
+                header.style.backdropFilter = 'none';
+                header.style.webkitBackdropFilter = 'none';
+            }
+        });
+    </script>
+
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+
+            if (mobileMenu.classList.contains("show")) {
+                mobileMenu.classList.remove("show");
+                mobileMenu.classList.add("hide");
+            } else {
+                mobileMenu.classList.remove("hide");
+                mobileMenu.classList.add("show");
+            }
+        });
+    </script>
+
+    <script>
+        // Title animation for desktop only
+        function isDesktop() {
+            return window.innerWidth > 768;
+        }
+
+        if (!isDesktop()) {
+            document.title = "حرفجية";
+        } else {
+            const texts = ["Harfya", "حرفجية"];
+            let index = 0;
+            let isDeleting = false;
+            let charIndex = 0;
+            let currentText = '';
+
+            function typeText() {
+                currentText = texts[index];
+                
+                if (!isDeleting) {
+                    document.title = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === currentText.length) {
+                        isDeleting = true;
+                        setTimeout(typeText, 3000);
+                        return;
+                    }
+                } else {
+                    document.title = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        index = (index + 1) % texts.length;
+                        document.title = ".";
+                        setTimeout(typeText, 80);
+                        return;
+                    }
+                }
+                
+                const speed = isDeleting ? 400 : 400;
+                setTimeout(typeText, speed);
+            }
+
+            window.onload = function() {
+                if (isDesktop()) {
+                    document.title = ".";
+                    setTimeout(typeText, 800);
+                }
+            };
+        }
+    </script>
+    
+    <script src="js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+.why-harafji {
+  background-color: #F5F3EF;
+  padding: 20px 20px 40px;
+  text-align: center;
+  margin-top: 0;
+}
+
+.why-harafji h2 {
+  font-family: 'Changa', sans-serif;
+  font-size: 36px;
+  margin-bottom: 40px;
+  color: #0D1B2A;
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  height: 340px;
+  display: flex;
+  gap: 8px;
+  margin: 0 auto;
+  padding: 0.4em;
+}
+
+.panel {
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.5s ease;
+  background: none;
+  border: 3px solid #C6A15D;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  border-radius: 10px;
+}
+
+.panel:hover {
+  flex: 4;
+  background-color: #D7CFC4;
+}
+
+.panel span {
+  min-width: 14em;
+  padding: 0.5em;
+  text-align: center;
+  transform: rotate(-90deg);
+  transition: transform 0.5s ease;
+  text-transform: none;
+  color: #0D1B2A;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.panel:hover span {
+  transform: rotate(0);
+}
+
+.panel .desc {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.4s ease, max-height 0.4s ease;
+  color: #4A4A4A;
+  text-align: center;
+  padding: 0 10px;
+  font-size: 18px;
+}
+
+.panel:hover .desc {
+  opacity: 1;
+  max-height: 100px;
+  margin-top: 12px;
+}
+
+.panel,
+.panel * {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 769px) {
+  .panel {
+    transition: all 0.9s ease;
+  }
+
+  .panel:hover .desc {
+    transition: opacity 0.6s ease, max-height 0.6s ease;
+  }
+
+  .panel:hover span {
+    transition: transform 0.6s ease;
+  }
+}
+
+.contact-skewed {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.contact-skewed h2 {
+  font-size: 25px;
+  margin-bottom: 50px;
+  color: #0D1B2A;
+}
+
+.contact-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+.contact-tile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 30px;
+  width: 85%;
+  max-width: 600px;
+  background-color: #fff;
+  color: #0D1B2A;
+  border-radius: 12px;
+  border-left: 5px solid #C6A15D;
+  transform: skewX(-6deg);
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contact-tile:hover {
+  transform: skewX(-6deg) translateX(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.contact-tile .icon {
+  font-size: 36px;
+  transform: skewX(6deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-tile .text {
+  transform: skewX(6deg);
+  text-align: right;
+}
+
+.contact-tile h3 {
+  font-size: 20px;
+  margin: 0;
+  color: #A65A38;
+}
+
+.contact-tile p {
+  margin: 5px 0 0;
+  font-size: 15px;
+  color: #4A4A4A;
+}
+
+@media (max-width: 768px) {
+  .contact-tile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .contact-tile .text {
+    text-align: right;
+  }
+}
+
+.contact-tile .icon img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: block;
+}
+
+.contact-tile p a {
+  user-select: text;
+}
