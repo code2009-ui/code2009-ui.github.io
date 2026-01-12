@@ -32,12 +32,14 @@ function changeImage(direction) {
 
 // إعداد معرض الصور لكل منتج
 function setupImageGallery(container, images, productId) {
-    // حفظ الصور مع المسار الصحيح
-    productImages[productId] = images.map(img => '../' + img);
+    // حفظ الصور بدون إضافة ../ لأن المسار في الـ JSON صحيح
+    productImages[productId] = images.map(img => img);
 
     const imgElement = container.querySelector('.product-image');
-    imgElement.style.cursor = 'pointer';
-    imgElement.onclick = () => openLightbox(productId, 0);
+    if (imgElement) {
+        imgElement.style.cursor = 'pointer';
+        imgElement.onclick = () => openLightbox(productId, 0);
+    }
 }
 
 // تحميل المنتجات
@@ -47,15 +49,22 @@ async function loadProducts() {
     const productsGrid = document.getElementById('productsGrid');
 
     // تعيين عنوان الصفحة
-    if (category) {
-        categoryTitle.textContent = decodeURIComponent(category);
-    } else {
-        categoryTitle.textContent = 'جميع المنتجات';
+    if (categoryTitle) {
+        if (category) {
+            categoryTitle.textContent = decodeURIComponent(category);
+        } else {
+            categoryTitle.textContent = 'جميع المنتجات';
+        }
     }
 
     try {
-        // تحميل ملف JSON
+        // تحميل ملف JSON - المسار الصحيح من مجلد pages
         const response = await fetch('../products.json');
+        
+        if (!response.ok) {
+            throw new Error('فشل تحميل البيانات');
+        }
+        
         const products = await response.json();
 
         // فلترة المنتجات حسب الفئة
@@ -63,7 +72,7 @@ async function loadProducts() {
         if (category) {
             const decodedCategory = decodeURIComponent(category);
             filteredProducts = products.filter(product =>
-                product.category && product.category.includes(decodedCategory)
+                product.category && product.category.toLowerCase().includes(decodedCategory.toLowerCase())
             );
         }
 
@@ -77,20 +86,30 @@ async function loadProducts() {
                 productCard.className = 'product-card';
                 const productId = `product_${index}`;
 
+                // التأكد من وجود اسم المنتج
+                const productName = product.product_name && product.product_name.trim() 
+                    ? product.product_name 
+                    : 'منتج بدون اسم';
+
+                // التأكد من وجود صورة
+                const imagePath = product.images && product.images.length > 0 
+                    ? '../' + product.images[0] 
+                    : 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة';
+
                 // بناء HTML للمنتج
                 productCard.innerHTML = `
                     <div class="image-gallery">
-                        <img src="../${product.images[0]}" 
-                             alt="${product.product_name}" 
+                        <img src="${imagePath}" 
+                             alt="${productName}" 
                              class="product-image"
                              onerror="this.src='https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'">
                     </div>
                     <div class="product-info">
-                        <h3 class="product-name">${product.product_name || 'منتج بدون اسم'}</h3>
+                        <h3 class="product-name">${productName}</h3>
                         <p class="product-description">${product.description || ''}</p>
                         <div class="product-seller">
                             <a href="../users/${encodeURIComponent(product.username)}/profile.html" class="seller-link">
-                                ${product.username}
+                                ${product.username || 'بائع'}
                             </a>
                         </div>
                     </div>
@@ -98,17 +117,19 @@ async function loadProducts() {
 
                 productsGrid.appendChild(productCard);
 
-                // إعداد معرض الصور
-                setupImageGallery(
-                    productCard.querySelector('.image-gallery'), 
-                    product.images, 
-                    productId
-                );
+                // إعداد معرض الصور إذا كانت هناك صور
+                if (product.images && product.images.length > 0) {
+                    setupImageGallery(
+                        productCard.querySelector('.image-gallery'), 
+                        product.images.map(img => '../' + img), 
+                        productId
+                    );
+                }
             });
         }
     } catch (error) {
         console.error('Error loading products:', error);
-        productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
+        productsGrid.innerHTML = '<div class="no-products">حدث خطأ في تحميل المنتجات. يرجى المحاولة لاحقاً.</div>';
     }
 }
 
@@ -136,32 +157,30 @@ document.addEventListener('DOMContentLoaded', function() {
     loadProducts();
 });
 
-
-
-
-
-
+// Animation للايت بوكس
 document.addEventListener('DOMContentLoaded', function() {
-  const lightboxImg = document.querySelector('#lightbox-img');
-  const prevBtn = document.querySelector('.prev-btn');
-  const nextBtn = document.querySelector('.next-btn');
+    const lightboxImg = document.querySelector('#lightbox-img');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
 
-  function animateImageChange(direction) {
-    lightboxImg.style.animation = 'none';
-    setTimeout(() => {
-      if (direction === 'next') {
-        lightboxImg.style.animation = 'fadeSlide 0.4s ease';
-      } else {
-        lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
-      }
-    }, 10);
-  }
+    function animateImageChange(direction) {
+        if (!lightboxImg) return;
+        
+        lightboxImg.style.animation = 'none';
+        setTimeout(() => {
+            if (direction === 'next') {
+                lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+            } else {
+                lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+            }
+        }, 10);
+    }
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => animateImageChange('prev'));
-  }
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => animateImageChange('prev'));
+    }
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => animateImageChange('next'));
-  }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => animateImageChange('next'));
+    }
 });
