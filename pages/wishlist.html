@@ -10,63 +10,64 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="logo">
-            <a href="/pages/home.html" class="logo-link">
-                <img src="../images/logo.png" alt="شعار" style="height: 50px; width: auto;">
-            </a>
-        </div>
+<header class="header">
+    <div class="logo">
+        <a href="home.html" class="logo-link">
+            <img src="../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
+        </a>
+    </div>
+ 
+    <nav class="nav-center">
+        <ul class="nav-list">
+            <li><a href="./home.html">الرئيسية</a></li>
+            <li><a href="./about.html">حول المنصة</a></li>
+            <li><a href="./contact.html">تواصل معنا</a></li>
 
-        <nav class="nav-center">
-            <ul class="nav-list">
-                <li><a href="/pages/home.html">الرئيسية</a></li>
-                <li><a href="/pages/about.html">حول المنصة</a></li>
-                <li><a href="/pages/contact.html">تواصل معنا</a></li>
-            </ul>
-        </nav>
+        </ul>
+    </nav>
+    
+    <div class="search-icon-container">
+        <button id="search-open-btn" class="search-btn" aria-label="Open search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+        </button>
+    </div>
 
-        <div class="search-icon-container">
-            <button id="search-open-btn" class="search-btn" aria-label="Open search">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <path d="m21 21-4.35-4.35"></path>
-                </svg>
-            </button>
-        </div>
+    <div class="wishlist-icon-container">
+        <a href="wishlist.html" class="wishlist-link" aria-label="Wishlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="wishlist-count" id="wishlist-count">0</span>
+        </a>
+    </div>
 
-        <div class="wishlist-icon-container">
-            <a href="/pages/wishlist.html" class="wishlist-link" aria-label="Wishlist">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                </svg>
-                <span class="wishlist-count" id="wishlist-count">0</span>
-            </a>
-        </div>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
 
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
+    <div id="search-popup" class="search-popup hidden">
+        <div class="search-popup-content">
+            <button id="search-close-btn" class="close-btn">✕</button>
+            <form id="search-form" action="search.html" method="get">
+                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
+                <button type="submit" class="search-submit-btn">بحث</button>
+            </form>
         </div>
-
-        <div id="search-popup" class="search-popup hidden">
-            <div class="search-popup-content">
-                <button id="search-close-btn" class="close-btn">✕</button>
-                <form id="search-form" action="search.html" method="get">
-                    <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
-                    <button type="submit" class="search-submit-btn">بحث</button>
-                </form>
-            </div>
-        </div>
-
-        <div class="mobile-menu" id="mobileMenu">
-            <ul>
-                <li><a href="/pages/home.html">الرئيسية</a></li>
-                <li><a href="/pages/about.html">حول المنصة</a></li>
-                <li><a href="/pages/contact.html">تواصل معنا</a></li>
-            </ul>
-        </div>
-    </header>
+    </div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="./home.html">الرئيسية</a></li>
+            <li><a href="./about.html">حول المنصة</a></li>
+            <li><a href="./contact.html">تواصل معنا</a></li>
+        </ul>
+    </div>
+</header>
 
     <div class="wishlist-container">
         <h1 id="wishlistTitle">المفضلة</h1>
