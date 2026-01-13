@@ -1,7 +1,7 @@
 /* منع تأثير الدارك مود */
 body {
     color-scheme: light only;
-}
+}   
 
 .big_img {
     width: calc(100% - 40px);
