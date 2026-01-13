@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/home.css">
     <link rel="stylesheet" href="../style/header.css">
-
 </head>
 
 <body>
@@ -22,7 +21,6 @@
             <li><a href="./home.html">الرئيسية</a></li>
             <li><a href="./about.html">حول المنصة</a></li>
             <li><a href="./contact.html">تواصل معنا</a></li>
-
         </ul>
     </nav>
     
@@ -70,8 +68,6 @@
 </header>
 
     <div class="big_img"></div>
-    <a class="category visible">...</a>
-
     
     <section class="overview">
         <h1>أقسامنا</h1>
@@ -129,7 +125,7 @@
     </section>
 
     <script>
-        // Mobile Animation - Fixed version
+        // Mobile Animation - من اليمين لليسار
         function revealOnScrollMobile() {
             const isMobile = window.innerWidth <= 768;
             if (!isMobile) return;
@@ -137,8 +133,8 @@
             const categories = document.querySelectorAll('.category');
 
             for (let i = 0; i < categories.length; i += 2) {
-                const right = categories[i];  // الكارت على اليمين (في RTL)
-                const left = categories[i + 1]; // الكارت على اليسار (في RTL)
+                const right = categories[i];
+                const left = categories[i + 1];
 
                 const rect = right.getBoundingClientRect();
                 const trigger = rect.top < window.innerHeight - 100;
@@ -154,7 +150,7 @@
             }
         }
 
-        // Desktop Animation
+        // Desktop Animation - من اليمين لليسار
         const perRow = 4;
         const categories = document.querySelectorAll('.category');
 
@@ -172,7 +168,7 @@
                         if (!el.classList.contains('visible')) {
                             setTimeout(() => {
                                 el.classList.add('visible');
-                            }, index * 200);
+                            }, index * 150);
                         }
                     });
                 }
