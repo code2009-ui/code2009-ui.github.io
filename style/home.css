@@ -1,3 +1,8 @@
+/* منع تأثير الدارك مود */
+body {
+    color-scheme: light only;
+}
+
 .big_img {
     width: calc(100% - 40px);
     max-width: 1150px;
@@ -7,15 +12,6 @@
     background-position: center;
     border-radius: 20px;
     margin: 0 auto 48px auto;
-}
-
-@media (max-width: 768px) {
-    .big_img {
-        background-image: url('../images/banner.png');
-        height: 200px;
-        width: calc(100% - 32px);
-        margin: 0 auto 40px auto;
-    }
 }
 
 .overview {
@@ -110,17 +106,68 @@
     line-height: 1.3;
 }
 
-/* Mobile Styles */
-@media (max-width: 768px) {
+/* Tablets: 481px - 768px */
+@media (max-width: 768px) and (min-width: 481px) {
+    .big_img {
+        height: 220px;
+        width: calc(100% - 40px);
+        margin: 0 auto 44px auto;
+    }
+
+    .overview h1 {
+        font-size: 42px;
+    }
+
     .category-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
+        gap: 24px;
+        padding: 0 20px 40px;
+    }
+
+    .category {
+        width: 100%;
+        max-width: 340px;
+        height: 200px;
+        opacity: 0;
+    }
+
+    .category.visible-right {
+        animation: slideFromLeftMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .category.visible-left {
+        animation: slideFromRightMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .category .overlay {
+        font-size: 19px;
+    }
+}
+
+/* Mobile: 360px - 480px */
+@media (max-width: 480px) and (min-width: 360px) {
+    .big_img {
+        height: 180px;
+        width: calc(100% - 32px);
+        margin: 0 auto 36px auto;
+        border-radius: 16px;
+    }
+
+    .overview h1 {
+        font-size: 38px;
+        margin-bottom: 30px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
         padding: 0 16px 40px;
     }
 
     .category {
         width: 100%;
         max-width: 100%;
+        height: 165px;
         opacity: 0;
         border-radius: 10px;
     }
@@ -133,6 +180,59 @@
         animation: slideFromRightMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
+    .category .overlay {
+        font-size: 16px;
+        padding-bottom: 16px;
+        line-height: 1.2;
+    }
+}
+
+/* Extra Small Mobile: 320px - 359px */
+@media (max-width: 359px) {
+    .big_img {
+        height: 160px;
+        width: calc(100% - 24px);
+        margin: 0 auto 32px auto;
+        border-radius: 14px;
+    }
+
+    .overview h1 {
+        font-size: 32px;
+        margin-bottom: 24px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 0 12px 32px;
+    }
+
+    .category {
+        width: 100%;
+        max-width: 100%;
+        height: 145px;
+        opacity: 0;
+        border-radius: 8px;
+    }
+
+    .category.visible-right {
+        animation: slideFromLeftMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .category.visible-left {
+        animation: slideFromRightMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .category .overlay {
+        font-size: 14px;
+        padding-bottom: 12px;
+        line-height: 1.15;
+        gap: 2px;
+    }
+}
+
+/* Mobile Animations */
+@media (max-width: 768px) {
     @keyframes slideFromLeftMobile {
         0% {
             transform: translateX(120%);
@@ -154,13 +254,9 @@
             opacity: 1;
         }
     }
-    
-    .category .overlay {
-        font-size: 18px;
-    }
 }
 
-/* Desktop Styles */
+/* Desktop Styles: 769px+ */
 @media (min-width: 769px) {
     .category {
         opacity: 0;
@@ -174,18 +270,21 @@
     }
 }
 
-/* Extra small mobile */
-@media (max-width: 480px) {
+/* Large Desktop: 1440px+ */
+@media (min-width: 1440px) {
     .category-grid {
-        gap: 16px;
+        max-width: 1400px;
+        margin: 0 auto;
+        gap: 56px;
     }
-    
+
     .category {
-        height: 180px;
+        width: 280px;
+        height: 225px;
     }
-    
-    .category .overlay {
-        font-size: 16px;
+
+    .overview h1 {
+        font-size: 56px;
     }
 }
 

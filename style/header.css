@@ -5,6 +5,8 @@ body {
     padding: 0;
     font-family: 'Cairo', sans-serif;
     background-color: #F5F3EF;
+        color-scheme: light only;
+
 }
 
 /* إزالة اللون الأزرق من جميع العناصر */
