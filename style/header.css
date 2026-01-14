@@ -477,12 +477,12 @@ a[href*="api.whatsapp.com"] {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .wishlist-count.show {
-    opacity: 1;
+    opacity: 0;
 }
 
 
