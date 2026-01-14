@@ -57,8 +57,9 @@ body {
   justify-items: center;
 }
 
-/* نفس تصميم الكرت من البروفايل */
+/* الكرت مع القلب */
 .product-card {
+  position: relative;
   width: 300px;
   background: #fff;
   border-radius: 15px;
@@ -66,6 +67,68 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+}
+
+/* أيقونة القلب */
+.heart-icon {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 38px;
+  height: 38px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.heart-icon:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.heart-icon:active {
+  transform: scale(0.95);
+}
+
+.heart-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.heart-icon.animating {
+  animation: heartBeat 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.heart-icon.active svg {
+  fill: #ff4757;
+  stroke: #ff4757;
+  filter: drop-shadow(0 2px 8px rgba(255, 71, 87, 0.4));
+}
+
+.heart-icon:not(.active) svg {
+  fill: none;
+  stroke: #666;
+  stroke-width: 2;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  20% { transform: scale(1.3) rotate(-5deg); }
+  40% { transform: scale(1.1) rotate(5deg); }
+  60% { transform: scale(1.25) rotate(-3deg); }
+  80% { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
 }
 
 .image-gallery {
@@ -133,7 +196,7 @@ body {
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Lightbox - نسخة طبق الأصل من البروفايل */
+/* Lightbox */
 .lightbox {
   position: fixed;
   top: 50%;
@@ -206,8 +269,8 @@ body {
 }
 
 .lightbox-nav,
-.prev, 
-.next {
+.prev-btn, 
+.next-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -222,63 +285,128 @@ body {
 }
 
 .lightbox-nav:hover,
-.prev:hover, 
-.next:hover {
+.prev-btn:hover, 
+.next-btn:hover {
   background: #3b2a1a;
 }
 
 .lightbox-nav.prev-btn,
-.prev { 
+.prev-btn { 
   left: 20px; 
 }
 
 .lightbox-nav.next-btn,
-.next { 
+.next-btn { 
   right: 10px; 
 }
 
-/* ====== MOBILE RESPONSIVE ====== */
-@media (max-width: 600px) {
+/* ====== TABLET: 481px - 768px ====== */
+@media (max-width: 768px) and (min-width: 481px) {
+  body {
+    font-size: 17px;
+  }
+
+  .products-container {
+    padding: 30px 15px;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    padding: 15px 0;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 320px;
+    position: relative !important;
+  }
+
+  .heart-icon {
+    width: 36px;
+    height: 36px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .heart-icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .product-image {
+    height: 220px;
+    object-fit: contain !important;
+  }
+
+  .product-info {
+    padding: 13px;
+  }
+
+  .product-name {
+    font-size: 17px;
+  }
+
+  .product-description {
+    font-size: 15px;
+  }
+}
+
+/* ====== MOBILE: 360px - 480px ====== */
+@media (max-width: 480px) and (min-width: 360px) {
   body {
     font-size: 16px;
   }
 
   .products-container {
-    padding: 10px;
+    padding: 20px 12px;
   }
 
   .products-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    padding: 0;
+    padding: 10px 0;
   }
 
   .product-card {
     width: 100%;
-    max-width: 340px;
+    max-width: 100%;
     background: #fff;
-    border-radius: 18px;
+    border-radius: 16px;
     box-shadow: 0 6px 20px rgba(31, 36, 73, 0.1);
     border: 1px solid #e2e8f0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    position: relative !important;
+  }
+
+  .heart-icon {
+    width: 34px;
+    height: 34px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .heart-icon svg {
+    width: 18px;
+    height: 18px;
   }
 
   .product-image {
-    height: 200px;
-    object-fit: contain;
+    height: 180px !important;
+    object-fit: contain !important;
     background: #f8f8f8;
     border-radius: 8px;
   }
 
   .product-info {
     padding: 12px;
-    padding-bottom: 15px;
+    padding-bottom: 14px;
   }
 
   .product-name {
     color: #1F2449;
     font-size: 16px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
   }
 
   .product-description {
@@ -290,7 +418,7 @@ body {
   }
 
   .product-seller {
-    padding: 10px;
+    padding: 8px;
   }
 
   .lightbox {
@@ -311,7 +439,8 @@ body {
     border-radius: 10px;
   }
 
-  .close-btn {
+  .close-btn,
+  .close-lightbox {
     top: 10px;
     right: 10px;
     width: 40px;
@@ -323,8 +452,8 @@ body {
     align-items: center;
   }
 
-  .prev, 
-  .next {
+  .prev-btn, 
+  .next-btn {
     width: 40px;
     height: 40px;
     font-size: 18px;
@@ -334,35 +463,65 @@ body {
     align-items: center;
   }
 
-  .prev { 
+  .prev-btn { 
     left: 10px; 
   }
   
-  .next { 
+  .next-btn { 
     right: 10px; 
   }
 }
 
-@media (max-width: 400px) {
+/* ====== MOBILE SMALL: 320px - 359px ====== */
+@media (max-width: 359px) {
   body {
     font-size: 15px;
   }
 
+  .products-container {
+    padding: 15px 10px;
+  }
+
   .products-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 8px 0;
   }
 
   .product-card {
-    margin: 0 auto;
+    border-radius: 14px;
+    position: relative !important;
+  }
+
+  .heart-icon {
+    width: 32px;
+    height: 32px;
+    top: 6px;
+    left: 6px;
+  }
+
+  .heart-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .product-image {
+    height: 160px !important;
+    object-fit: contain !important;
+  }
+
+  .product-info {
+    padding: 10px;
+    padding-bottom: 12px;
   }
 
   .product-name {
-    font-size: 16px;
+    font-size: 15px;
+    margin-bottom: 6px;
   }
 
   .product-description {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .lightbox {
@@ -374,16 +533,44 @@ body {
     max-height: 55vh;
   }
 
-  .close-btn {
+  .close-btn,
+  .close-lightbox {
     width: 35px;
     height: 35px;
     font-size: 18px;
   }
 
-  .prev, 
-  .next {
+  .prev-btn, 
+  .next-btn {
     width: 35px;
     height: 35px;
     font-size: 16px;
+  }
+}
+
+/* ====== DESKTOP: 769px+ ====== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .products-container {
+    max-width: 1400px;
+  }
+
+  .products-grid {
+    gap: 30px;
+  }
+
+  .product-card {
+    max-width: 320px;
   }
 }

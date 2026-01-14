@@ -77,8 +77,13 @@ async function loadProducts() {
                 productCard.className = 'product-card';
                 const productId = `product_${index}`;
 
-                // بناء HTML للمنتج
+                // بناء HTML للمنتج مع القلب
                 productCard.innerHTML = `
+                    <div class="heart-icon" onclick="toggleWishlist(event, '${product.username}', '${product.product_name}', '${product.images[0]}', '${product.category}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </div>
                     <div class="image-gallery">
                         <img src="../${product.images[0]}" 
                              alt="${product.product_name}" 
@@ -104,12 +109,56 @@ async function loadProducts() {
                     product.images, 
                     productId
                 );
+
+                // تحديث حالة القلب بناءً على المفضلة
+                updateHeartState(productCard.querySelector('.heart-icon'), product.images[0]);
             });
         }
     } catch (error) {
         console.error('Error loading products:', error);
         productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
     }
+}
+
+// تحديث حالة القلب
+function updateHeartState(heartIcon, imagePath) {
+    if (!heartIcon) return;
+    
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    
+    // البحث عن المنتج في المفضلة بالمسار الصحيح
+    const isInWishlist = wishlist.some(item => {
+        const parts = item.split('|||');
+        if (parts.length === 4) {
+            const itemImage = parts[2]; // الصورة هي الجزء الثالث
+            return itemImage === imagePath;
+        }
+        return false;
+    });
+    
+    if (isInWishlist) {
+        heartIcon.classList.add('active');
+    } else {
+        heartIcon.classList.remove('active');
+    }
+}
+
+// تحديث جميع القلوب في الصفحة
+function updateAllHearts() {
+    const allCards = document.querySelectorAll('.product-card');
+    allCards.forEach(card => {
+        const heart = card.querySelector('.heart-icon');
+        const onclick = heart.getAttribute('onclick');
+        
+        if (onclick) {
+            // استخراج مسار الصورة من الـ onclick
+            const match = onclick.match(/toggleWishlist\(event,\s*'[^']*',\s*'[^']*',\s*'([^']*)'/);
+            if (match) {
+                const imagePath = match[1];
+                updateHeartState(heart, imagePath);
+            }
+        }
+    });
 }
 
 // تشغيل عند تحميل الصفحة
@@ -134,34 +183,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // تحميل المنتجات
     loadProducts();
+
+    // بعد تحميل المنتجات، انتظر شوية وحدّث القلوب
+    setTimeout(updateAllHearts, 100);
+
+    // الاستماع لتحديثات المفضلة
+    window.addEventListener('wishlistUpdated', updateAllHearts);
+    
+    // الاستماع لتغييرات localStorage من تابات أخرى
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'wishlist') {
+            updateAllHearts();
+        }
+    });
 });
 
-
-
-
-
-
+// أنيميشن تغيير الصورة
 document.addEventListener('DOMContentLoaded', function() {
-  const lightboxImg = document.querySelector('#lightbox-img');
-  const prevBtn = document.querySelector('.prev-btn');
-  const nextBtn = document.querySelector('.next-btn');
+    const lightboxImg = document.querySelector('#lightbox-img');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
 
-  function animateImageChange(direction) {
-    lightboxImg.style.animation = 'none';
-    setTimeout(() => {
-      if (direction === 'next') {
-        lightboxImg.style.animation = 'fadeSlide 0.4s ease';
-      } else {
-        lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
-      }
-    }, 10);
-  }
+    function animateImageChange(direction) {
+        lightboxImg.style.animation = 'none';
+        setTimeout(() => {
+            if (direction === 'next') {
+                lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+            } else {
+                lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+            }
+        }, 10);
+    }
 
-  if (prevBtn) {
-    prevBtn.addEventListener('click', () => animateImageChange('prev'));
-  }
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => animateImageChange('prev'));
+    }
 
-  if (nextBtn) {
-    nextBtn.addEventListener('click', () => animateImageChange('next'));
-  }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => animateImageChange('next'));
+    }
 });
