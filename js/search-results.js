@@ -100,20 +100,26 @@ async function searchProducts() {
                 results.forEach((product, index) => {
                     const productCard = document.createElement('div');
                     productCard.className = 'product-card';
-
-                    const productId = `product_${index}`;
-
+                
+                    const productKey = `${product.username}|||${product.product_name}|||${product.images[0]}|||${product.category || ''}`;
+                
                     productCard.innerHTML = `
+                        <div class="heart-icon ${isFavorite(productKey) ? 'active' : ''}" 
+                             onclick="toggleWishlist(event, '${product.username}', '${product.product_name.replace(/'/g, "\\'")}', '${product.images[0]}', '${(product.category || '').replace(/'/g, "\\'")}')">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </div>
+                
                         <div class="image-gallery">
                             <img src="../${product.images[0]}" 
-                                alt="${product.product_name || 'منتج'}" 
-                                class="product-image"
-                                onerror="this.src='https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'">
+                                 alt="${product.product_name || 'منتج'}" 
+                                 class="product-image"
+                                 onerror="this.src='https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'">
                         </div>
                         <div class="product-info">
                             <h3 class="product-name">${product.product_name || 'منتج بدون اسم'}</h3>
                             <p class="product-description">${product.description || ''}</p>
-                            
                             <div class="product-seller">
                                 <a href="../users/${encodeURIComponent(product.username)}/profile.html" class="seller-link">
                                     ${product.username}
@@ -121,13 +127,13 @@ async function searchProducts() {
                             </div>
                         </div>
                     `;
-
+                
                     productsGrid.appendChild(productCard);
-
+                
                     setupImageGallery(
                         productCard.querySelector('.image-gallery'),
                         product.images,
-                        productId
+                        `product_${index}`
                     );
                 });
             }
@@ -159,3 +165,37 @@ document.addEventListener('DOMContentLoaded', function () {
         searchProducts();
     }
 });
+
+
+
+
+function isFavorite(key) {
+    const favs = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    return favs.includes(key);
+}
+
+function toggleWishlist(event, username, productName, image, category) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const key = `${username}|||${productName}|||${image}|||${category || ''}`;
+    let favs = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    
+    if (favs.includes(key)) {
+        favs = favs.filter(k => k !== key);
+    } else {
+        favs.push(key);
+    }
+    
+    localStorage.setItem('wishlist', JSON.stringify(favs));
+    
+    const countEl = document.getElementById('wishlist-count');
+    if (countEl) {
+        countEl.textContent = favs.length;
+        countEl.style.display = favs.length > 0 ? 'flex' : 'none';
+    }
+    
+    event.currentTarget.classList.toggle('active');
+}
+
+window.toggleWishlist = toggleWishlist;
