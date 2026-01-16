@@ -3,7 +3,7 @@
 // =======================
 let currentProduct = null;
 let currentIndex = 0;
-let productImages = {};
+// let productImages = {};          ← احذفه أو غيّره إلى: const productImages = window.productImages;
 
 // =======================
 // Lightbox للصور
