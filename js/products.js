@@ -39,7 +39,7 @@ function changeImage(direction) {
 function setupImageGallery(container, images) {
     container._images = images.map(img => {
         // نرجع للـ root بـ ../ واحد فقط، ثم نضيف المسار كما هو
-        return '../' + img;
+        return '../../' + img;
     });
 
     const imgElement = container.querySelector('.product-image');
