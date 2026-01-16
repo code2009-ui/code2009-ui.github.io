@@ -235,14 +235,32 @@ function toggleWishlist(event, username, productName, image, category) {
     event.stopPropagation();
     event.preventDefault();
     
-    const key = `${username}|||${productName}|||${image}|||${category}`;
-    let favs = getFavorites();
+    const key = `${username}|||${productName}|||${image}|||${category || ''}`;
+    let favs = JSON.parse(localStorage.getItem('wishlist') || '[]');
     
-    favs = favs.filter(k => k !== key); // حذف فقط (لأننا في صفحة المفضلة)
+    if (favs.includes(key)) {
+        favs = favs.filter(k => k !== key);
+    } else {
+        favs.push(key);
+    }
     
-    saveFavorites(favs);
-    updateWishlistCount();
-    loadWishlistProducts(); // إعادة رسم الصفحة → المنتج يختفي
+    localStorage.setItem('wishlist', JSON.stringify(favs));
+    
+    // تحديث العدد في الهيدر (يعمل في كل الصفحات)
+    const countEl = document.getElementById('wishlist-count');
+    if (countEl) {
+        countEl.textContent = favs.length;
+        countEl.style.display = favs.length > 0 ? 'flex' : 'none';
+    }
+    
+    // تغيير شكل القلب فورًا (بدون إعادة تحميل الصفحة)
+    event.currentTarget.classList.toggle('active', favs.includes(key));
+    
+    // إعادة تحميل المنتجات فقط لو كنا في صفحة المفضلة
+    const isWishlistPage = document.getElementById('wishlistGrid') !== null;
+    if (isWishlistPage && typeof loadWishlistProducts === 'function') {
+        loadWishlistProducts();
+    }
 }
 
 window.toggleWishlist = toggleWishlist;
