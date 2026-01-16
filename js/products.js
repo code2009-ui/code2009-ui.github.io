@@ -33,7 +33,7 @@ function changeImage(direction) {
 // إعداد معرض الصور لكل منتج
 function setupImageGallery(container, images, productId) {
     // حفظ الصور مع المسار الصحيح
-    productImages[productId] = images.map(img => '../' + img);
+    productImages[productId] = images;
 
     const imgElement = container.querySelector('.product-image');
     imgElement.style.cursor = 'pointer';
