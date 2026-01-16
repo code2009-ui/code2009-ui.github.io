@@ -31,7 +31,10 @@ function changeImage(direction) {
 }
 
 function setupImageGallery(container, images, productId) {
-    productImages[productId] = images.map(img => '/' + img);  // ← الحل: / بدل ../ عشان absolute من root
+    // المسار المطلق من root الموقع (صحيح لـ GitHub Pages)
+    productImages[productId] = images.map(img => 
+        `https://code2009-ui.github.io/${img}`
+    );
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
