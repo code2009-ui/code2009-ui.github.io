@@ -30,14 +30,20 @@ function changeImage(direction) {
     document.getElementById("lightbox-img").src = imgs[currentIndex];
 }
 
-// إعداد معرض الصور لكل منتج
 function setupImageGallery(container, images, productId) {
-    // حفظ الصور مع المسار الصحيح
-    productImages[productId] = images;
+    // بدون إضافة ../ لأن المسارات في products.json نسبية من الـ root
+    productImages[productId] = images.map(img => {
+        // لو الصورة تبدأ بـ users/ أو products/ خليها زي ما هي
+        return img.startsWith('users/') || img.startsWith('products/') 
+            ? img 
+            : '../' + img;
+    });
 
     const imgElement = container.querySelector('.product-image');
-    imgElement.style.cursor = 'pointer';
-    imgElement.onclick = () => openLightbox(productId, 0);
+    if (imgElement) {
+        imgElement.style.cursor = 'pointer';
+        imgElement.onclick = () => openLightbox(productId, 0);
+    }
 }
 
 // تحميل المنتجات
