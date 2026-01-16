@@ -229,3 +229,20 @@ document.addEventListener('DOMContentLoaded', () => {
         window.changeImage = wishlist_changeImage;
     }
 });
+
+
+function toggleWishlist(event, username, productName, image, category) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const key = `${username}|||${productName}|||${image}|||${category}`;
+    let favs = getFavorites();
+    
+    favs = favs.filter(k => k !== key); // حذف فقط (لأننا في صفحة المفضلة)
+    
+    saveFavorites(favs);
+    updateWishlistCount();
+    loadWishlistProducts(); // إعادة رسم الصفحة → المنتج يختفي
+}
+
+window.toggleWishlist = toggleWishlist;

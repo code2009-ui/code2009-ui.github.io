@@ -20,7 +20,7 @@ function openLightbox(productKey, index) {
         console.log('Available images:', productImages[productKey]);
         return;
     }
-
+    
     currentProduct = productKey;
     currentIndex = index;
     
