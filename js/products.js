@@ -31,12 +31,12 @@ function changeImage(direction) {
 }
 
 function setupImageGallery(container, images, productId) {
-    // بدون إضافة ../ لأن المسارات في products.json نسبية من الـ root
+    // المسار الصحيح للموقع المنشور في /pages/ → نرجع للـ root بـ /
     productImages[productId] = images.map(img => {
-        // لو الصورة تبدأ بـ users/ أو products/ خليها زي ما هي
-        return img.startsWith('users/') || img.startsWith('products/') 
-            ? img 
-            : '../' + img;
+        if (img.startsWith('users/') || img.startsWith('products/')) {
+            return '/' + img;  // ← هنا التصليح المهم: نضيف / بدل ../
+        }
+        return img;
     });
 
     const imgElement = container.querySelector('.product-image');
