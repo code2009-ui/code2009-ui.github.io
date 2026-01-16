@@ -9,19 +9,13 @@ function getUrlParameter(name) {
     return urlParams.get(name);
 }
 
-function openLightbox() {
-    // مش هنحتاجها أصلاً بعد التعديل ده
-}
-
-function changeImage(direction) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    
-    if (!lightbox._currentImages) return;
-    
-    const index = (lightbox._currentIndex + direction + lightbox._currentImages.length) % lightbox._currentImages.length;
-    lightbox._currentIndex = index;
-    lightboxImg.src = lightbox._currentImages[index];
+// فتح اللايت بوكس
+function openLightbox(productId, index) {
+    currentProduct = productId;
+    currentIndex = index;
+    const src = productImages[productId][index];
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox").classList.add("show");
 }
 
 // إغلاق اللايت بوكس
@@ -36,29 +30,16 @@ function changeImage(direction) {
     document.getElementById("lightbox-img").src = imgs[currentIndex];
 }
 
-function setupImageGallery(container, images) {
-    // نحفظ الصور مباشرة في الـ container نفسه عشان ما نحتاجش id
-    container._images = images.map(img => 
-        window.location.origin + '/' + img.replace(/^\.\.\//, '')
-    );
+// إعداد معرض الصور لكل منتج
+function setupImageGallery(container, images, productId) {
+    // حفظ الصور مع المسار الصحيح
+    productImages[productId] = images.map(img => '../' + img);
 
     const imgElement = container.querySelector('.product-image');
-    if (imgElement) {
-        imgElement.style.cursor = 'pointer';
-        imgElement.onclick = () => {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            
-            // نفتح أول صورة
-            lightboxImg.src = container._images[0];
-            lightbox.classList.add('show');
-            
-            // حفظ قائمة الصور في الـ lightbox نفسه مؤقتًا
-            lightbox._currentImages = container._images;
-            lightbox._currentIndex = 0;
-        };
-    }
+    imgElement.style.cursor = 'pointer';
+    imgElement.onclick = () => openLightbox(productId, 0);
 }
+
 // تحميل المنتجات
 async function loadProducts() {
     const category = getUrlParameter('category');
@@ -125,7 +106,8 @@ async function loadProducts() {
                 // إعداد معرض الصور
                 setupImageGallery(
                     productCard.querySelector('.image-gallery'), 
-                    product.images
+                    product.images, 
+                    productId
                 );
 
                 // تحديث حالة القلب بناءً على المفضلة
