@@ -1,19 +1,27 @@
-function openLightbox(product, index) {
-    // 🔒 التحقق من وجود المنتج أولاً
-    if (!productImages || !productImages[product]) {
-        console.error('❌ Product not found:', product);
+// =======================
+// المتغيرات العامة للـ Lightbox
+// =======================
+let currentProduct = null;
+let currentIndex = 0;
+let productImages = {};
+
+// =======================
+// Lightbox للصور
+// =======================
+function openLightbox(productKey, index) {
+    if (!productImages || !productImages[productKey]) {
+        console.error('❌ Product not found:', productKey);
         console.log('Available products:', Object.keys(productImages || {}));
         return;
     }
 
-    // 🔒 التحقق من وجود الصور
-    if (!productImages[product][index]) {
+    if (!productImages[productKey][index]) {
         console.error('❌ Image not found at index:', index);
-        console.log('Available images:', productImages[product]);
+        console.log('Available images:', productImages[productKey]);
         return;
     }
 
-    currentProduct = product;
+    currentProduct = productKey;
     currentIndex = index;
     
     const lightbox = document.getElementById("lightbox");
@@ -24,7 +32,7 @@ function openLightbox(product, index) {
         return;
     }
     
-    lightboxImg.src = productImages[product][index];
+    lightboxImg.src = productImages[productKey][index];
     lightbox.classList.add("show");
 }
 
@@ -36,7 +44,6 @@ function closeLightbox() {
 }
 
 function changeImage(direction) {
-    // 🔒 التحقق من وجود المنتج الحالي
     if (!productImages || !productImages[currentProduct]) {
         console.error('❌ Current product not found');
         return;
@@ -51,20 +58,90 @@ function changeImage(direction) {
     }
 }
 
-// تحديث CSS ديناميكياً
-(function(){
+// =======================
+// المفضلة (Wishlist)
+// =======================
+function getFavorites() {
     try {
-        const links = document.querySelectorAll('link[rel="stylesheet"]');
-        links.forEach(l => {
-            if (l.href && l.href.includes('profile.css')) {
-                l.href = l.href.split('?')[0] + '?v=' + Date.now();
-            }
-        });
-    } catch(e) { 
-        console.error('CSS refresh error:', e); 
+        const data = localStorage.getItem('wishlist');
+        return JSON.parse(data || '[]');
+    } catch (e) {
+        return [];
     }
-})();
+}
 
+function saveFavorites(favorites) {
+    try {
+        localStorage.setItem('wishlist', JSON.stringify(favorites));
+    } catch (e) {
+        console.error('Error saving favorites');
+    }
+}
+
+function isFavorite(productKey) {
+    return getFavorites().includes(productKey);
+}
+
+function toggleWishlist(event, username, productName, image, category) {
+    event.stopPropagation();
+    event.preventDefault();
+    
+    const element = event.currentTarget;
+    const productKey = `${username}|||${productName}|||${image}|||${category}`;
+    
+    let favorites = getFavorites();
+
+    element.classList.add('animating');
+    setTimeout(() => element.classList.remove('animating'), 600);
+
+    if (favorites.includes(productKey)) {
+        favorites = favorites.filter(key => key !== productKey);
+        element.classList.remove('active');
+        console.log(`تم إزالة "${productName}" من المفضلة`);
+    } else {
+        favorites.push(productKey);
+        element.classList.add('active');
+        console.log(`تم إضافة "${productName}" إلى المفضلة`);
+    }
+
+    saveFavorites(favorites);
+    updateWishlistCount();
+}
+
+function updateWishlistCount() {
+    const favorites = getFavorites();
+    const countElement = document.getElementById('wishlist-count');
+    
+    if (!countElement) return;
+
+    countElement.textContent = favorites.length;
+    countElement.style.display = favorites.length > 0 ? 'flex' : 'none';
+}
+
+function loadHearts() {
+    const favorites = getFavorites();
+    const hearts = document.querySelectorAll('.heart-icon');
+    
+    hearts.forEach(heart => {
+        const onclick = heart.getAttribute('onclick');
+        if (!onclick) return;
+        
+        const match = onclick.match(/toggleWishlist\(event,\s*'([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']*)'\)/);
+        
+        if (match) {
+            const [_, username, productName, image, category] = match;
+            const productKey = `${username}|||${productName}|||${image}|||${category}`;
+            
+            if (favorites.includes(productKey)) {
+                heart.classList.add('active');
+            }
+        }
+    });
+}
+
+// =======================
+// Animations
+// =======================
 function revealOnScrollMobile() {
     const isMobile = window.innerWidth <= 768;
     if (!isMobile) return;
@@ -85,10 +162,10 @@ function revealOnScrollMobile() {
     }
 }
 
-const perRow = 4;
-const categories = document.querySelectorAll('.category');
-
 function revealOnScrollDesktop() {
+    const perRow = 4;
+    const categories = document.querySelectorAll('.category');
+
     for (let i = 0; i < categories.length; i += perRow) {
         const rowItems = Array.from(categories).slice(i, i + perRow);
         const firstItem = rowItems[0];
@@ -109,17 +186,10 @@ function revealOnScrollDesktop() {
     }
 }
 
-window.addEventListener('scroll', () => {
-    revealOnScrollMobile();
-    revealOnScrollDesktop();
-});
-
-window.addEventListener('load', () => {
-    revealOnScrollMobile();
-    revealOnScrollDesktop();
-});
-
-window.addEventListener('scroll', function () {
+// =======================
+// Header Scroll Effect
+// =======================
+function handleHeaderScroll() {
     const header = document.querySelector('.header');
     
     if (!header) return;
@@ -139,29 +209,37 @@ window.addEventListener('scroll', function () {
         header.style.backdropFilter = 'none';
         header.style.webkitBackdropFilter = 'none';
     }
-});
-
-const hamburger = document.getElementById("hamburger");
-const mobileMenu = document.getElementById("mobileMenu");
-
-if (hamburger && mobileMenu) {
-    hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-
-        if (mobileMenu.classList.contains("show")) {
-            mobileMenu.classList.remove("show");
-            mobileMenu.classList.add("hide");
-        } else {
-            mobileMenu.classList.remove("hide");
-            mobileMenu.classList.add("show");
-        }
-    });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const lightboxImg = document.querySelector('.lightbox img');
-    const prevBtn = document.querySelector('.prev');
-    const nextBtn = document.querySelector('.next');
+// =======================
+// Hamburger Menu
+// =======================
+function initHamburgerMenu() {
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+
+            if (mobileMenu.classList.contains("show")) {
+                mobileMenu.classList.remove("show");
+                mobileMenu.classList.add("hide");
+            } else {
+                mobileMenu.classList.remove("hide");
+                mobileMenu.classList.add("show");
+            }
+        });
+    }
+}
+
+// =======================
+// Lightbox Animation
+// =======================
+function initLightboxAnimation() {
+    const lightboxImg = document.querySelector('#lightbox-img');
+    const prevBtn = document.querySelector('.lightbox .prev');
+    const nextBtn = document.querySelector('.lightbox .next');
 
     function animateImageChange(direction) {
         if (!lightboxImg) return;
@@ -183,4 +261,43 @@ document.addEventListener('DOMContentLoaded', function() {
     if (nextBtn) {
         nextBtn.addEventListener('click', () => animateImageChange('next'));
     }
+}
+
+// =======================
+// Event Listeners
+// =======================
+window.addEventListener('scroll', () => {
+    revealOnScrollMobile();
+    revealOnScrollDesktop();
+    handleHeaderScroll();
 });
+
+window.addEventListener('load', () => {
+    revealOnScrollMobile();
+    revealOnScrollDesktop();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateWishlistCount();
+    loadHearts();
+    initHamburgerMenu();
+    initLightboxAnimation();
+
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox) closeLightbox();
+        });
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    }
+});
+
+// =======================
+// Global Functions
+// =======================
+window.toggleWishlist = toggleWishlist;
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.changeImage = changeImage;

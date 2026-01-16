@@ -1,5 +1,5 @@
 // =======================
-// المتغيرات العامة
+// المتغيرات العامة للـ Wishlist
 // =======================
 let wishlist_currentProduct = null;
 let wishlist_currentIndex = 0;
@@ -8,7 +8,6 @@ let wishlist_productImages = {};
 // =======================
 // المفضلة (Wishlist)
 // =======================
-
 function getFavorites() {
     try {
         const data = localStorage.getItem('wishlist');
@@ -26,8 +25,8 @@ function saveFavorites(favorites) {
     }
 }
 
-function isFavorite(productId) {
-    return getFavorites().includes(productId);
+function isFavorite(productKey) {
+    return getFavorites().includes(productKey);
 }
 
 function toggleWishlist(event, username, productName, image, category) {
@@ -35,23 +34,19 @@ function toggleWishlist(event, username, productName, image, category) {
     event.preventDefault();
     
     const element = event.currentTarget;
-    const productId = `${username}|||${productName}|||${image}|||${category}`;
+    const productKey = `${username}|||${productName}|||${image}|||${category}`;
     
-    toggleFavorite(element, productId, productName);
-}
-
-function toggleFavorite(element, productId, productName) {
     let favorites = getFavorites();
 
     element.classList.add('animating');
     setTimeout(() => element.classList.remove('animating'), 600);
 
-    if (favorites.includes(productId)) {
-        favorites = favorites.filter(id => id !== productId);
+    if (favorites.includes(productKey)) {
+        favorites = favorites.filter(key => key !== productKey);
         element.classList.remove('active');
         console.log(`تم إزالة "${productName}" من المفضلة`);
     } else {
-        favorites.push(productId);
+        favorites.push(productKey);
         element.classList.add('active');
         console.log(`تم إضافة "${productName}" إلى المفضلة`);
     }
@@ -75,32 +70,62 @@ function updateWishlistCount() {
 }
 
 // =======================
-// Lightbox للصور
+// Lightbox للصور في الـ Wishlist
 // =======================
+function openLightbox(productKey, index) {
+    if (!wishlist_productImages || !wishlist_productImages[productKey]) {
+        console.error('❌ Product not found:', productKey);
+        return;
+    }
 
-function openLightbox(productId, index) {
-    wishlist_currentProduct = productId;
+    if (!wishlist_productImages[productKey][index]) {
+        console.error('❌ Image not found at index:', index);
+        return;
+    }
+
+    wishlist_currentProduct = productKey;
     wishlist_currentIndex = index;
-    document.getElementById("lightbox-img").src = wishlist_productImages[productId][index];
-    document.getElementById("lightbox").classList.add("show");
+    
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    
+    if (!lightbox || !lightboxImg) {
+        console.error('❌ Lightbox elements not found');
+        return;
+    }
+    
+    lightboxImg.src = wishlist_productImages[productKey][index];
+    lightbox.classList.add("show");
 }
 
 function closeLightbox() {
-    document.getElementById("lightbox").classList.remove("show");
+    const lightbox = document.getElementById("lightbox");
+    if (lightbox) {
+        lightbox.classList.remove("show");
+    }
 }
 
 function changeImage(direction) {
+    if (!wishlist_productImages || !wishlist_productImages[wishlist_currentProduct]) {
+        console.error('❌ Current product not found');
+        return;
+    }
+
     const imgs = wishlist_productImages[wishlist_currentProduct];
     wishlist_currentIndex = (wishlist_currentIndex + direction + imgs.length) % imgs.length;
-    document.getElementById("lightbox-img").src = imgs[wishlist_currentIndex];
+    
+    const lightboxImg = document.getElementById("lightbox-img");
+    if (lightboxImg) {
+        lightboxImg.src = imgs[wishlist_currentIndex];
+    }
 }
 
-function setupImageGallery(container, images, productId) {
-    wishlist_productImages[productId] = images;
+function setupImageGallery(container, images, productKey) {
+    wishlist_productImages[productKey] = images;
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
         imgElement.style.cursor = 'pointer';
-        imgElement.onclick = () => openLightbox(productId, 0);
+        imgElement.onclick = () => openLightbox(productKey, 0);
     }
 }
 
@@ -131,8 +156,8 @@ async function loadWishlistProducts() {
         const allProducts = await response.json();
         const wishlistProducts = [];
 
-        favorites.forEach(favId => {
-            const parts = favId.split('|||');
+        favorites.forEach(favKey => {
+            const parts = favKey.split('|||');
             if (parts.length !== 4) return;
             
             const [username, productName, image, category] = parts;
@@ -145,7 +170,7 @@ async function loadWishlistProducts() {
                     product.category === category;
                 
                 if (matches) {
-                    wishlistProducts.push({ ...product, productId: favId });
+                    wishlistProducts.push({ ...product, productKey: favKey });
                     break;
                 }
             }
@@ -162,10 +187,9 @@ async function loadWishlistProducts() {
 
         wishlistGrid.innerHTML = '';
 
-        wishlistProducts.forEach((product, index) => {
+        wishlistProducts.forEach((product) => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            const displayId = `wishlist_${index}`;
 
             const imagesArray = product.images && product.images.length > 0 
                 ? product.images 
@@ -175,7 +199,7 @@ async function loadWishlistProducts() {
                 ? imagesArray[0] 
                 : '../' + imagesArray[0];
 
-            const isActive = isFavorite(product.productId);
+            const isActive = isFavorite(product.productKey);
 
             card.innerHTML = `
                 <div class="heart-icon ${isActive ? 'active' : ''}" 
@@ -206,7 +230,7 @@ async function loadWishlistProducts() {
             const processedImages = imagesArray.map(img => 
                 img.startsWith('../') ? img : '../' + img
             );
-            setupImageGallery(card.querySelector('.image-gallery'), processedImages, displayId);
+            setupImageGallery(card.querySelector('.image-gallery'), processedImages, product.productKey);
         });
 
     } catch (e) {
@@ -215,7 +239,7 @@ async function loadWishlistProducts() {
 }
 
 // =======================
-// تحميل حالة القلوب في صفحات البروفايل
+// تحميل حالة القلوب
 // =======================
 function loadHearts() {
     const favorites = getFavorites();
@@ -229,9 +253,9 @@ function loadHearts() {
         
         if (match) {
             const [_, username, productName, image, category] = match;
-            const productId = `${username}|||${productName}|||${image}|||${category}`;
+            const productKey = `${username}|||${productName}|||${image}|||${category}`;
             
-            if (favorites.includes(productId)) {
+            if (favorites.includes(productKey)) {
                 heart.classList.add('active');
             }
         }
@@ -261,11 +285,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// =======================
+// Global Functions
+// =======================
 window.toggleWishlist = toggleWishlist;
-
-
-
-
-
-
-
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.changeImage = changeImage;
