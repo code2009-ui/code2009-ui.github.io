@@ -204,32 +204,19 @@
 </div>
 
 <script>
-// تعريف الصور لكل منتج
-window.productImages = {
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/1-1.png|||Printing': [
-        'products/1-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/2-1.png|||Printing': [
-        'products/2-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/3-1.png|||Printing': [
-        'products/3-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/4-1.png|||Printing': [
-        'products/4-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/5-1.png|||Printing': [
-        'products/5-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/6-1.png|||Printing': [
-        'products/6-1.png'
-    ],
-    'نقشة|||طباعة على الملابس|||users/نقشة/products/7-1.png|||Printing': [
-        'products/7-1.png'
-    ]
-};
+// تعريف productImages قبل تحميل app.js - هذا مهم جداً!
+window.productImages = window.productImages || {};
 
-// ربط الصور بالـ Lightbox
+// إضافة صور المنتجات
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/1-1.png|||Printing'] = ['products/1-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/2-1.png|||Printing'] = ['products/2-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/3-1.png|||Printing'] = ['products/3-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/4-1.png|||Printing'] = ['products/4-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/5-1.png|||Printing'] = ['products/5-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/6-1.png|||Printing'] = ['products/6-1.png'];
+productImages['نقشة|||طباعة على الملابس|||users/نقشة/products/7-1.png|||Printing'] = ['products/7-1.png'];
+
+// ربط الصور بالـ onclick
 document.addEventListener('DOMContentLoaded', function() {
     const productCards = document.querySelectorAll('.product-card');
     
@@ -246,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const [_, username, productName, image, category] = match;
             const productKey = `${username}|||${productName}|||${image}|||${category}`;
             
-            if (window.productImages[productKey]) {
+            if (productImages[productKey]) {
                 img.style.cursor = 'pointer';
                 img.onclick = () => window.openLightbox(productKey, 0);
             }
