@@ -261,8 +261,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// اجعل الدوال متاحة عالمياً
 window.toggleWishlist = toggleWishlist;
-window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.changeImage = changeImage;
+
+
+
+
+
+
+
+
+
