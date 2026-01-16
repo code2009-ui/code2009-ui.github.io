@@ -262,10 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.toggleWishlist = toggleWishlist;
-window.closeLightbox = closeLightbox;
-window.changeImage = changeImage;
-
-
 
 
 
