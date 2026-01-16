@@ -124,7 +124,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/1-1.png" alt="تزيين مواليد" class="product-image" data-product-key="jouri for design|||تزيين مواليد|||users/jouri for design/products/1-1.png|||Event_Planning">
+        <img src="products/1-1.png" alt="تزيين مواليد" class="product-image">
         <div class="product-info">
             <h3>تزيين مواليد</h3>
             <p></p>
@@ -137,7 +137,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/2-1.png" alt="تزيين حفلة عيد ميلاد" class="product-image" data-product-key="jouri for design|||تزيين حفلة عيد ميلاد|||users/jouri for design/products/2-1.png|||Event_Planning">
+        <img src="products/2-1.png" alt="تزيين حفلة عيد ميلاد" class="product-image">
         <div class="product-info">
             <h3>تزيين حفلة عيد ميلاد</h3>
             <p></p>
@@ -150,7 +150,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/3-1.png" alt="تزيين غرفة عروس" class="product-image" data-product-key="jouri for design|||تزيين غرفة عروس|||users/jouri for design/products/3-1.png|||Event_Planning">
+        <img src="products/3-1.png" alt="تزيين غرفة عروس" class="product-image">
         <div class="product-info">
             <h3>تزيين غرفة عروس</h3>
             <p></p>
@@ -163,7 +163,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/4-1.png" alt="تزيين حفلة اطفال" class="product-image" data-product-key="jouri for design|||تزيين حفلة اطفال|||users/jouri for design/products/4-1.png|||Event_Planning">
+        <img src="products/4-1.png" alt="تزيين حفلة اطفال" class="product-image">
         <div class="product-info">
             <h3>تزيين حفلة اطفال</h3>
             <p></p>
@@ -176,7 +176,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/5-1.png" alt="تزيين عيد زواج" class="product-image" data-product-key="jouri for design|||تزيين عيد زواج|||users/jouri for design/products/5-1.png|||Event_Planning">
+        <img src="products/5-1.png" alt="تزيين عيد زواج" class="product-image">
         <div class="product-info">
             <h3>تزيين عيد زواج</h3>
             <p></p>
@@ -189,7 +189,7 @@
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
             </svg>
         </div>
-        <img src="products/6-1.png" alt="تزيين حلفة خطوبة" class="product-image" data-product-key="jouri for design|||تزيين حلفة خطوبة|||users/jouri for design/products/6-1.png|||Event_Planning">
+        <img src="products/6-1.png" alt="تزيين حلفة خطوبة" class="product-image">
         <div class="product-info">
             <h3>تزيين حلفة خطوبة</h3>
             <p></p>
@@ -207,7 +207,8 @@
 </div>
 
 <script>
-const productImages = {
+// تعريف الصور لكل منتج
+window.productImages = {
     'jouri for design|||تزيين مواليد|||users/jouri for design/products/1-1.png|||Event_Planning': [
         'products/1-1.png'
     ],
@@ -228,22 +229,34 @@ const productImages = {
     ]
 };
 
+// ربط الصور بالـ Lightbox
 document.addEventListener('DOMContentLoaded', function() {
-    const productImgs = document.querySelectorAll('.product-image');
+    const productCards = document.querySelectorAll('.product-card');
     
-    productImgs.forEach(img => {
-        const productKey = img.getAttribute('data-product-key');
+    productCards.forEach((card, index) => {
+        const img = card.querySelector('.product-image');
+        const heartIcon = card.querySelector('.heart-icon');
         
-        if (productKey && productImages[productKey]) {
-            img.style.cursor = 'pointer';
-            img.onclick = () => openLightbox(productKey, 0);
+        if (!img || !heartIcon) return;
+        
+        const onclick = heartIcon.getAttribute('onclick');
+        const match = onclick.match(/toggleWishlist\(event,\s*'([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']*)'\)/);
+        
+        if (match) {
+            const [_, username, productName, image, category] = match;
+            const productKey = `${username}|||${productName}|||${image}|||${category}`;
+            
+            if (window.productImages[productKey]) {
+                img.style.cursor = 'pointer';
+                img.onclick = () => window.openLightbox(productKey, 0);
+            }
         }
     });
 });
 </script>
 
-<script src="../../js/search.js"></script>
 <script src="../../js/app.js"></script>
+<script src="../../js/search.js"></script>
 
 </body>
 </html>
