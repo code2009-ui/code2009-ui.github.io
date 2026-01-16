@@ -37,10 +37,10 @@ function changeImage(direction) {
 }
 
 function setupImageGallery(container, images) {
-    container._images = images.map(img => {
-        // نرجع للـ root بـ ../ واحد فقط، ثم نضيف المسار كما هو
-        return '../' + img;
-    });
+    // نحفظ الصور مباشرة في الـ container نفسه عشان ما نحتاجش id
+    container._images = images.map(img => 
+        window.location.origin + '/' + img.replace(/^\.\.\//, '')
+    );
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
@@ -49,9 +49,11 @@ function setupImageGallery(container, images) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             
+            // نفتح أول صورة
             lightboxImg.src = container._images[0];
             lightbox.classList.add('show');
             
+            // حفظ قائمة الصور في الـ lightbox نفسه مؤقتًا
             lightbox._currentImages = container._images;
             lightbox._currentIndex = 0;
         };
