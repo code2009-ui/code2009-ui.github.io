@@ -6,7 +6,7 @@ let wishlist_currentIndex = 0;
 let wishlist_productImages = {};
 
 // =======================
-// المفضلة (Wishlist)
+// المفضلة (Wishlist) - localStorage
 // =======================
 function getFavorites() {
     try {
@@ -29,36 +29,6 @@ function isFavorite(productKey) {
     return getFavorites().includes(productKey);
 }
 
-function toggleWishlist(event, username, productName, image, category) {
-    event.stopPropagation();
-    event.preventDefault();
-    
-    const element = event.currentTarget;
-    const productKey = `${username}|||${productName}|||${image}|||${category}`;
-    
-    let favorites = getFavorites();
-
-    element.classList.add('animating');
-    setTimeout(() => element.classList.remove('animating'), 600);
-
-    if (favorites.includes(productKey)) {
-        favorites = favorites.filter(key => key !== productKey);
-        element.classList.remove('active');
-        console.log(`تم إزالة "${productName}" من المفضلة`);
-    } else {
-        favorites.push(productKey);
-        element.classList.add('active');
-        console.log(`تم إضافة "${productName}" إلى المفضلة`);
-    }
-
-    saveFavorites(favorites);
-    updateWishlistCount();
-
-    if (window.location.pathname.includes('wishlist.html')) {
-        loadWishlistProducts();
-    }
-}
-
 function updateWishlistCount() {
     const favorites = getFavorites();
     const countElement = document.getElementById('wishlist-count');
@@ -70,9 +40,9 @@ function updateWishlistCount() {
 }
 
 // =======================
-// Lightbox للصور في الـ Wishlist
+// Lightbox للصور في صفحة الـ Wishlist فقط
 // =======================
-function openLightbox(productKey, index) {
+function wishlist_openLightbox(productKey, index) {
     if (!wishlist_productImages || !wishlist_productImages[productKey]) {
         console.error('❌ Product not found:', productKey);
         return;
@@ -98,14 +68,14 @@ function openLightbox(productKey, index) {
     lightbox.classList.add("show");
 }
 
-function closeLightbox() {
+function wishlist_closeLightbox() {
     const lightbox = document.getElementById("lightbox");
     if (lightbox) {
         lightbox.classList.remove("show");
     }
 }
 
-function changeImage(direction) {
+function wishlist_changeImage(direction) {
     if (!wishlist_productImages || !wishlist_productImages[wishlist_currentProduct]) {
         console.error('❌ Current product not found');
         return;
@@ -125,7 +95,7 @@ function setupImageGallery(container, images, productKey) {
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
         imgElement.style.cursor = 'pointer';
-        imgElement.onclick = () => openLightbox(productKey, 0);
+        imgElement.onclick = () => wishlist_openLightbox(productKey, 0);
     }
 }
 
@@ -203,7 +173,7 @@ async function loadWishlistProducts() {
 
             card.innerHTML = `
                 <div class="heart-icon ${isActive ? 'active' : ''}" 
-                     onclick="toggleWishlist(event, '${product.username}', '${product.product_name}', '${product.images[0]}', '${product.category}')">
+                     onclick="window.toggleWishlist(event, '${product.username}', '${product.product_name}', '${product.images[0]}', '${product.category}')">
                     <svg viewBox="0 0 24 24">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                     </svg>
@@ -239,56 +209,23 @@ async function loadWishlistProducts() {
 }
 
 // =======================
-// تحميل حالة القلوب
-// =======================
-function loadHearts() {
-    const favorites = getFavorites();
-    const hearts = document.querySelectorAll('.heart-icon');
-    
-    hearts.forEach(heart => {
-        const onclick = heart.getAttribute('onclick');
-        if (!onclick) return;
-        
-        const match = onclick.match(/toggleWishlist\(event,\s*'([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']*)'\)/);
-        
-        if (match) {
-            const [_, username, productName, image, category] = match;
-            const productKey = `${username}|||${productName}|||${image}|||${category}`;
-            
-            if (favorites.includes(productKey)) {
-                heart.classList.add('active');
-            }
-        }
-    });
-}
-
-// =======================
-// عند تحميل الصفحة
+// عند تحميل صفحة الـ Wishlist
 // =======================
 document.addEventListener('DOMContentLoaded', () => {
-    updateWishlistCount();
-
     if (window.location.pathname.includes('wishlist.html')) {
         loadWishlistProducts();
-    } else {
-        loadHearts();
-    }
-
-    const lightbox = document.getElementById('lightbox');
-    if (lightbox) {
-        lightbox.addEventListener('click', e => {
-            if (e.target === lightbox) closeLightbox();
-        });
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') closeLightbox();
-        });
+        
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            lightbox.addEventListener('click', e => {
+                if (e.target === lightbox) wishlist_closeLightbox();
+            });
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') wishlist_closeLightbox();
+            });
+        }
+        
+        window.closeLightbox = wishlist_closeLightbox;
+        window.changeImage = wishlist_changeImage;
     }
 });
-
-// =======================
-// Global Functions
-// =======================
-window.toggleWishlist = toggleWishlist;
-window.openLightbox = openLightbox;
-window.closeLightbox = closeLightbox;
-window.changeImage = changeImage;
