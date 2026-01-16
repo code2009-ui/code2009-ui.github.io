@@ -31,13 +31,7 @@ function changeImage(direction) {
 }
 
 function setupImageGallery(container, images, productId) {
-    // المسار الصحيح للموقع المنشور في /pages/ → نرجع للـ root بـ /
-    productImages[productId] = images.map(img => {
-        if (img.startsWith('users/') || img.startsWith('products/')) {
-            return '/' + img;  // ← هنا التصليح المهم: نضيف / بدل ../
-        }
-        return img;
-    });
+    productImages[productId] = images.map(img => '/' + img);  // ← الحل: / بدل ../ عشان absolute من root
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
