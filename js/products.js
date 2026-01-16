@@ -37,10 +37,10 @@ function changeImage(direction) {
 }
 
 function setupImageGallery(container, images) {
-    container._images = images.map(img => {
-        // نرجع للـ root بـ ../ واحد فقط، ثم نضيف المسار كما هو
-        return '../../' + img;
-    });
+    // المسار المطلق الصحيح من الـ root (بدون /pages/)
+    container._images = images.map(img => 
+        'https://code2009-ui.github.io/' + img
+    );
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
@@ -49,9 +49,11 @@ function setupImageGallery(container, images) {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             
+            // نفتح أول صورة بالمسار الصحيح
             lightboxImg.src = container._images[0];
             lightbox.classList.add('show');
             
+            // حفظ الصور للتنقل
             lightbox._currentImages = container._images;
             lightbox._currentIndex = 0;
         };
