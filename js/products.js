@@ -30,9 +30,9 @@ function changeImage(direction) {
     document.getElementById("lightbox-img").src = imgs[currentIndex];
 }
 
-// إعداد معرض الصور لكل منتج (التصليح الوحيد هنا)
+// إعداد معرض الصور لكل منتج – التصليح هنا فقط
 function setupImageGallery(container, images, productId) {
-    // المسار الصحيح: ../ للرجوع للـ root من /pages/
+    // نضيف ../ للرجوع للـ root من داخل /pages/
     productImages[productId] = images.map(img => '../' + img);
 
     const imgElement = container.querySelector('.product-image');
@@ -40,7 +40,7 @@ function setupImageGallery(container, images, productId) {
     imgElement.onclick = () => openLightbox(productId, 0);
 }
 
-// تحميل المنتجات (ابقى زي ما هو)
+// باقي الكود (loadProducts وكل حاجة تانية) زي ما كان عندك بالضبط – لا تغيره
 async function loadProducts() {
     const category = getUrlParameter('category');
     const categoryTitle = document.getElementById('categoryTitle');
@@ -113,4 +113,4 @@ async function loadProducts() {
     }
 }
 
-// باقي الدوال (updateHeartState, updateAllHearts, DOMContentLoaded, أنيميشن) ابقيها زي ما هي في كودك الأصلي
+// باقي الكود (updateHeartState, updateAllHearts, DOMContentLoaded, أنيميشن) ابقيه زي ما هو عندك
