@@ -29,18 +29,18 @@ function closeLightbox() {
     document.getElementById("lightbox").classList.remove("show");
 }
 
-// تغيير الصورة في اللايت بوكس
-function changeImage(direction) {
-    const imgs = productImages[currentProduct];
-    currentIndex = (currentIndex + direction + imgs.length) % imgs.length;
-    document.getElementById("lightbox-img").src = imgs[currentIndex];
-}
-
+// الدالة المعدلة - هنا الإصلاح
 function setupImageGallery(container, images) {
-    // نحفظ الصور مباشرة في الـ container نفسه عشان ما نحتاجش id
-    container._images = images.map(img => 
-        window.location.origin + '/' + img.replace(/^\.\.\//, '')
-    );
+    // تحويل المسارات بشكل صحيح
+    container._images = images.map(img => {
+        // إزالة أي ../ من البداية
+        let cleanPath = img.replace(/^\.\.\//, '');
+        // التأكد من أن المسار يبدأ من الجذر
+        if (!cleanPath.startsWith('/')) {
+            cleanPath = '/' + cleanPath;
+        }
+        return window.location.origin + cleanPath;
+    });
 
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
@@ -59,6 +59,7 @@ function setupImageGallery(container, images) {
         };
     }
 }
+
 // تحميل المنتجات
 async function loadProducts() {
     const category = getUrlParameter('category');
@@ -122,7 +123,7 @@ async function loadProducts() {
 
                 productsGrid.appendChild(productCard);
 
-                // إعداد معرض الصور
+                // إعداد معرض الصور - هنا بنمرر الصور
                 setupImageGallery(
                     productCard.querySelector('.image-gallery'), 
                     product.images
