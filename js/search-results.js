@@ -1,7 +1,10 @@
-// متغيرات اللايت بوكس
-let currentProduct = null;
-let currentIndex = 0;
-let productImages = {};
+// =======================
+// المتغيرات العامة للـ Search (مختلفة عن الملفات الأخرى)
+// =======================
+window.searchPage = window.searchPage || {};
+window.searchPage.currentProduct = null;
+window.searchPage.currentIndex = 0;
+window.searchPage.productImages = {};
 
 // قراءة باراميتر من الرابط
 function getUrlParameter(name) {
@@ -9,38 +12,42 @@ function getUrlParameter(name) {
     return urlParams.get(name);
 }
 
-// فتح اللايت بوكس
-function openLightbox(productId, index) {
-    currentProduct = productId;
-    currentIndex = index;
-    const src = productImages[productId][index];
+// =======================
+// Lightbox للصور في صفحة Search
+// =======================
+function search_openLightbox(productId, index) {
+    window.searchPage.currentProduct = productId;
+    window.searchPage.currentIndex = index;
+    const src = window.searchPage.productImages[productId][index];
     document.getElementById("lightbox-img").src = src;
     document.getElementById("lightbox").classList.add("show");
 }
 
-// إغلاق اللايت بوكس
-function closeLightbox() {
+function search_closeLightbox() {
     document.getElementById("lightbox").classList.remove("show");
 }
 
-// تغيير الصورة في اللايت بوكس
-function changeImage(direction) {
-    const imgs = productImages[currentProduct];
-    currentIndex = (currentIndex + direction + imgs.length) % imgs.length;
-    document.getElementById("lightbox-img").src = imgs[currentIndex];
+function search_changeImage(direction) {
+    const imgs = window.searchPage.productImages[window.searchPage.currentProduct];
+    window.searchPage.currentIndex = (window.searchPage.currentIndex + direction + imgs.length) % imgs.length;
+    document.getElementById("lightbox-img").src = imgs[window.searchPage.currentIndex];
 }
 
-// إعداد معرض الصور لكل منتج
-function setupImageGallery(container, images, productId) {
-    productImages[productId] = images.map(img => '../' + img);
+// =======================
+// إعداد معرض الصور لكل منتج - نفس طريقة HTML
+// =======================
+function search_setupImageGallery(container, images, productId) {
+    window.searchPage.productImages[productId] = images.map(img => '../' + img);
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
         imgElement.style.cursor = 'pointer';
-        imgElement.onclick = () => openLightbox(productId, 0);
+        imgElement.onclick = () => search_openLightbox(productId, 0);
     }
 }
 
+// =======================
 // البحث في المنتجات
+// =======================
 async function searchProducts() {
     const searchTerm = getUrlParameter('search-term');
     const searchQuery = document.getElementById('searchQuery');
@@ -130,7 +137,7 @@ async function searchProducts() {
                 
                     productsGrid.appendChild(productCard);
                 
-                    setupImageGallery(
+                    search_setupImageGallery(
                         productCard.querySelector('.image-gallery'),
                         product.images,
                         `product_${index}`
@@ -145,30 +152,37 @@ async function searchProducts() {
     }
 }
 
+// =======================
+// تشغيل عند تحميل الصفحة
+// =======================
 document.addEventListener('DOMContentLoaded', function () {
     const lightbox = document.getElementById('lightbox');
     if (lightbox) {
         lightbox.addEventListener('click', function (e) {
             if (e.target === lightbox) {
-                closeLightbox();
+                search_closeLightbox();
             }
         });
 
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') {
-                closeLightbox();
+                search_closeLightbox();
             }
         });
     }
 
     if (window.location.pathname.includes('search.html')) {
         searchProducts();
+        
+        // ربط الدوال بـ window لاستخدامها في HTML
+        window.closeLightbox = search_closeLightbox;
+        window.changeImage = search_changeImage;
     }
 });
 
-
-
-
+// =======================
+// دوال المفضلة (Wishlist)
+// =======================
 function isFavorite(key) {
     const favs = JSON.parse(localStorage.getItem('wishlist') || '[]');
     return favs.includes(key);
