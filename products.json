@@ -63,57 +63,57 @@
         ]
     },
     {
-        "username": "jouri for design",
-        "product_name": "تزيين مواليد",
+        "username": "jouri_for_design",
+        "product_name": "تزيين حفلات مواليد",
         "description": "",
         "category": "Event_Planning",
         "images": [
-            "users/jouri for design/products/1-1.png"
+            "users/jouri_for_design/products/1-1.png"
         ]
     },
     {
-        "username": "jouri for design",
-        "product_name": "تزيين حفلة عيد ميلاد",
-        "description": "",
-        "category": "Event_Planning",
-        "images": [
-            "users/jouri for design/products/2-1.png"
-        ]
-    },
-    {
-        "username": "jouri for design",
-        "product_name": "تزيين غرفة عروس",
-        "description": "",
-        "category": "Event_Planning",
-        "images": [
-            "users/jouri for design/products/3-1.png"
-        ]
-    },
-    {
-        "username": "jouri for design",
+        "username": "jouri_for_design",
         "product_name": "تزيين حفلة اطفال",
         "description": "",
         "category": "Event_Planning",
         "images": [
-            "users/jouri for design/products/4-1.png"
+            "users/jouri_for_design/products/2-1.png"
         ]
     },
     {
-        "username": "jouri for design",
+        "username": "jouri_for_design",
+        "product_name": "تزيين غرفة عروس",
+        "description": "",
+        "category": "Event_Planning",
+        "images": [
+            "users/jouri_for_design/products/3-1.png"
+        ]
+    },
+    {
+        "username": "jouri_for_design",
+        "product_name": "تزيين حفلة اطفال",
+        "description": "",
+        "category": "Event_Planning",
+        "images": [
+            "users/jouri_for_design/products/4-1.png"
+        ]
+    },
+    {
+        "username": "jouri_for_design",
         "product_name": "تزيين عيد زواج",
         "description": "",
         "category": "Event_Planning",
         "images": [
-            "users/jouri for design/products/5-1.png"
+            "users/jouri_for_design/products/5-1.png"
         ]
     },
     {
-        "username": "jouri for design",
+        "username": "jouri_for_design",
         "product_name": "تزيين حلفة خطوبة",
         "description": "",
         "category": "Event_Planning",
         "images": [
-            "users/jouri for design/products/6-1.png"
+            "users/jouri_for_design/products/6-1.png"
         ]
     }
 ]
