@@ -61,14 +61,11 @@ function products_changeImage(direction) {
 }
 
 // =======================
-// إعداد معرض الصور - التعديل الرئيسي هنا
+// إعداد معرض الصور - نفس طريقة HTML
 // =======================
-function setupImageGallery(container, images, productKey) {
-    // نستخدم نفس الطريقة اللي بتشتغل في HTML!
-    // بدل window.location.origin نستخدم المسار النسبي مع ../
+function products_setupImageGallery(container, images, productKey) {
     const processedImages = images.map(img => {
-        // نفس طريقة HTML: "../users/نقشة/products/1-1.png"
-        return `../${img}`;
+        return '../' + img;
     });
 
     console.log('✅ Processed images:', processedImages);
@@ -90,7 +87,6 @@ async function loadProducts() {
     const categoryTitle = document.getElementById('categoryTitle');
     const productsGrid = document.getElementById('productsGrid');
 
-    // تعيين عنوان الصفحة
     if (category) {
         categoryTitle.textContent = decodeURIComponent(category);
     } else {
@@ -98,11 +94,9 @@ async function loadProducts() {
     }
 
     try {
-        // تحميل ملف JSON
         const response = await fetch('../products.json');
         const products = await response.json();
 
-        // فلترة المنتجات حسب الفئة
         let filteredProducts = products;
         if (category) {
             const decodedCategory = decodeURIComponent(category);
@@ -111,7 +105,6 @@ async function loadProducts() {
             );
         }
 
-        // عرض المنتجات
         if (filteredProducts.length === 0) {
             productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
         } else {
@@ -119,43 +112,52 @@ async function loadProducts() {
             filteredProducts.forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
-                const productKey = `${product.username}_${product.product_name}_${index}`;
+                const productKey = product.username + '_' + product.product_name + '_' + index;
 
-                // بناء HTML للمنتج مع القلب
-                productCard.innerHTML = `
-                    <div class="heart-icon" onclick="toggleWishlist(event, '${product.username}', '${product.product_name}', '${product.images[0]}', '${product.category}')">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                        </svg>
-                    </div>
-                    <div class="image-gallery">
-                        <img src="../${product.images[0]}" 
-                             alt="${product.product_name}" 
-                             class="product-image"
-                             onerror="this.src='https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">${product.product_name || 'منتج بدون اسم'}</h3>
-                        <p class="product-description">${product.description || ''}</p>
-                        <div class="product-seller">
-                            <a href="../users/${encodeURIComponent(product.username)}/profile.html" class="seller-link">
-                                ${product.username}
-                            </a>
-                        </div>
-                    </div>
-                `;
+                const heartDiv = document.createElement('div');
+                heartDiv.className = 'heart-icon';
+                heartDiv.setAttribute('onclick', "toggleWishlist(event, '" + product.username + "', '" + product.product_name + "', '" + product.images[0] + "', '" + product.category + "')");
+                heartDiv.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
 
+                const galleryDiv = document.createElement('div');
+                galleryDiv.className = 'image-gallery';
+                const img = document.createElement('img');
+                img.src = '../' + product.images[0];
+                img.alt = product.product_name;
+                img.className = 'product-image';
+                img.onerror = function() { this.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'; };
+                galleryDiv.appendChild(img);
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'product-info';
+                
+                const nameH3 = document.createElement('h3');
+                nameH3.className = 'product-name';
+                nameH3.textContent = product.product_name || 'منتج بدون اسم';
+                
+                const descP = document.createElement('p');
+                descP.className = 'product-description';
+                descP.textContent = product.description || '';
+                
+                const sellerDiv = document.createElement('div');
+                sellerDiv.className = 'product-seller';
+                const sellerLink = document.createElement('a');
+                sellerLink.href = '../users/' + encodeURIComponent(product.username) + '/profile.html';
+                sellerLink.className = 'seller-link';
+                sellerLink.textContent = product.username;
+                sellerDiv.appendChild(sellerLink);
+                
+                infoDiv.appendChild(nameH3);
+                infoDiv.appendChild(descP);
+                infoDiv.appendChild(sellerDiv);
+
+                productCard.appendChild(heartDiv);
+                productCard.appendChild(galleryDiv);
+                productCard.appendChild(infoDiv);
                 productsGrid.appendChild(productCard);
 
-                // إعداد معرض الصور مع المفتاح الفريد
-                setupImageGallery(
-                    productCard.querySelector('.image-gallery'), 
-                    product.images,
-                    productKey
-                );
-
-                // تحديث حالة القلب بناءً على المفضلة
-                updateHeartState(productCard.querySelector('.heart-icon'), product.images[0]);
+                products_setupImageGallery(galleryDiv, product.images, productKey);
+                updateHeartState(heartDiv, product.images[0]);
             });
         }
     } catch (error) {
@@ -208,33 +210,24 @@ function updateAllHearts() {
 // تشغيل عند تحميل الصفحة
 // =======================
 document.addEventListener('DOMContentLoaded', function() {
-    // تحميل المنتجات
     loadProducts();
-
-    // بعد تحميل المنتجات، انتظر شوية وحدّث القلوب
     setTimeout(updateAllHearts, 100);
-
-    // الاستماع لتحديثات المفضلة
-    window.addEventListener('wishlistUpdated', updateAllHearts);
     
-    // الاستماع لتغييرات localStorage من تابات أخرى
+    window.addEventListener('wishlistUpdated', updateAllHearts);
     window.addEventListener('storage', function(e) {
         if (e.key === 'wishlist') {
             updateAllHearts();
         }
     });
     
-    // إعداد اللايت بوكس للصفحة
     const lightbox = document.getElementById('lightbox');
     if (lightbox) {
-        // إغلاق عند الضغط خارج الصورة
         lightbox.addEventListener('click', function(e) {
             if (e.target === lightbox) {
                 products_closeLightbox();
             }
         });
 
-        // إغلاق بزر ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 products_closeLightbox();
@@ -242,19 +235,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // ربط الدوال بـ window لاستخدامها في HTML
     window.closeLightbox = products_closeLightbox;
     window.changeImage = products_changeImage;
 });
 
-// أنيميشن تغيير الصورة
 document.addEventListener('DOMContentLoaded', function() {
     const lightboxImg = document.querySelector('#lightbox-img');
-    
-    // حفظ الدالة الأصلية
     const originalChangeImage = window.changeImage;
     
-    // استبدال الدالة بنسخة جديدة مع الأنيميشن
     window.changeImage = function(direction) {
         lightboxImg.style.animation = 'none';
         setTimeout(() => {
@@ -265,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 10);
         
-        // تنفيذ الدالة الأصلية
         if (originalChangeImage) {
             originalChangeImage(direction);
         }
