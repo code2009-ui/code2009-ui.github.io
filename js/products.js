@@ -64,25 +64,16 @@ function products_changeImage(direction) {
 // إعداد معرض الصور - التعديل الرئيسي هنا
 // =======================
 function setupImageGallery(container, images, productKey) {
-    // تحويل المسارات بشكل صحيح
+    // تحويل المسارات - الحل البسيط والصحيح
     const processedImages = images.map(img => {
-        // إزالة أي ../ من البداية
-        let cleanPath = img.replace(/^\.\.\//, '');
+        // الصور في JSON بدون ../ وبدون / في البداية
+        // مثال: "users/نقشة/products/1-1.png"
+        // نريدها: "https://www.harafjya.com/users/نقشة/products/1-1.png"
         
-        // التأكد من أن المسار لا يبدأ بـ "pages/"
-        if (cleanPath.startsWith('pages/')) {
-            cleanPath = cleanPath.replace('pages/', '');
-        }
-        
-        // إضافة / في البداية إذا لم يكن موجود
-        if (!cleanPath.startsWith('/')) {
-            cleanPath = '/' + cleanPath;
-        }
-        
-        return window.location.origin + cleanPath;
+        return `${window.location.origin}/${img}`;
     });
 
-    console.log('✅ Processed images for', productKey, ':', processedImages);
+    console.log('✅ Processed images:', processedImages);
     
     window.productsPage.productImages[productKey] = processedImages;
     
