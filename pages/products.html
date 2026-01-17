@@ -1,189 +1,273 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style/products.css">
-    <link rel="stylesheet" href="../style/header.css">
-<link rel="icon" type="image/png" href="/images/logo.png">
+// =======================
+// المتغيرات العامة للـ Products (مختلفة عن app.js)
+// =======================
+window.productsPage = window.productsPage || {};
+window.productsPage.currentProduct = null;
+window.productsPage.currentIndex = 0;
+window.productsPage.productImages = {};
 
-</head>
-<body>
-    <header class="header">
+// قراءة باراميتر من الرابط
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
-    <div class="logo">
-        <a href="/pages/home.html" class="logo-link">
-            <img src="../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
-        </a>
-    </div>
+// =======================
+// Lightbox للصور في صفحة Products
+// =======================
+function products_openLightbox(productKey, index) {
+    if (!window.productsPage.productImages[productKey]) {
+        console.error('❌ Product not found:', productKey);
+        return;
+    }
 
-    <nav class="nav-center">
-        <ul class="nav-list">
-            <li><a href="/pages/home.html">الرئيسية</a></li>
-            <li><a href="/pages/about.html">حول المنصة</a></li>
-            <li><a href="/pages/contact.html">تواصل معنا</a></li>
-        </ul>
-    </nav>
-        <div class="search-icon-container">
-        <button id="search-open-btn" class="search-btn" aria-label="Open search">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-            </svg>
-        </button>
-    </div>
-
-<!-- أيقونة المفضلة - جديدة -->
-<div class="wishlist-icon-container">
-    <a href="/pages/wishlist.html" class="wishlist-link" aria-label="Wishlist">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
-        <span class="wishlist-count" id="wishlist-count">0</span>
-    </a>
-</div>
-
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <!-- Search popup window -->
-    <div id="search-popup" class="search-popup hidden">
-        <div class="search-popup-content">
-            <button id="search-close-btn" class="close-btn">✕</button>
-            <form id="search-form" action="search.html" method="get">
-                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
-                <button type="submit" class="search-submit-btn">بحث</button>
-            </form>
-        </div>
-    </div>
+    if (!window.productsPage.productImages[productKey][index]) {
+        console.error('❌ Image not found at index:', index);
+        return;
+    }
     
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="/pages/home.html">الرئيسية</a></li>
-            <li><a href="/pages/about.html">حول المنصة</a></li>
-            <li><a href="/pages/contact.html">تواصل معنا</a></li>
-        </ul>
-    </div>
-</header>
+    window.productsPage.currentProduct = productKey;
+    window.productsPage.currentIndex = index;
+    
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    
+    if (!lightbox || !lightboxImg) {
+        console.error('❌ Lightbox elements not found');
+        return;
+    }
+    
+    lightboxImg.src = window.productsPage.productImages[productKey][index];
+    lightbox.classList.add("show");
+}
 
-    <h1 id="categoryTitle">جميع المنتجات</h1>
-    <div id="productsGrid" class="products-grid"></div>
+function products_closeLightbox() {
+    document.getElementById("lightbox").classList.remove("show");
+}
 
-    <div id="lightbox" class="lightbox">
-        <span class="close-lightbox" onclick="closeLightbox()">×</span>
-        <img id="lightbox-img" src="" alt="Lightbox Image">
-        <button class="lightbox-nav prev-btn" onclick="changeImage(-1)">&#10094;</button>
-        <button class="lightbox-nav next-btn" onclick="changeImage(1)">&#10095;</button>
-    </div>
-    <script>
-        // Mobile Animation - من اليمين لليسار
-        function revealOnScrollMobile() {
-            const isMobile = window.innerWidth <= 768;
-            if (!isMobile) return;
+function products_changeImage(direction) {
+    if (!window.productsPage.productImages[window.productsPage.currentProduct]) {
+        console.error('❌ Current product not found');
+        return;
+    }
 
-            const categories = document.querySelectorAll('.category');
+    const imgs = window.productsPage.productImages[window.productsPage.currentProduct];
+    window.productsPage.currentIndex = (window.productsPage.currentIndex + direction + imgs.length) % imgs.length;
+    
+    const lightboxImg = document.getElementById("lightbox-img");
+    if (lightboxImg) {
+        lightboxImg.src = imgs[window.productsPage.currentIndex];
+    }
+}
 
-            for (let i = 0; i < categories.length; i += 2) {
-                const right = categories[i];
-                const left = categories[i + 1];
+// =======================
+// إعداد معرض الصور - نفس طريقة HTML
+// =======================
+function setupImageGallery(container, images, productKey) {
+    // نستخدم نفس الطريقة اللي بتشتغل في HTML!
+    // بدل window.location.origin نستخدم المسار النسبي مع ../
+    const processedImages = images.map(img => {
+        // نفس طريقة HTML: "../users/نقشة/products/1-1.png"
+        return `../${img}`;
+    });
 
-                const rect = right.getBoundingClientRect();
-                const trigger = rect.top < window.innerHeight - 100;
+    console.log('✅ Processed images:', processedImages);
+    
+    window.productsPage.productImages[productKey] = processedImages;
+    
+    const imgElement = container.querySelector('.product-image');
+    if (imgElement) {
+        imgElement.style.cursor = 'pointer';
+        imgElement.onclick = () => products_openLightbox(productKey, 0);
+    }
+}
 
-                if (trigger) {
-                    if (!right.classList.contains('visible-right')) {
-                        right.classList.add('visible-right');
-                    }
-                    if (left && !left.classList.contains('visible-left')) {
-                        left.classList.add('visible-left');
-                    }
-                }
-            }
+// =======================
+// تحميل المنتجات
+// =======================
+async function loadProducts() {
+    const category = getUrlParameter('category');
+    const categoryTitle = document.getElementById('categoryTitle');
+    const productsGrid = document.getElementById('productsGrid');
+
+    // تعيين عنوان الصفحة
+    if (category) {
+        categoryTitle.textContent = decodeURIComponent(category);
+    } else {
+        categoryTitle.textContent = 'جميع المنتجات';
+    }
+
+    try {
+        // تحميل ملف JSON
+        const response = await fetch('../products.json');
+        const products = await response.json();
+
+        // فلترة المنتجات حسب الفئة
+        let filteredProducts = products;
+        if (category) {
+            const decodedCategory = decodeURIComponent(category);
+            filteredProducts = products.filter(product =>
+                product.category && product.category.includes(decodedCategory)
+            );
         }
 
-        // Desktop Animation - من اليمين لليسار
-        const perRow = 4;
-        const categories = document.querySelectorAll('.category');
+        // عرض المنتجات
+        if (filteredProducts.length === 0) {
+            productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
+        } else {
+            productsGrid.innerHTML = '';
+            filteredProducts.forEach((product, index) => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                const productKey = `${product.username}_${product.product_name}_${index}`;
 
-        function revealOnScrollDesktop() {
-            const isDesktop = window.innerWidth > 768;
-            if (!isDesktop) return;
+                // بناء HTML للمنتج مع القلب
+                productCard.innerHTML = `
+                    <div class="heart-icon" onclick="toggleWishlist(event, '${product.username}', '${product.product_name}', '${product.images[0]}', '${product.category}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                    </div>
+                    <div class="image-gallery">
+                        <img src="../${product.images[0]}" 
+                             alt="${product.product_name}" 
+                             class="product-image"
+                             onerror="this.src='https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.product_name || 'منتج بدون اسم'}</h3>
+                        <p class="product-description">${product.description || ''}</p>
+                        <div class="product-seller">
+                            <a href="../users/${encodeURIComponent(product.username)}/profile.html" class="seller-link">
+                                ${product.username}
+                            </a>
+                        </div>
+                    </div>
+                `;
 
-            for (let i = 0; i < categories.length; i += perRow) {
-                const rowItems = Array.from(categories).slice(i, i + perRow);
-                const firstItem = rowItems[0];
-                const rect = firstItem.getBoundingClientRect();
+                productsGrid.appendChild(productCard);
 
-                if (rect.top >= 0 && rect.top < window.innerHeight - 100) {
-                    rowItems.forEach((el, index) => {
-                        if (!el.classList.contains('visible')) {
-                            setTimeout(() => {
-                                el.classList.add('visible');
-                            }, index * 150);
-                        }
-                    });
-                }
-            }
+                // إعداد معرض الصور مع المفتاح الفريد
+                setupImageGallery(
+                    productCard.querySelector('.image-gallery'), 
+                    product.images,
+                    productKey
+                );
+
+                // تحديث حالة القلب بناءً على المفضلة
+                updateHeartState(productCard.querySelector('.heart-icon'), product.images[0]);
+            });
         }
+    } catch (error) {
+        console.error('Error loading products:', error);
+        productsGrid.innerHTML = '<div class="no-products">حدث خطأ في تحميل المنتجات</div>';
+    }
+}
 
-        window.addEventListener('scroll', () => {
-            revealOnScrollMobile();
-            revealOnScrollDesktop();
-        });
+// =======================
+// تحديث حالة القلب
+// =======================
+function updateHeartState(heartIcon, imagePath) {
+    if (!heartIcon) return;
+    
+    const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+    
+    const isInWishlist = wishlist.some(item => {
+        const parts = item.split('|||');
+        if (parts.length === 4) {
+            const itemImage = parts[2];
+            return itemImage === imagePath;
+        }
+        return false;
+    });
+    
+    if (isInWishlist) {
+        heartIcon.classList.add('active');
+    } else {
+        heartIcon.classList.remove('active');
+    }
+}
 
-        window.addEventListener('load', () => {
-            revealOnScrollMobile();
-            revealOnScrollDesktop();
-        });
+function updateAllHearts() {
+    const allCards = document.querySelectorAll('.product-card');
+    allCards.forEach(card => {
+        const heart = card.querySelector('.heart-icon');
+        const onclick = heart.getAttribute('onclick');
         
-        // Header scroll effect
-        window.addEventListener('scroll', function () {
-            const header = document.querySelector('.header');
+        if (onclick) {
+            const match = onclick.match(/toggleWishlist\(event,\s*'[^']*',\s*'[^']*',\s*'([^']*)'/);
+            if (match) {
+                const imagePath = match[1];
+                updateHeartState(heart, imagePath);
+            }
+        }
+    });
+}
 
-            if (window.scrollY > 10) {
-                header.style.transform = 'translateY(20px)';
-                header.style.maxWidth = '70%';
-                header.style.borderRadius = '40px';
-                header.style.backgroundColor = 'rgba(215, 207, 196, 0.70)';
-                header.style.backdropFilter = 'blur(10px)';
-                header.style.webkitBackdropFilter = 'blur(1px)';
-            } else {
-                header.style.transform = 'translateY(0)';
-                header.style.maxWidth = '100%';
-                header.style.borderRadius = '2px';
-                header.style.backgroundColor = 'rgb(215, 207, 196)';
-                header.style.backdropFilter = 'none';
-                header.style.webkitBackdropFilter = 'none';
+// =======================
+// تشغيل عند تحميل الصفحة
+// =======================
+document.addEventListener('DOMContentLoaded', function() {
+    // تحميل المنتجات
+    loadProducts();
+
+    // بعد تحميل المنتجات، انتظر شوية وحدّث القلوب
+    setTimeout(updateAllHearts, 100);
+
+    // الاستماع لتحديثات المفضلة
+    window.addEventListener('wishlistUpdated', updateAllHearts);
+    
+    // الاستماع لتغييرات localStorage من تابات أخرى
+    window.addEventListener('storage', function(e) {
+        if (e.key === 'wishlist') {
+            updateAllHearts();
+        }
+    });
+    
+    // إعداد اللايت بوكس للصفحة
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        // إغلاق عند الضغط خارج الصورة
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                products_closeLightbox();
             }
         });
-    </script>
 
-    <script>
-        // Mobile menu toggle
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobileMenu");
-
-        hamburger.addEventListener("click", () => {
-            hamburger.classList.toggle("active");
-
-            if (mobileMenu.classList.contains("show")) {
-                mobileMenu.classList.remove("show");
-                mobileMenu.classList.add("hide");
-            } else {
-                mobileMenu.classList.remove("hide");
-                mobileMenu.classList.add("show");
+        // إغلاق بزر ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                products_closeLightbox();
             }
         });
-    </script>
+    }
+    
+    // ربط الدوال بـ window لاستخدامها في HTML
+    window.closeLightbox = products_closeLightbox;
+    window.changeImage = products_changeImage;
+});
 
-    <script src="../js/products.js"></script>
-    <script src="../js/app.js"></script>
-    <script src="../js/search.js"></script>
-    <script src="../js/wishlist.js"></script>
-
-
-</body>
-</html>
+// أنيميشن تغيير الصورة
+document.addEventListener('DOMContentLoaded', function() {
+    const lightboxImg = document.querySelector('#lightbox-img');
+    
+    // حفظ الدالة الأصلية
+    const originalChangeImage = window.changeImage;
+    
+    // استبدال الدالة بنسخة جديدة مع الأنيميشن
+    window.changeImage = function(direction) {
+        lightboxImg.style.animation = 'none';
+        setTimeout(() => {
+            if (direction === 1) {
+                lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+            } else if (direction === -1) {
+                lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+            }
+        }, 10);
+        
+        // تنفيذ الدالة الأصلية
+        if (originalChangeImage) {
+            originalChangeImage(direction);
+        }
+    };
+});
