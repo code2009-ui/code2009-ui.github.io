@@ -1,7 +1,10 @@
-// متغيرات اللايت بوكس
-let currentProduct = null;
-let currentIndex = 0;
-let productImages = {};
+// =======================
+// المتغيرات العامة للـ Products (مختلفة عن app.js)
+// =======================
+window.productsPage = window.productsPage || {};
+window.productsPage.currentProduct = null;
+window.productsPage.currentIndex = 0;
+window.productsPage.productImages = {};
 
 // قراءة باراميتر من الرابط
 function getUrlParameter(name) {
@@ -9,58 +12,90 @@ function getUrlParameter(name) {
     return urlParams.get(name);
 }
 
-function openLightbox() {
-    // مش هنحتاجها أصلاً بعد التعديل ده
+// =======================
+// Lightbox للصور في صفحة Products
+// =======================
+function products_openLightbox(productKey, index) {
+    if (!window.productsPage.productImages[productKey]) {
+        console.error('❌ Product not found:', productKey);
+        return;
+    }
+
+    if (!window.productsPage.productImages[productKey][index]) {
+        console.error('❌ Image not found at index:', index);
+        return;
+    }
+    
+    window.productsPage.currentProduct = productKey;
+    window.productsPage.currentIndex = index;
+    
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+    
+    if (!lightbox || !lightboxImg) {
+        console.error('❌ Lightbox elements not found');
+        return;
+    }
+    
+    lightboxImg.src = window.productsPage.productImages[productKey][index];
+    lightbox.classList.add("show");
 }
 
-function changeImage(direction) {
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    
-    if (!lightbox._currentImages) return;
-    
-    const index = (lightbox._currentIndex + direction + lightbox._currentImages.length) % lightbox._currentImages.length;
-    lightbox._currentIndex = index;
-    lightboxImg.src = lightbox._currentImages[index];
-}
-
-// إغلاق اللايت بوكس
-function closeLightbox() {
+function products_closeLightbox() {
     document.getElementById("lightbox").classList.remove("show");
 }
 
-// الدالة المعدلة - هنا الإصلاح
-function setupImageGallery(container, images) {
-    // تحويل المسارات بشكل صحيح
-    container._images = images.map(img => {
-        // إزالة أي ../ من البداية
-        let cleanPath = img.replace(/^\.\.\//, '');
-        // التأكد من أن المسار يبدأ من الجذر
-        if (!cleanPath.startsWith('/')) {
-            cleanPath = '/' + cleanPath;
-        }
-        return window.location.origin + cleanPath;
-    });
+function products_changeImage(direction) {
+    if (!window.productsPage.productImages[window.productsPage.currentProduct]) {
+        console.error('❌ Current product not found');
+        return;
+    }
 
-    const imgElement = container.querySelector('.product-image');
-    if (imgElement) {
-        imgElement.style.cursor = 'pointer';
-        imgElement.onclick = () => {
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            
-            // نفتح أول صورة
-            lightboxImg.src = container._images[0];
-            lightbox.classList.add('show');
-            
-            // حفظ قائمة الصور في الـ lightbox نفسه مؤقتًا
-            lightbox._currentImages = container._images;
-            lightbox._currentIndex = 0;
-        };
+    const imgs = window.productsPage.productImages[window.productsPage.currentProduct];
+    window.productsPage.currentIndex = (window.productsPage.currentIndex + direction + imgs.length) % imgs.length;
+    
+    const lightboxImg = document.getElementById("lightbox-img");
+    if (lightboxImg) {
+        lightboxImg.src = imgs[window.productsPage.currentIndex];
     }
 }
 
+// =======================
+// إعداد معرض الصور - التعديل الرئيسي هنا
+// =======================
+function setupImageGallery(container, images, productKey) {
+    // تحويل المسارات بشكل صحيح
+    const processedImages = images.map(img => {
+        // إزالة أي ../ من البداية
+        let cleanPath = img.replace(/^\.\.\//, '');
+        
+        // التأكد من أن المسار لا يبدأ بـ "pages/"
+        if (cleanPath.startsWith('pages/')) {
+            cleanPath = cleanPath.replace('pages/', '');
+        }
+        
+        // إضافة / في البداية إذا لم يكن موجود
+        if (!cleanPath.startsWith('/')) {
+            cleanPath = '/' + cleanPath;
+        }
+        
+        return window.location.origin + cleanPath;
+    });
+
+    console.log('✅ Processed images for', productKey, ':', processedImages);
+    
+    window.productsPage.productImages[productKey] = processedImages;
+    
+    const imgElement = container.querySelector('.product-image');
+    if (imgElement) {
+        imgElement.style.cursor = 'pointer';
+        imgElement.onclick = () => products_openLightbox(productKey, 0);
+    }
+}
+
+// =======================
 // تحميل المنتجات
+// =======================
 async function loadProducts() {
     const category = getUrlParameter('category');
     const categoryTitle = document.getElementById('categoryTitle');
@@ -95,7 +130,7 @@ async function loadProducts() {
             filteredProducts.forEach((product, index) => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
-                const productId = `product_${index}`;
+                const productKey = `${product.username}_${product.product_name}_${index}`;
 
                 // بناء HTML للمنتج مع القلب
                 productCard.innerHTML = `
@@ -123,10 +158,11 @@ async function loadProducts() {
 
                 productsGrid.appendChild(productCard);
 
-                // إعداد معرض الصور - هنا بنمرر الصور
+                // إعداد معرض الصور مع المفتاح الفريد
                 setupImageGallery(
                     productCard.querySelector('.image-gallery'), 
-                    product.images
+                    product.images,
+                    productKey
                 );
 
                 // تحديث حالة القلب بناءً على المفضلة
@@ -135,21 +171,22 @@ async function loadProducts() {
         }
     } catch (error) {
         console.error('Error loading products:', error);
-        productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
+        productsGrid.innerHTML = '<div class="no-products">حدث خطأ في تحميل المنتجات</div>';
     }
 }
 
+// =======================
 // تحديث حالة القلب
+// =======================
 function updateHeartState(heartIcon, imagePath) {
     if (!heartIcon) return;
     
     const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
     
-    // البحث عن المنتج في المفضلة بالمسار الصحيح
     const isInWishlist = wishlist.some(item => {
         const parts = item.split('|||');
         if (parts.length === 4) {
-            const itemImage = parts[2]; // الصورة هي الجزء الثالث
+            const itemImage = parts[2];
             return itemImage === imagePath;
         }
         return false;
@@ -162,7 +199,6 @@ function updateHeartState(heartIcon, imagePath) {
     }
 }
 
-// تحديث جميع القلوب في الصفحة
 function updateAllHearts() {
     const allCards = document.querySelectorAll('.product-card');
     allCards.forEach(card => {
@@ -170,7 +206,6 @@ function updateAllHearts() {
         const onclick = heart.getAttribute('onclick');
         
         if (onclick) {
-            // استخراج مسار الصورة من الـ onclick
             const match = onclick.match(/toggleWishlist\(event,\s*'[^']*',\s*'[^']*',\s*'([^']*)'/);
             if (match) {
                 const imagePath = match[1];
@@ -180,26 +215,10 @@ function updateAllHearts() {
     });
 }
 
+// =======================
 // تشغيل عند تحميل الصفحة
+// =======================
 document.addEventListener('DOMContentLoaded', function() {
-    // إعداد اللايت بوكس
-    const lightbox = document.getElementById('lightbox');
-    if (lightbox) {
-        // إغلاق عند الضغط خارج الصورة
-        lightbox.addEventListener('click', function(e) {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
-
-        // إغلاق بزر ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeLightbox();
-            }
-        });
-    }
-
     // تحميل المنتجات
     loadProducts();
 
@@ -215,30 +234,51 @@ document.addEventListener('DOMContentLoaded', function() {
             updateAllHearts();
         }
     });
+    
+    // إعداد اللايت بوكس للصفحة
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        // إغلاق عند الضغط خارج الصورة
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                products_closeLightbox();
+            }
+        });
+
+        // إغلاق بزر ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                products_closeLightbox();
+            }
+        });
+    }
+    
+    // ربط الدوال بـ window لاستخدامها في HTML
+    window.closeLightbox = products_closeLightbox;
+    window.changeImage = products_changeImage;
 });
 
 // أنيميشن تغيير الصورة
 document.addEventListener('DOMContentLoaded', function() {
     const lightboxImg = document.querySelector('#lightbox-img');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-
-    function animateImageChange(direction) {
+    
+    // حفظ الدالة الأصلية
+    const originalChangeImage = window.changeImage;
+    
+    // استبدال الدالة بنسخة جديدة مع الأنيميشن
+    window.changeImage = function(direction) {
         lightboxImg.style.animation = 'none';
         setTimeout(() => {
-            if (direction === 'next') {
+            if (direction === 1) {
                 lightboxImg.style.animation = 'fadeSlide 0.4s ease';
-            } else {
+            } else if (direction === -1) {
                 lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
             }
         }, 10);
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => animateImageChange('prev'));
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => animateImageChange('next'));
-    }
+        
+        // تنفيذ الدالة الأصلية
+        if (originalChangeImage) {
+            originalChangeImage(direction);
+        }
+    };
 });
