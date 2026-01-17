@@ -1108,7 +1108,6 @@
 
 
 
-  /* إصلاح الوصف - كل النصوص بجانب بعض في سطر واحد */
 .profile-info-box p {
     display: inline !important;
     margin: 0 !important;
@@ -1123,8 +1122,6 @@
     top: 15px;
     right: 15px !important;
     left: auto !important;
-    background: rgba(255, 255, 255, 0.2);
-    border: 2px solid rgba(255, 255, 255, 0.4);
     color: #fff !important;
     font-size: 28px;
     width: 45px;
@@ -1132,13 +1129,8 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 10000;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.lightbox .close-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
-}
