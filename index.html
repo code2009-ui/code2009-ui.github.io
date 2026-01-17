@@ -2,16 +2,40 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    
+    <!-- Title و Description -->
+    <title>حرفجية - منصة الخدمات والحرفيين</title>
+    <meta name="description" content="حرفجية: اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة. المنصة العربية الأفضل لعرض وطلب الخدمات.">
+    <meta name="keywords" content="حرفجية, خدمات, حجز, مشاريع, مطورين, مصممين, تصميم, عرب">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon / Logo -->
+    <link rel="icon" type="image/png" href="images/logo.png">
+
+    <!-- Open Graph (لتحسين ظهور الموقع عند المشاركة) -->
+    <meta property="og:title" content="حرفجية - منصة الخدمات والحرفيين">
+    <meta property="og:description" content="اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة. المنصة العربية الأفضل لعرض وطلب الخدمات.">
+    <meta property="og:image" content="https://www.harafjya.com/images/logo.png">
+    <meta property="og:url" content="https://www.harafjya.com/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="حرفجية - منصة الخدمات والحرفيين">
+    <meta name="twitter:description" content="اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة.">
+    <meta name="twitter:image" content="https://www.harafjya.com/images/logo.png">
+
+    <!-- إعادة التوجيه التلقائي إلى صفحة home -->
     <meta http-equiv="refresh" content="0; URL=pages/home.html">
-    <title>حرفجية</title>
+
+    <!-- Redirect بدون www إلى www -->
+    <script>
+        if (location.hostname === "harafjya.com") {
+            location.href = location.href.replace("harafjya.com", "www.harafjya.com");
+        }
+    </script>
 </head>
 <body>
     <p>إذا لم يتم إعادة التوجيه تلقائيًا، اضغط <a href="pages/home.html">هنا</a>.</p>
-    <script>
-if (location.hostname === "harafjya.com") {
-    location.href = location.href.replace("harafjya.com", "www.harafjya.com");
-}
-</script>
-
 </body>
 </html>
