@@ -182,12 +182,29 @@ for pnum in sorted(product_meta.keys()):
     html_products_cards.append(card)
 
 # Build JS product images
+# Build JS product images
 product_js_entries = []
+
 for pnum in sorted(product_meta.keys()):
     meta = product_meta[pnum]
-    first_img = os.path.basename(meta["images"][0]) if meta["images"] else ""
-    product_js_entries.append(f"'{username}|||{meta['product_name']}|||users/{username}/products/{first_img}|||{meta['category']}': ['products/{first_img}']")
-
+    
+    if not meta["images"]:
+        continue
+        
+    # الصورة الأولى فقط هي التي تُستخدم في الـ onclick وفي مفتاح المنتج
+    first_img_basename = os.path.basename(meta["images"][0])
+    first_img_path = f"products/{first_img_basename}"
+    
+    # المفتاح يبقى يعتمد على الصورة الأولى فقط (مهم للتوافق مع الكود الحالي)
+    key = f"{username}|||{meta['product_name']}|||users/{username}/products/{first_img_basename}|||{meta['category']}"
+    
+    # هنا نضع كل الصور الخاصة بالمنتج في المصفوفة
+    all_images_for_js = [f"products/{os.path.basename(img_path)}" for img_path in meta["images"]]
+    
+    # طريقة آمنة وصحيحة نحوياً
+    product_js_entries.append(
+        f'productImages[{json.dumps(key)}] = {json.dumps(all_images_for_js)};'
+    )
 # Build social HTML
 social_html = ""
 
@@ -338,8 +355,7 @@ html_template = f"""<!DOCTYPE html>
 window.productImages = window.productImages || {{}};
 
 // إضافة صور المنتجات
-{chr(10).join([f"productImages['{entry.split(':')[0]}'] = {entry.split(': ')[1]};" for entry in product_js_entries])}
-
+{''.join(product_js_entries)}
 // ربط الصور بالـ onclick
 document.addEventListener('DOMContentLoaded', function() {{
     const productCards = document.querySelectorAll('.product-card');
