@@ -1,21 +1,14 @@
-// =======================
-// المتغيرات العامة للـ Products
-// =======================
 window.productsPage = window.productsPage || {};
 window.productsPage.currentProduct = null;
 window.productsPage.currentIndex = 0;
 window.productsPage.productImages = {};
-window.productsPage.loadedImages = new Set(); // تتبع الصور المحملة
+window.productsPage.loadedImages = new Set();
 
-// قراءة باراميتر من الرابط
 function getUrlParameter(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 }
 
-// =======================
-// Pre-loading الصور المجاورة
-// =======================
 function preloadAdjacentImages(productKey, currentIdx) {
     const images = window.productsPage.productImages[productKey];
     if (!images || images.length <= 1) return;
@@ -23,20 +16,15 @@ function preloadAdjacentImages(productKey, currentIdx) {
     const nextIdx = (currentIdx + 1) % images.length;
     const prevIdx = (currentIdx - 1 + images.length) % images.length;
 
-    // تحميل الصورة التالية
     const nextImg = new Image();
     nextImg.onload = () => window.productsPage.loadedImages.add(images[nextIdx]);
     nextImg.src = images[nextIdx];
 
-    // تحميل الصورة السابقة
     const prevImg = new Image();
     prevImg.onload = () => window.productsPage.loadedImages.add(images[prevIdx]);
     prevImg.src = images[prevIdx];
 }
 
-// =======================
-// Lightbox للصور
-// =======================
 function products_openLightbox(productKey, index) {
     if (!window.productsPage.productImages[productKey]) {
         console.error('❌ Product not found:', productKey);
@@ -63,7 +51,6 @@ function products_openLightbox(productKey, index) {
 
     const images = window.productsPage.productImages[productKey];
     
-    // إخفاء/إظهار الأسهم حسب عدد الصور
     if (images.length <= 1) {
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
@@ -75,7 +62,6 @@ function products_openLightbox(productKey, index) {
     lightboxImg.src = images[index];
     lightbox.classList.add("show");
 
-    // Pre-load الصور المجاورة
     preloadAdjacentImages(productKey, index);
 }
 
@@ -91,7 +77,6 @@ function products_changeImage(direction) {
 
     const imgs = window.productsPage.productImages[window.productsPage.currentProduct];
     
-    // منع التنقل إذا كانت صورة واحدة فقط
     if (imgs.length <= 1) return;
 
     const lightbox = document.getElementById("lightbox");
@@ -99,21 +84,16 @@ function products_changeImage(direction) {
     
     if (!lightbox || !lightboxImg) return;
 
-    // حساب الفهرس الجديد
     const newIndex = (window.productsPage.currentIndex + direction + imgs.length) % imgs.length;
     const newImageSrc = imgs[newIndex];
 
-    // التحقق إذا كانت الصورة محملة مسبقاً
     const isImageCached = window.productsPage.loadedImages.has(newImageSrc);
 
     if (isImageCached) {
-        // الصورة محملة → عرض فوري مع أنيميشن
         window.productsPage.currentIndex = newIndex;
         
-        // إزالة الأنيميشن القديم
         lightboxImg.style.animation = 'none';
         
-        // تطبيق الأنيميشن الجديد
         requestAnimationFrame(() => {
             if (direction === 1) {
                 lightboxImg.style.animation = 'fadeSlide 0.4s ease';
@@ -123,10 +103,8 @@ function products_changeImage(direction) {
             lightboxImg.src = newImageSrc;
         });
 
-        // Pre-load الصور المجاورة
         preloadAdjacentImages(window.productsPage.currentProduct, newIndex);
     } else {
-        // الصورة غير محملة → عرض Loading
         let loadingOverlay = lightbox.querySelector('.loading-overlay');
         if (!loadingOverlay) {
             loadingOverlay = document.createElement('div');
@@ -135,21 +113,17 @@ function products_changeImage(direction) {
             lightbox.appendChild(loadingOverlay);
         }
 
-        // إظهار Loading
         loadingOverlay.classList.add('show');
         lightboxImg.style.opacity = '0';
 
-        // تحميل الصورة
         const tempImg = new Image();
         
         tempImg.onload = function() {
             window.productsPage.currentIndex = newIndex;
             window.productsPage.loadedImages.add(newImageSrc);
             
-            // إزالة الأنيميشن القديم
             lightboxImg.style.animation = 'none';
             
-            // تطبيق الأنيميشن الجديد
             requestAnimationFrame(() => {
                 if (direction === 1) {
                     lightboxImg.style.animation = 'fadeSlide 0.4s ease';
@@ -160,12 +134,10 @@ function products_changeImage(direction) {
                 lightboxImg.style.opacity = '1';
             });
             
-            // إخفاء Loading
             setTimeout(() => {
                 loadingOverlay.classList.remove('show');
             }, 100);
 
-            // Pre-load الصور المجاورة
             preloadAdjacentImages(window.productsPage.currentProduct, newIndex);
         };
 
@@ -179,9 +151,6 @@ function products_changeImage(direction) {
     }
 }
 
-// =======================
-// إعداد معرض الصور
-// =======================
 function products_setupImageGallery(container, images, productKey) {
     const processedImages = images.map(img => {
         return '../' + img;
@@ -191,7 +160,6 @@ function products_setupImageGallery(container, images, productKey) {
     
     window.productsPage.productImages[productKey] = processedImages;
     
-    // تحميل الصورة الأولى مسبقاً وتسجيلها
     if (processedImages[0]) {
         const firstImg = new Image();
         firstImg.onload = () => window.productsPage.loadedImages.add(processedImages[0]);
@@ -205,9 +173,6 @@ function products_setupImageGallery(container, images, productKey) {
     }
 }
 
-// =======================
-// تحميل المنتجات
-// =======================
 async function loadProducts() {
     const category = getUrlParameter('category');
     const categoryTitle = document.getElementById('categoryTitle');
@@ -247,11 +212,22 @@ async function loadProducts() {
 
                 const galleryDiv = document.createElement('div');
                 galleryDiv.className = 'image-gallery';
+                
                 const img = document.createElement('img');
-                img.src = '../' + product.images[0];
+                img.dataset.src = '../' + product.images[0];
                 img.alt = product.product_name;
-                img.className = 'product-image';
-                img.onerror = function() { this.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'; };
+                img.className = 'product-image lazy';
+                img.style.filter = 'blur(10px)';
+                img.style.transition = 'filter 0.3s ease';
+                
+                const placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"%3E%3Crect fill="%23f0f0f0" width="300" height="300"/%3E%3C/svg%3E';
+                img.src = placeholder;
+                
+                img.onerror = function() { 
+                    this.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'; 
+                    this.style.filter = 'none';
+                };
+                
                 galleryDiv.appendChild(img);
 
                 const infoDiv = document.createElement('div');
@@ -285,6 +261,8 @@ async function loadProducts() {
                 products_setupImageGallery(galleryDiv, product.images, productKey);
                 updateHeartState(heartDiv, product.images[0]);
             });
+            
+            initLazyLoading();
         }
     } catch (error) {
         console.error('Error loading products:', error);
@@ -292,9 +270,40 @@ async function loadProducts() {
     }
 }
 
-// =======================
-// تحديث حالة القلب
-// =======================
+function initLazyLoading() {
+    const lazyImages = document.querySelectorAll('img.lazy');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const realSrc = img.dataset.src;
+                    
+                    const tempImg = new Image();
+                    tempImg.onload = function() {
+                        img.src = realSrc;
+                        img.style.filter = 'none';
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    };
+                    tempImg.src = realSrc;
+                }
+            });
+        }, {
+            rootMargin: '50px'
+        });
+
+        lazyImages.forEach(img => imageObserver.observe(img));
+    } else {
+        lazyImages.forEach(img => {
+            img.src = img.dataset.src;
+            img.style.filter = 'none';
+            img.classList.remove('lazy');
+        });
+    }
+}
+
 function updateHeartState(heartIcon, imagePath) {
     if (!heartIcon) return;
     
@@ -332,9 +341,6 @@ function updateAllHearts() {
     });
 }
 
-// =======================
-// تشغيل عند تحميل الصفحة
-// =======================
 document.addEventListener('DOMContentLoaded', function() {
     loadProducts();
     setTimeout(updateAllHearts, 100);
