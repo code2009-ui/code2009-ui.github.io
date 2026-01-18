@@ -319,7 +319,9 @@
     padding: 12px 20px;
     border-radius: 50%;
     transition: background 0.3s;
+      z-index: 999;
   }
+  
 
   .lightbox-nav:hover,
   .prev-btn:hover, 
