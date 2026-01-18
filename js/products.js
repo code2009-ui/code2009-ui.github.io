@@ -66,7 +66,14 @@ function products_openLightbox(productKey, index) {
 }
 
 function products_closeLightbox() {
-    document.getElementById("lightbox").classList.remove("show");
+    const lightbox = document.getElementById("lightbox");
+    const loadingOverlay = lightbox.querySelector('.loading-overlay');
+    
+    if (loadingOverlay) {
+        loadingOverlay.classList.remove('show');
+    }
+    
+    lightbox.classList.remove("show");
 }
 
 function products_changeImage(direction) {
