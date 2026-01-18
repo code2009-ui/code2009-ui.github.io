@@ -280,39 +280,19 @@ async function loadProducts() {
 function initLazyLoading() {
     const lazyImages = document.querySelectorAll('img.lazy');
     
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const realSrc = img.dataset.src;
-                    const spinner = img.parentElement.querySelector('.product-spinner');
-                    
-                    const tempImg = new Image();
-                    tempImg.onload = function() {
-                        img.src = realSrc;
-                        img.style.opacity = '1';
-                        if (spinner) spinner.style.display = 'none';
-                        img.classList.remove('lazy');
-                        observer.unobserve(img);
-                    };
-                    tempImg.src = realSrc;
-                }
-            });
-        }, {
-            rootMargin: '50px'
-        });
-
-        lazyImages.forEach(img => imageObserver.observe(img));
-    } else {
-        lazyImages.forEach(img => {
-            const spinner = img.parentElement.querySelector('.product-spinner');
-            img.src = img.dataset.src;
+    lazyImages.forEach(img => {
+        const realSrc = img.dataset.src;
+        const spinner = img.parentElement.querySelector('.product-spinner');
+        
+        const tempImg = new Image();
+        tempImg.onload = function() {
+            img.src = realSrc;
             img.style.opacity = '1';
             if (spinner) spinner.style.display = 'none';
             img.classList.remove('lazy');
-        });
-    }
+        };
+        tempImg.src = realSrc;
+    });
 }
 
 function updateHeartState(heartIcon, imagePath) {
