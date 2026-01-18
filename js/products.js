@@ -5,6 +5,7 @@ window.productsPage = window.productsPage || {};
 window.productsPage.currentProduct = null;
 window.productsPage.currentIndex = 0;
 window.productsPage.productImages = {};
+window.productsPage.loadedImages = new Set(); // تتبع الصور المحملة
 
 // قراءة باراميتر من الرابط
 function getUrlParameter(name) {
@@ -24,10 +25,12 @@ function preloadAdjacentImages(productKey, currentIdx) {
 
     // تحميل الصورة التالية
     const nextImg = new Image();
+    nextImg.onload = () => window.productsPage.loadedImages.add(images[nextIdx]);
     nextImg.src = images[nextIdx];
 
     // تحميل الصورة السابقة
     const prevImg = new Image();
+    prevImg.onload = () => window.productsPage.loadedImages.add(images[prevIdx]);
     prevImg.src = images[prevIdx];
 }
 
@@ -96,58 +99,84 @@ function products_changeImage(direction) {
     
     if (!lightbox || !lightboxImg) return;
 
-    // إنشاء Loading Overlay
-    let loadingOverlay = lightbox.querySelector('.loading-overlay');
-    if (!loadingOverlay) {
-        loadingOverlay = document.createElement('div');
-        loadingOverlay.className = 'loading-overlay';
-        loadingOverlay.innerHTML = '<div class="spinner"></div>';
-        lightbox.appendChild(loadingOverlay);
-    }
-
     // حساب الفهرس الجديد
     const newIndex = (window.productsPage.currentIndex + direction + imgs.length) % imgs.length;
     const newImageSrc = imgs[newIndex];
 
-    // إظهار Loading + بدء الأنيميشن
-    loadingOverlay.classList.add('show');
-    lightboxImg.style.opacity = '0';
+    // التحقق إذا كانت الصورة محملة مسبقاً
+    const isImageCached = window.productsPage.loadedImages.has(newImageSrc);
 
-    // تحميل الصورة الجديدة
-    const tempImg = new Image();
-    
-    tempImg.onload = function() {
-        // بعد اكتمال التحميل
+    if (isImageCached) {
+        // الصورة محملة → عرض فوري مع أنيميشن
         window.productsPage.currentIndex = newIndex;
         
-        // تطبيق الأنيميشن
-        if (direction === 1) {
-            lightboxImg.style.animation = 'fadeSlide 0.4s ease';
-        } else {
-            lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
-        }
+        // إزالة الأنيميشن القديم
+        lightboxImg.style.animation = 'none';
         
-        // تحديث الصورة
-        lightboxImg.src = newImageSrc;
-        lightboxImg.style.opacity = '1';
-        
-        // إخفاء Loading
-        setTimeout(() => {
-            loadingOverlay.classList.remove('show');
-        }, 200);
+        // تطبيق الأنيميشن الجديد
+        requestAnimationFrame(() => {
+            if (direction === 1) {
+                lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+            } else {
+                lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+            }
+            lightboxImg.src = newImageSrc;
+        });
 
-        // Pre-load الصور المجاورة الجديدة
+        // Pre-load الصور المجاورة
         preloadAdjacentImages(window.productsPage.currentProduct, newIndex);
-    };
+    } else {
+        // الصورة غير محملة → عرض Loading
+        let loadingOverlay = lightbox.querySelector('.loading-overlay');
+        if (!loadingOverlay) {
+            loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = '<div class="spinner"></div>';
+            lightbox.appendChild(loadingOverlay);
+        }
 
-    tempImg.onerror = function() {
-        // في حالة فشل التحميل
-        loadingOverlay.classList.remove('show');
-        lightboxImg.style.opacity = '1';
-        console.error('فشل تحميل الصورة');
-    };
+        // إظهار Loading
+        loadingOverlay.classList.add('show');
+        lightboxImg.style.opacity = '0';
 
-    tempImg.src = newImageSrc;
+        // تحميل الصورة
+        const tempImg = new Image();
+        
+        tempImg.onload = function() {
+            window.productsPage.currentIndex = newIndex;
+            window.productsPage.loadedImages.add(newImageSrc);
+            
+            // إزالة الأنيميشن القديم
+            lightboxImg.style.animation = 'none';
+            
+            // تطبيق الأنيميشن الجديد
+            requestAnimationFrame(() => {
+                if (direction === 1) {
+                    lightboxImg.style.animation = 'fadeSlide 0.4s ease';
+                } else {
+                    lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
+                }
+                lightboxImg.src = newImageSrc;
+                lightboxImg.style.opacity = '1';
+            });
+            
+            // إخفاء Loading
+            setTimeout(() => {
+                loadingOverlay.classList.remove('show');
+            }, 100);
+
+            // Pre-load الصور المجاورة
+            preloadAdjacentImages(window.productsPage.currentProduct, newIndex);
+        };
+
+        tempImg.onerror = function() {
+            loadingOverlay.classList.remove('show');
+            lightboxImg.style.opacity = '1';
+            console.error('فشل تحميل الصورة');
+        };
+
+        tempImg.src = newImageSrc;
+    }
 }
 
 // =======================
@@ -161,6 +190,13 @@ function products_setupImageGallery(container, images, productKey) {
     console.log('✅ Processed images:', processedImages);
     
     window.productsPage.productImages[productKey] = processedImages;
+    
+    // تحميل الصورة الأولى مسبقاً وتسجيلها
+    if (processedImages[0]) {
+        const firstImg = new Image();
+        firstImg.onload = () => window.productsPage.loadedImages.add(processedImages[0]);
+        firstImg.src = processedImages[0];
+    }
     
     const imgElement = container.querySelector('.product-image');
     if (imgElement) {
