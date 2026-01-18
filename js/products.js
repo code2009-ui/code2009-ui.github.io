@@ -213,19 +213,26 @@ async function loadProducts() {
                 const galleryDiv = document.createElement('div');
                 galleryDiv.className = 'image-gallery';
                 
+                const spinner = document.createElement('div');
+                spinner.className = 'product-spinner';
+                spinner.innerHTML = '<div class="spinner-circle"></div>';
+                galleryDiv.appendChild(spinner);
+                
                 const img = document.createElement('img');
                 img.dataset.src = '../' + product.images[0];
                 img.alt = product.product_name;
                 img.className = 'product-image lazy';
-                img.style.filter = 'blur(10px)';
-                img.style.transition = 'filter 0.3s ease';
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s ease';
                 
-                const placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"%3E%3Crect fill="%23f0f0f0" width="300" height="300"/%3E%3C/svg%3E';
+                const placeholder = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"%3E%3Crect fill="%23f8f8f8" width="300" height="300"/%3E%3C/svg%3E';
                 img.src = placeholder;
                 
                 img.onerror = function() { 
                     this.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة'; 
-                    this.style.filter = 'none';
+                    this.style.opacity = '1';
+                    const spinnerEl = this.parentElement.querySelector('.product-spinner');
+                    if (spinnerEl) spinnerEl.style.display = 'none';
                 };
                 
                 galleryDiv.appendChild(img);
@@ -279,11 +286,13 @@ function initLazyLoading() {
                 if (entry.isIntersecting) {
                     const img = entry.target;
                     const realSrc = img.dataset.src;
+                    const spinner = img.parentElement.querySelector('.product-spinner');
                     
                     const tempImg = new Image();
                     tempImg.onload = function() {
                         img.src = realSrc;
-                        img.style.filter = 'none';
+                        img.style.opacity = '1';
+                        if (spinner) spinner.style.display = 'none';
                         img.classList.remove('lazy');
                         observer.unobserve(img);
                     };
@@ -297,8 +306,10 @@ function initLazyLoading() {
         lazyImages.forEach(img => imageObserver.observe(img));
     } else {
         lazyImages.forEach(img => {
+            const spinner = img.parentElement.querySelector('.product-spinner');
             img.src = img.dataset.src;
-            img.style.filter = 'none';
+            img.style.opacity = '1';
+            if (spinner) spinner.style.display = 'none';
             img.classList.remove('lazy');
         });
     }

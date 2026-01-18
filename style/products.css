@@ -641,3 +641,43 @@ body {
     max-width: 320px;
   }
 }
+
+
+
+.image-gallery {
+  position: relative;
+  background: #f8f8f8;
+}
+
+.product-spinner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  z-index: 1;
+}
+
+.spinner-circle {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(31, 36, 73, 0.1);
+  border-top-color: #1F2449;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.product-image {
+  position: relative;
+  z-index: 2;
+}
