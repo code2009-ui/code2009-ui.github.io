@@ -902,32 +902,38 @@ body {
   }
 
 .profile-info-box {
-    position: relative !important;
-    top: auto !important;
-    right: auto !important;
-    width: 100%;
-    padding: 130px 15px 20px 15px;   /* زيادة البادينج العلوي عشان ينزل بعد الصورة */
-    margin-top: 0;
-    background: #fff;
-    text-align: right;
-    z-index: 2;
-  }
+  position: relative !important;
+  top: auto !important;
+  right: auto !important;
+  width: 100%;
+  padding: 80px 15px 20px 15px;
+  margin-top: 0;
+  background: #fff;
+  text-align: right;
+  z-index: 2;
+  display: block !important;
+}
 
   .name-and-social {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    gap: 12px;
-  }
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  margin-bottom: 12px;
+  gap: 12px;
+  width: 100%;
+}
 
   .profile-info-box h1 {
-    color: #1F2449 !important;
-    font-size: 26px;
-    margin: 0 0 8px 0;
-    text-align: right;
-    order: 2;
-  }
+  color: #1F2449 !important;
+  font-size: 26px !important;
+  margin: 0 0 8px 0 !important;
+  text-align: right !important;
+  order: 1 !important;
+  width: 100%;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
   
   .social-icons {
     display: flex;
@@ -949,16 +955,16 @@ body {
   }
 
   .profile-info-box p {
-    color: #944C2E !important;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    text-align: right;
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
+  color: #944C2E !important;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  text-align: right;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
 
   .products-container {
     margin-top: 20px;
