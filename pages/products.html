@@ -162,6 +162,58 @@
             }
         });
     </script>
+        <script>
+        // Title animation for desktop only
+        function isDesktop() {
+            return window.innerWidth > 768;
+        }
+
+        if (!isDesktop()) {
+            document.title = "حرفجية";
+        } else {
+            const texts = ["Harfya", "حرفجية"];
+            let index = 0;
+            let isDeleting = false;
+            let charIndex = 0;
+            let currentText = '';
+
+            function typeText() {
+                currentText = texts[index];
+                
+                if (!isDeleting) {
+                    document.title = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                    
+                    if (charIndex === currentText.length) {
+                        isDeleting = true;
+                        setTimeout(typeText, 3000);
+                        return;
+                    }
+                } else {
+                    document.title = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                    
+                    if (charIndex === 0) {
+                        isDeleting = false;
+                        index = (index + 1) % texts.length;
+                        document.title = ".";
+                        setTimeout(typeText, 80);
+                        return;
+                    }
+                }
+                
+                const speed = isDeleting ? 400 : 400;
+                setTimeout(typeText, speed);
+            }
+
+            window.onload = function() {
+                if (isDesktop()) {
+                    document.title = ".";
+                    setTimeout(typeText, 800);
+                } 
+            };
+        }
+    </script>
 
     <script src="../js/products.js"></script>
     <script src="../js/app.js"></script>
