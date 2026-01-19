@@ -205,11 +205,15 @@ body {
 }
 
 .product-seller {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 0;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 10px 0 !important;
+  margin: 0 auto !important;
   margin-top: auto;
+  width: 100% !important;
+  direction: rtl;
 }
 
 .seller-link {
