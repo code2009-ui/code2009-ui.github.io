@@ -384,6 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {{
 
 <script src="../../js/app.js"></script>
 <script src="../../js/search.js"></script>
+<script src="../../js/profile.js"></script>
 
 </body>
 </html>
