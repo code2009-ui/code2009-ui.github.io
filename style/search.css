@@ -13,12 +13,14 @@ body {
   min-height: 100vh;
   font-size: 18px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 .search-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
+  overflow-x: hidden;
 }
 
 #searchTitle {
@@ -48,6 +50,7 @@ body {
   gap: 20px;
   padding: 20px 0;
   justify-items: center;
+  overflow-x: hidden;
 }
 
 .product-card {

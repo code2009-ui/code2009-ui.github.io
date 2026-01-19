@@ -60,6 +60,7 @@ function search_openLightbox(productKey, index) {
 
     const images = window.searchPage.productImages[productKey];
     
+    // إخفاء/إظهار أزرار التنقل
     if (images.length <= 1) {
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
@@ -68,9 +69,55 @@ function search_openLightbox(productKey, index) {
         if (nextBtn) nextBtn.style.display = 'block';
     }
     
-    lightboxImg.src = images[index];
+    const newImageSrc = images[index];
+    const isImageCached = window.searchPage.loadedImages.has(newImageSrc);
+
+    // إظهار الـ Lightbox فورًا
     lightbox.classList.add("show");
 
+    if (isImageCached) {
+        // الصورة موجودة في الـ Cache - عرض فوري
+        lightboxImg.src = newImageSrc;
+        lightboxImg.style.opacity = '1';
+    } else {
+        // الصورة غير موجودة - إظهار Loading
+        let loadingOverlay = lightbox.querySelector('.loading-overlay');
+        if (!loadingOverlay) {
+            loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'loading-overlay';
+            loadingOverlay.innerHTML = '<div class="spinner"></div>';
+            lightbox.appendChild(loadingOverlay);
+        }
+
+        // إخفاء الصورة القديمة وإظهار Loading
+        lightboxImg.style.opacity = '0';
+        loadingOverlay.classList.add('show');
+
+        const tempImg = new Image();
+        
+        tempImg.onload = function() {
+            window.searchPage.loadedImages.add(newImageSrc);
+            
+            lightboxImg.src = newImageSrc;
+            lightboxImg.style.opacity = '1';
+            
+            setTimeout(() => {
+                loadingOverlay.classList.remove('show');
+            }, 100);
+
+            preloadAdjacentImages(productKey, index);
+        };
+
+        tempImg.onerror = function() {
+            loadingOverlay.classList.remove('show');
+            lightboxImg.style.opacity = '1';
+            console.error('فشل تحميل الصورة');
+        };
+
+        tempImg.src = newImageSrc;
+    }
+
+    // Preload للصور المجاورة
     preloadAdjacentImages(productKey, index);
 }
 
@@ -106,6 +153,7 @@ function search_changeImage(direction) {
     const isImageCached = window.searchPage.loadedImages.has(newImageSrc);
 
     if (isImageCached) {
+        // الصورة موجودة في الـ Cache - تبديل فوري مع Animation
         window.searchPage.currentIndex = newIndex;
         
         lightboxImg.style.animation = 'none';
@@ -117,10 +165,12 @@ function search_changeImage(direction) {
                 lightboxImg.style.animation = 'fadeSlideReverse 0.4s ease';
             }
             lightboxImg.src = newImageSrc;
+            lightboxImg.style.opacity = '1';
         });
 
         preloadAdjacentImages(window.searchPage.currentProduct, newIndex);
     } else {
+        // الصورة غير موجودة - إظهار Loading أولاً
         let loadingOverlay = lightbox.querySelector('.loading-overlay');
         if (!loadingOverlay) {
             loadingOverlay = document.createElement('div');
@@ -129,6 +179,7 @@ function search_changeImage(direction) {
             lightbox.appendChild(loadingOverlay);
         }
 
+        // إظهار Loading وإخفاء الصورة
         loadingOverlay.classList.add('show');
         lightboxImg.style.opacity = '0';
 
@@ -138,6 +189,10 @@ function search_changeImage(direction) {
             window.searchPage.currentIndex = newIndex;
             window.searchPage.loadedImages.add(newImageSrc);
             
+            // إخفاء Loading أولاً
+            loadingOverlay.classList.remove('show');
+            
+            // ثم تشغيل Animation وتغيير الصورة
             lightboxImg.style.animation = 'none';
             
             requestAnimationFrame(() => {
@@ -149,10 +204,6 @@ function search_changeImage(direction) {
                 lightboxImg.src = newImageSrc;
                 lightboxImg.style.opacity = '1';
             });
-            
-            setTimeout(() => {
-                loadingOverlay.classList.remove('show');
-            }, 100);
 
             preloadAdjacentImages(window.searchPage.currentProduct, newIndex);
         };
