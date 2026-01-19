@@ -901,13 +901,16 @@ body {
     border: 4px solid #fff;
   }
 
-  .profile-info-box {
-    position: relative;
+.profile-info-box {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
     width: 100%;
-    z-index: 2;
-    background: #fff;
-    padding: 40px 15px 15px 15px;
+    padding: 130px 15px 20px 15px;   /* زيادة البادينج العلوي عشان ينزل بعد الصورة */
     margin-top: 0;
+    background: #fff;
+    text-align: right;
+    z-index: 2;
   }
 
   .name-and-social {
@@ -919,12 +922,10 @@ body {
   }
 
   .profile-info-box h1 {
-    font-size: 24px;
     color: #1F2449 !important;
-    margin: 0;
-    font-weight: 700;
-    background: none !important;
-    -webkit-text-fill-color: initial !important;
+    font-size: 26px;
+    margin: 0 0 8px 0;
+    text-align: right;
     order: 2;
   }
   
@@ -948,19 +949,15 @@ body {
   }
 
   .profile-info-box p {
-    font-size: 16px;
     color: #944C2E !important;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.6;
-    margin-top: 10px;
-    width: 100%;
+    margin: 0;
+    padding: 0;
     text-align: right;
-    padding: 12px;
-    background: #f8f9fa;
-    border-radius: 10px;
-    border-right: 4px solid #1F2449;
     opacity: 1 !important;
     visibility: visible !important;
-    font-weight: 500;
   }
 
   .products-container {
