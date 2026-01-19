@@ -956,14 +956,19 @@ body {
 
   .profile-info-box p {
   color: #944C2E !important;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  text-align: right;
-  opacity: 1 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+  margin: 8px 0 0 0 !important;
+  padding: 0 !important;
+  text-align: right !important;
+  order: 3 !important;
+  width: 100%;
+  display: block !important;
   visibility: visible !important;
+  opacity: 1 !important;
+  direction: rtl !important;
+  unicode-bidi: plaintext !important;
 }
 
   .products-container {
