@@ -577,7 +577,8 @@ body {
 
   .product-seller {
     padding: 8px 0;
-    overflow-wrap: anywhere !important;   
+    overflow-wrap: anywhere !important;
+  }
 
   .seller-link {
     font-size: 14px;
