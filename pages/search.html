@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/search.css">
     <link rel="stylesheet" href="../style/header.css">
-<link rel="icon" type="image/png" href="/images/tab-logo.png">
-
-
+    <link rel="icon" type="image/png" href="/images/tab-logo.png">
 </head>
 
 <body>
@@ -24,7 +22,6 @@
             <li><a href="./home.html">الرئيسية</a></li>
             <li><a href="./about.html">حول المنصة</a></li>
             <li><a href="./contact.html">تواصل معنا</a></li>
-
         </ul>
     </nav>
     
@@ -82,16 +79,17 @@
         </div>
     </div>
 
-<!-- Lightbox -->
-<div id="lightbox" class="lightbox">
-    <span class="close-lightbox" onclick="closeLightbox()">×</span>
-    <img id="lightbox-img" src="" alt="Lightbox Image">
-    <button class="lightbox-nav prev-btn" onclick="changeImage(-1)">&#10094;</button>
-    <button class="lightbox-nav next-btn" onclick="changeImage(1)">&#10095;</button>
-</div>
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+        <button class="lightbox-nav prev-btn" onclick="changeImage(-1)">&#10094;</button>
+        <button class="lightbox-nav next-btn" onclick="changeImage(1)">&#10095;</button>
+    </div>
 
     <script src="../js/search-results.js"></script>
     <script src="../js/search.js"></script>
+    <script src="../js/wishlist.js"></script>
     <script>
         const hamburger = document.getElementById("hamburger");
         const mobileMenu = document.getElementById("mobileMenu");
@@ -129,8 +127,5 @@
         });
     </script>
 </body>
-    <script src="../js/search.js"></script>
-    <script src="../js/wishlist.js"></script>
-    
 
 </html>
