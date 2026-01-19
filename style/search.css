@@ -17,7 +17,7 @@ body {
 .search-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 40px;
 }
 #searchTitle {
   text-align: center;
@@ -44,13 +44,16 @@ body {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  padding: 20px 0;
+  padding: 20px;
   justify-items: center;
   width: 100%;
+  margin: 0 auto;
 }
+
 .product-card {
   position: relative;
-  width: 300px;
+  width: 100%;
+  max-width: 280px;
   background: #fff;
   border-radius: 15px;
   overflow: hidden;
@@ -58,6 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 480px;
+  margin: 0 auto;
 }
 
 .heart-icon {
