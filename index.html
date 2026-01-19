@@ -1,42 +1,67 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/png" href="/images/tab-logo.png">
-    
-    <!-- Title و Description -->
-    <title>حرفجية - منصة الخدمات والحرفيين</title>
-    <meta name="description" content="حرفجية: اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة. المنصة العربية الأفضل لعرض وطلب الخدمات.">
-    <meta name="keywords" content="حرفجية, خدمات, حجز, مشاريع, مطورين, مصممين, تصميم, عرب">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Primary SEO (Syria Only) -->
+    <title>حرفجية | Harafjya – منصة الحرفيين والخدمات في سوريا</title>
+    <meta name="description" content="حرفجية Harafjya منصة سورية تجمع الحرفيين وأصحاب المهن لعرض وطلب الخدمات داخل سوريا فقط. اكتشف أفضل الحرفيين وابدأ الآن.">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://www.harafjya.com/">
 
-    <!-- Favicon / Logo -->
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <!-- Geo Targeting (Important) -->
+    <meta name="geo.region" content="SY">
+    <meta name="geo.placename" content="Syria">
+    <meta name="geo.position" content="35.0000;38.0000">
+    <meta name="ICBM" content="35.0000, 38.0000">
 
-    <!-- Open Graph (لتحسين ظهور الموقع عند المشاركة) -->
-    <meta property="og:title" content="حرفجية - منصة الخدمات والحرفيين">
-    <meta property="og:description" content="اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة. المنصة العربية الأفضل لعرض وطلب الخدمات.">
-    <meta property="og:image" content="https://www.harafjya.com/images/logo.png">
-    <meta property="og:url" content="https://www.harafjya.com/">
+    <!-- Language -->
+    <meta http-equiv="content-language" content="ar-SY">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/tab-logo.png">
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
+    <meta property="og:title" content="حرفجية – منصة الحرفيين والخدمات في سوريا">
+    <meta property="og:description" content="منصة سورية لعرض وطلب خدمات الحرفيين وأصحاب المهن داخل سوريا فقط.">
+    <meta property="og:url" content="https://www.harafjya.com/">
+    <meta property="og:image" content="https://www.harafjya.com/images/logo.png">
+    <meta property="og:locale" content="ar_SY">
 
-    <!-- Twitter Card -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="حرفجية - منصة الخدمات والحرفيين">
-    <meta name="twitter:description" content="اكتشف خدمات الحرفيين واحجز أفضل العروض بكل سهولة.">
+    <meta name="twitter:title" content="حرفجية | Harafjya سوريا">
+    <meta name="twitter:description" content="اكتشف خدمات الحرفيين داخل سوريا فقط.">
     <meta name="twitter:image" content="https://www.harafjya.com/images/logo.png">
 
-    <!-- إعادة التوجيه التلقائي إلى صفحة home -->
-    <meta http-equiv="refresh" content="0; URL=pages/home.html">
+    <!-- Structured Data (Syria Focused) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "حرفجية",
+      "alternateName": "Harafjya",
+      "url": "https://www.harafjya.com/",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Syria"
+      },
+      "inLanguage": "ar-SY",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://www.harafjya.com/pages/home.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
-    <!-- Redirect بدون www إلى www -->
+    <!-- Redirect بدون www -->
     <script>
         if (location.hostname === "harafjya.com") {
             location.href = location.href.replace("harafjya.com", "www.harafjya.com");
         }
     </script>
+
+    <!-- Redirect to Home -->
+    <meta http-equiv="refresh" content="0; URL=/pages/home.html">
 </head>
-<body>
-    <p>إذا لم يتم إعادة التوجيه تلقائيًا، اضغط <a href="pages/home.html">هنا</a>.</p>
-</body>
-</html>
