@@ -60,7 +60,6 @@ function search_openLightbox(productKey, index) {
 
     const images = window.searchPage.productImages[productKey];
     
-    // إخفاء/إظهار أزرار التنقل
     if (images.length <= 1) {
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
@@ -72,15 +71,12 @@ function search_openLightbox(productKey, index) {
     const newImageSrc = images[index];
     const isImageCached = window.searchPage.loadedImages.has(newImageSrc);
 
-    // إظهار الـ Lightbox فورًا
     lightbox.classList.add("show");
 
     if (isImageCached) {
-        // الصورة موجودة في الـ Cache - عرض فوري
         lightboxImg.src = newImageSrc;
         lightboxImg.style.opacity = '1';
     } else {
-        // الصورة غير موجودة - إظهار Loading
         let loadingOverlay = lightbox.querySelector('.loading-overlay');
         if (!loadingOverlay) {
             loadingOverlay = document.createElement('div');
@@ -89,7 +85,6 @@ function search_openLightbox(productKey, index) {
             lightbox.appendChild(loadingOverlay);
         }
 
-        // إخفاء الصورة القديمة وإظهار Loading
         lightboxImg.style.opacity = '0';
         loadingOverlay.classList.add('show');
 
@@ -117,7 +112,6 @@ function search_openLightbox(productKey, index) {
         tempImg.src = newImageSrc;
     }
 
-    // Preload للصور المجاورة
     preloadAdjacentImages(productKey, index);
 }
 
@@ -153,7 +147,6 @@ function search_changeImage(direction) {
     const isImageCached = window.searchPage.loadedImages.has(newImageSrc);
 
     if (isImageCached) {
-        // الصورة موجودة في الـ Cache - تبديل فوري مع Animation
         window.searchPage.currentIndex = newIndex;
         
         lightboxImg.style.animation = 'none';
@@ -170,7 +163,6 @@ function search_changeImage(direction) {
 
         preloadAdjacentImages(window.searchPage.currentProduct, newIndex);
     } else {
-        // الصورة غير موجودة - إظهار Loading أولاً
         let loadingOverlay = lightbox.querySelector('.loading-overlay');
         if (!loadingOverlay) {
             loadingOverlay = document.createElement('div');
@@ -179,7 +171,6 @@ function search_changeImage(direction) {
             lightbox.appendChild(loadingOverlay);
         }
 
-        // إظهار Loading وإخفاء الصورة
         loadingOverlay.classList.add('show');
         lightboxImg.style.opacity = '0';
 
@@ -189,10 +180,8 @@ function search_changeImage(direction) {
             window.searchPage.currentIndex = newIndex;
             window.searchPage.loadedImages.add(newImageSrc);
             
-            // إخفاء Loading أولاً
             loadingOverlay.classList.remove('show');
             
-            // ثم تشغيل Animation وتغيير الصورة
             lightboxImg.style.animation = 'none';
             
             requestAnimationFrame(() => {
@@ -272,7 +261,7 @@ async function searchProducts() {
         const products = await response.json();
         const searchLower = searchTerm.toLowerCase().trim();
 
-        const results = products.filter(product => {
+        const scoredResults = products.filter(product => {
             const productName = (product.product_name || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
             const username = (product.username || '').toLowerCase();
@@ -280,19 +269,65 @@ async function searchProducts() {
             return productName.includes(searchLower) ||
                 description.includes(searchLower) ||
                 username.includes(searchLower);
-        }).sort((a, b) => {
-            const aName = (a.product_name || '').toLowerCase();
-            const aDesc = (a.description || '').toLowerCase();
-            const bName = (b.product_name || '').toLowerCase();
-            const bDesc = (b.description || '').toLowerCase();
+        }).map(product => {
+            const productName = (product.product_name || '').toLowerCase();
+            const description = (product.description || '').toLowerCase();
+            const username = (product.username || '').toLowerCase();
 
-            if (aName.includes(searchLower) && !bName.includes(searchLower)) return -1;
-            if (!aName.includes(searchLower) && bName.includes(searchLower)) return 1;
-            if (aDesc.includes(searchLower) && !bDesc.includes(searchLower)) return -1;
-            if (!aDesc.includes(searchLower) && bDesc.includes(searchLower)) return 1;
+            let score = 0;
 
-            return 0;
-        });
+            if (productName === searchLower) score += 100;
+            else if (productName.startsWith(searchLower)) score += 80;
+            else if (productName.includes(searchLower)) score += 50;
+
+            if (description.includes(searchLower)) score += 20;
+
+            if (username.includes(searchLower)) score += 10;
+
+            const nameMatches = (productName.match(new RegExp(searchLower, 'g')) || []).length;
+            const descMatches = (description.match(new RegExp(searchLower, 'g')) || []).length;
+            score += (nameMatches * 5) + (descMatches * 2);
+
+            return { product, score };
+        }).sort((a, b) => b.score - a.score);
+
+        const distributedResults = [];
+        const userLastIndex = {};
+        const maxConsecutive = 1;
+
+        let remainingProducts = [...scoredResults];
+        let round = 0;
+
+        while (remainingProducts.length > 0 && round < 100) {
+            let addedInRound = false;
+
+            for (let i = 0; i < remainingProducts.length; i++) {
+                const item = remainingProducts[i];
+                const username = item.product.username;
+                const lastIdx = userLastIndex[username];
+
+                const canAdd = lastIdx === undefined || 
+                               (distributedResults.length - lastIdx) > maxConsecutive;
+
+                if (canAdd) {
+                    distributedResults.push(item.product);
+                    userLastIndex[username] = distributedResults.length - 1;
+                    remainingProducts.splice(i, 1);
+                    addedInRound = true;
+                    break;
+                }
+            }
+
+            if (!addedInRound && remainingProducts.length > 0) {
+                const item = remainingProducts.shift();
+                distributedResults.push(item.product);
+                userLastIndex[item.product.username] = distributedResults.length - 1;
+            }
+
+            round++;
+        }
+
+        const results = distributedResults;
 
         if (results.length === 0) {
             if (resultsCount) resultsCount.textContent = 'لم يتم العثور على نتائج';
