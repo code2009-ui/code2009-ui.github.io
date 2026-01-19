@@ -29,6 +29,7 @@ body {
   overflow: visible;
   padding-top: 280px;
 }
+/* ===== كود صورة الكافر المرن ===== */
 
 .profile-cover-box {
   position: absolute;
@@ -37,12 +38,14 @@ body {
   width: 100%;
   height: 260px;
   z-index: 0;
+  overflow: hidden; /* مهم جداً */
 }
 
 .profile-cover-box img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* يغطي المساحة بالكامل */
+  object-position: center; /* يركز على وسط الصورة */
   border-radius: 30px;
 }
 
