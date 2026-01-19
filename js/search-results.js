@@ -233,6 +233,74 @@ function search_setupImageGallery(container, images, productKey) {
 }
 
 // =======================
+// Levenshtein Distance (محسنة للسرعة)
+// =======================
+function levenshtein(a, b) {
+    if (a.length === 0) return b.length;
+    if (b.length === 0) return a.length;
+    
+    if (a.length > b.length) {
+        const tmp = a;
+        a = b;
+        b = tmp;
+    }
+    
+    const row = Array(a.length + 1);
+    
+    for (let i = 0; i <= a.length; i++) {
+        row[i] = i;
+    }
+    
+    for (let i = 1; i <= b.length; i++) {
+        let prev = i;
+        
+        for (let j = 1; j <= a.length; j++) {
+            let val;
+            if (b[i-1] === a[j-1]) {
+                val = row[j-1];
+            } else {
+                val = Math.min(row[j-1] + 1, Math.min(prev + 1, row[j] + 1));
+            }
+            row[j-1] = prev;
+            prev = val;
+        }
+        row[a.length] = prev;
+    }
+    
+    return row[a.length];
+}
+
+// =======================
+// تحمل الأخطاء الإملائية (مع تحسينات السرعة)
+// =======================
+function fuzzyMatch(text, searchTerm, maxDistance = 2) {
+    text = text.toLowerCase();
+    searchTerm = searchTerm.toLowerCase();
+    
+    if (text.includes(searchTerm)) return true;
+    
+    if (searchTerm.length < 3) return false;
+    if (searchTerm.length > 15) return false;
+    
+    const words = text.split(/\s+/);
+    
+    for (const word of words) {
+        if (word === searchTerm) return true;
+        
+        if (Math.abs(word.length - searchTerm.length) > maxDistance) {
+            continue;
+        }
+        
+        const distance = levenshtein(word, searchTerm);
+        if (distance <= maxDistance) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+// =======================
 // Search Products Function
 // =======================
 async function searchProducts() {
@@ -291,11 +359,25 @@ async function searchProducts() {
             return { product, score };
         }).sort((a, b) => b.score - a.score);
 
+        let exactResults = scoredResults;
+        
+        if (exactResults.length === 0) {
+            exactResults = products.filter(product => {
+                const productName = (product.product_name || '').toLowerCase();
+                const description = (product.description || '').toLowerCase();
+                
+                return fuzzyMatch(productName, searchLower) || 
+                       fuzzyMatch(description, searchLower);
+            }).map(product => {
+                return { product, score: 25 };
+            });
+        }
+
         const distributedResults = [];
         const userLastIndex = {};
         const maxConsecutive = 1;
 
-        let remainingProducts = [...scoredResults];
+        let remainingProducts = [...exactResults];
         let round = 0;
 
         while (remainingProducts.length > 0 && round < 100) {
