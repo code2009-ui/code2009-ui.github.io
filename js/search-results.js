@@ -301,7 +301,7 @@ function fuzzyMatch(text, searchTerm, maxDistance = 2) {
 }
 
 // =======================
-// Search Products Function
+// Search Products Function (مع البحث في الأقسام)
 // =======================
 async function searchProducts() {
     const searchTerm = getUrlParameter('search-term');
@@ -329,45 +329,61 @@ async function searchProducts() {
         const products = await response.json();
         const searchLower = searchTerm.toLowerCase().trim();
 
+        // البحث في: الاسم، الوصف، اسم البائع، والقسم (category)
         const scoredResults = products.filter(product => {
             const productName = (product.product_name || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
             const username = (product.username || '').toLowerCase();
+            const category = (product.category || '').toLowerCase(); // إضافة القسم
 
             return productName.includes(searchLower) ||
                 description.includes(searchLower) ||
-                username.includes(searchLower);
+                username.includes(searchLower) ||
+                category.includes(searchLower); // البحث في القسم
         }).map(product => {
             const productName = (product.product_name || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
             const username = (product.username || '').toLowerCase();
+            const category = (product.category || '').toLowerCase();
 
             let score = 0;
 
+            // الأولوية للاسم
             if (productName === searchLower) score += 100;
             else if (productName.startsWith(searchLower)) score += 80;
             else if (productName.includes(searchLower)) score += 50;
 
+            // ثم القسم
+            if (category === searchLower) score += 70;
+            else if (category.includes(searchLower)) score += 40;
+
+            // ثم الوصف
             if (description.includes(searchLower)) score += 20;
 
+            // وأخيراً اسم البائع
             if (username.includes(searchLower)) score += 10;
 
             const nameMatches = (productName.match(new RegExp(searchLower, 'g')) || []).length;
             const descMatches = (description.match(new RegExp(searchLower, 'g')) || []).length;
-            score += (nameMatches * 5) + (descMatches * 2);
+            const categoryMatches = (category.match(new RegExp(searchLower, 'g')) || []).length;
+            
+            score += (nameMatches * 5) + (descMatches * 2) + (categoryMatches * 3);
 
             return { product, score };
         }).sort((a, b) => b.score - a.score);
 
         let exactResults = scoredResults;
         
+        // إذا لم توجد نتائج، جرب البحث الضبابي
         if (exactResults.length === 0) {
             exactResults = products.filter(product => {
                 const productName = (product.product_name || '').toLowerCase();
                 const description = (product.description || '').toLowerCase();
+                const category = (product.category || '').toLowerCase();
                 
                 return fuzzyMatch(productName, searchLower) || 
-                       fuzzyMatch(description, searchLower);
+                       fuzzyMatch(description, searchLower) ||
+                       fuzzyMatch(category, searchLower);
             }).map(product => {
                 return { product, score: 25 };
             });
@@ -487,7 +503,8 @@ async function searchProducts() {
                     updateHeartState(heartDiv, product.images[0]);
                 });
                 
-                initLazyLoading();
+                // تفعيل Lazy Loading الذكي
+                initIntersectionObserver();
             }
         }
     } catch (error) {
@@ -498,23 +515,50 @@ async function searchProducts() {
 }
 
 // =======================
-// Lazy Loading
+// Lazy Loading باستخدام Intersection Observer (ذكي وسريع)
 // =======================
-function initLazyLoading() {
+function initIntersectionObserver() {
     const lazyImages = document.querySelectorAll('img.lazy');
     
+    if (!lazyImages.length) return;
+
+    // إنشاء Observer يراقب الصور
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                const realSrc = img.dataset.src;
+                const spinner = img.parentElement?.querySelector('.product-spinner');
+                
+                // تحميل الصورة
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    img.src = realSrc;
+                    img.style.opacity = '1';
+                    if (spinner) spinner.style.display = 'none';
+                    img.classList.remove('lazy');
+                };
+                tempImg.onerror = function() {
+                    img.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة';
+                    img.style.opacity = '1';
+                    if (spinner) spinner.style.display = 'none';
+                    img.classList.remove('lazy');
+                };
+                tempImg.src = realSrc;
+                
+                // إيقاف مراقبة هذه الصورة
+                observer.unobserve(img);
+            }
+        });
+    }, {
+        // تحميل الصور قبل ظهورها بـ 400px (حوالي 1-2 صف من المنتجات)
+        rootMargin: '400px 0px',
+        threshold: 0.01
+    });
+
+    // مراقبة كل الصور
     lazyImages.forEach(img => {
-        const realSrc = img.dataset.src;
-        const spinner = img.parentElement.querySelector('.product-spinner');
-        
-        const tempImg = new Image();
-        tempImg.onload = function() {
-            img.src = realSrc;
-            img.style.opacity = '1';
-            if (spinner) spinner.style.display = 'none';
-            img.classList.remove('lazy');
-        };
-        tempImg.src = realSrc;
+        imageObserver.observe(img);
     });
 }
 
@@ -546,7 +590,7 @@ function updateAllHearts() {
     const allCards = document.querySelectorAll('.product-card');
     allCards.forEach(card => {
         const heart = card.querySelector('.heart-icon');
-        const onclick = heart.getAttribute('onclick');
+        const onclick = heart?.getAttribute('onclick');
         
         if (onclick) {
             const match = onclick.match(/toggleWishlist\(event,\s*'[^']*',\s*'[^']*',\s*'([^']*)'/);
