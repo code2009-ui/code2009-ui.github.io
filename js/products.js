@@ -180,6 +180,18 @@ function products_setupImageGallery(container, images, productKey) {
     }
 }
 
+// =======================
+// دالة الترتيب العشوائي
+// =======================
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
 async function loadProducts() {
     const category = getUrlParameter('category');
     const categoryTitle = document.getElementById('categoryTitle');
@@ -202,6 +214,9 @@ async function loadProducts() {
                 product.category && product.category.includes(decodedCategory)
             );
         }
+
+        // ✅ ترتيب عشوائي للمنتجات
+        filteredProducts = shuffleArray(filteredProducts);
 
         if (filteredProducts.length === 0) {
             productsGrid.innerHTML = '<div class="no-products">لا توجد منتجات في هذا القسم حالياً</div>';
@@ -276,7 +291,8 @@ async function loadProducts() {
                 updateHeartState(heartDiv, product.images[0]);
             });
             
-            initLazyLoading();
+            // ✅ تفعيل Lazy Loading الذكي بدلاً من التحميل الفوري
+            initIntersectionObserver();
         }
     } catch (error) {
         console.error('Error loading products:', error);
@@ -284,21 +300,51 @@ async function loadProducts() {
     }
 }
 
-function initLazyLoading() {
+// =======================
+// ✅ Lazy Loading الذكي باستخدام Intersection Observer
+// =======================
+function initIntersectionObserver() {
     const lazyImages = document.querySelectorAll('img.lazy');
     
+    if (!lazyImages.length) return;
+
+    // إنشاء Observer يراقب الصور
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                const realSrc = img.dataset.src;
+                const spinner = img.parentElement?.querySelector('.product-spinner');
+                
+                // تحميل الصورة
+                const tempImg = new Image();
+                tempImg.onload = function() {
+                    img.src = realSrc;
+                    img.style.opacity = '1';
+                    if (spinner) spinner.style.display = 'none';
+                    img.classList.remove('lazy');
+                };
+                tempImg.onerror = function() {
+                    img.src = 'https://dummyimage.com/300x300/ccc/fff&text=صورة+غير+متوفرة';
+                    img.style.opacity = '1';
+                    if (spinner) spinner.style.display = 'none';
+                    img.classList.remove('lazy');
+                };
+                tempImg.src = realSrc;
+                
+                // إيقاف مراقبة هذه الصورة
+                observer.unobserve(img);
+            }
+        });
+    }, {
+        // ✅ تحميل الصور قبل ظهورها بـ 400px (حوالي 8 منتجات)
+        rootMargin: '400px 0px',
+        threshold: 0.01
+    });
+
+    // مراقبة كل الصور
     lazyImages.forEach(img => {
-        const realSrc = img.dataset.src;
-        const spinner = img.parentElement.querySelector('.product-spinner');
-        
-        const tempImg = new Image();
-        tempImg.onload = function() {
-            img.src = realSrc;
-            img.style.opacity = '1';
-            if (spinner) spinner.style.display = 'none';
-            img.classList.remove('lazy');
-        };
-        tempImg.src = realSrc;
+        imageObserver.observe(img);
     });
 }
 
