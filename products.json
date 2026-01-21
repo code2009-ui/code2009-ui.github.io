@@ -445,5 +445,145 @@
             "users/baby_boutique/products/12-2.png",
             "users/baby_boutique/products/12-3.png"
         ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "ستاند محابس",
+        "description": "ستاند محابس زفاف و خطوبة بأشكال مختلفة مع أسماء",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/1-1.png",
+            "users/Amirösä_Gifts/products/1-10.png",
+            "users/Amirösä_Gifts/products/1-11.png",
+            "users/Amirösä_Gifts/products/1-2.png",
+            "users/Amirösä_Gifts/products/1-3.png",
+            "users/Amirösä_Gifts/products/1-4.png",
+            "users/Amirösä_Gifts/products/1-5.png",
+            "users/Amirösä_Gifts/products/1-6.png",
+            "users/Amirösä_Gifts/products/1-7.png",
+            "users/Amirösä_Gifts/products/1-8.png",
+            "users/Amirösä_Gifts/products/1-9.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "علبة تذكار بالأسماء",
+        "description": "علبة أكريليك شفاف بداخلها زهور و أسماء",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/2-1.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "أحرف مضيئة",
+        "description": "لمبديرات بليكسي",
+        "category": "Gift_Boxes",
+        "images": [
+            "users/Amirösä_Gifts/products/3-1.png",
+            "users/Amirösä_Gifts/products/3-2.png",
+            "users/Amirösä_Gifts/products/3-3.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "زينة رمضان",
+        "description": "أشكال مختلفة من زينة رمضان",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/4-1.png",
+            "users/Amirösä_Gifts/products/4-2.png",
+            "users/Amirösä_Gifts/products/4-3.png",
+            "users/Amirösä_Gifts/products/4-4.png",
+            "users/Amirösä_Gifts/products/4-5.png",
+            "users/Amirösä_Gifts/products/4-6.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "قواعد ريزن مكتبية",
+        "description": "ريزن بالأسماء و ألوان مختلفة",
+        "category": "Resin",
+        "images": [
+            "users/Amirösä_Gifts/products/5-1.png",
+            "users/Amirösä_Gifts/products/5-2.png",
+            "users/Amirösä_Gifts/products/5-3.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "طقم تخرج",
+        "description": "روب تخرج , وشاح تخرج , طاقية تخرج , الوان و أسماء حسب الطلب",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/6-1.png",
+            "users/Amirösä_Gifts/products/6-2.png",
+            "users/Amirösä_Gifts/products/6-3.png",
+            "users/Amirösä_Gifts/products/6-4.png",
+            "users/Amirösä_Gifts/products/6-5.png",
+            "users/Amirösä_Gifts/products/6-6.png",
+            "users/Amirösä_Gifts/products/6-7.png",
+            "users/Amirösä_Gifts/products/6-8.png",
+            "users/Amirösä_Gifts/products/6-9.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "هدايا تخرج",
+        "description": "هدية تخرج بليكسي",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/7-1.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "سيفونيرات تخرج",
+        "description": "بليكسي , خشب , ريزن",
+        "category": "Event_Planning",
+        "images": [
+            "users/Amirösä_Gifts/products/8-1.png",
+            "users/Amirösä_Gifts/products/8-2.png",
+            "users/Amirösä_Gifts/products/8-3.png",
+            "users/Amirösä_Gifts/products/8-4.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "بوكسات ورود",
+        "description": "هدايا ورد أشكال مختلفة",
+        "category": "Gift_Boxes",
+        "images": [
+            "users/Amirösä_Gifts/products/9-1.png",
+            "users/Amirösä_Gifts/products/9-2.png",
+            "users/Amirösä_Gifts/products/9-3.png",
+            "users/Amirösä_Gifts/products/9-4.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "بوكسات هدايا",
+        "description": "بوكسات بمحتويات مختلفة و أشكال متنوعة",
+        "category": "Gift_Boxes",
+        "images": [
+            "users/Amirösä_Gifts/products/10-1.png",
+            "users/Amirösä_Gifts/products/10-2.png",
+            "users/Amirösä_Gifts/products/10-3.png",
+            "users/Amirösä_Gifts/products/10-4.png",
+            "users/Amirösä_Gifts/products/10-5.png",
+            "users/Amirösä_Gifts/products/10-6.png"
+        ]
+    },
+    {
+        "username": "Amirösä_Gifts",
+        "product_name": "تعليقات حائط بليكسي",
+        "description": "تعليقات بأشكال مختلفة , خطوط عربية , آيات قرأنية",
+        "category": "HomeDecor",
+        "images": [
+            "users/Amirösä_Gifts/products/11-1.png",
+            "users/Amirösä_Gifts/products/11-2.png",
+            "users/Amirösä_Gifts/products/11-3.png",
+            "users/Amirösä_Gifts/products/11-4.png"
+        ]
     }
 ]
