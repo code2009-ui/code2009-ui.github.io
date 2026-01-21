@@ -13,6 +13,120 @@ function getUrlParameter(name) {
 }
 
 // =======================
+// ✅ قاموس ترجمة الأقسام (عربي ⇄ إنجليزي)
+// =======================
+const categoryTranslations = {
+    // كروشي
+    'كروشي': ['crochet', 'كروشي', 'كروشيه', 'كروشية'],
+    'كروشيه': ['crochet', 'كروشي', 'كروشيه', 'كروشية'],
+    'كروشية': ['crochet', 'كروشي', 'كروشيه', 'كروشية'],
+    'crochet': ['crochet', 'كروشي', 'كروشيه', 'كروشية'],
+    
+    // اكسسوارات
+    'اكسسوارات': ['accessories', 'اكسسوارات', 'اكسسوار', 'حلي'],
+    'اكسسوار': ['accessories', 'اكسسوارات', 'اكسسوار', 'حلي'],
+    'حلي': ['accessories', 'اكسسوارات', 'اكسسوار', 'حلي'],
+    'accessories': ['accessories', 'اكسسوارات', 'اكسسوار', 'حلي'],
+    
+    // تطريز
+    'تطريز': ['embroidery', 'تطريز', 'تطريزات'],
+    'تطريزات': ['embroidery', 'تطريز', 'تطريزات'],
+    'embroidery': ['embroidery', 'تطريز', 'تطريزات'],
+    
+    // طباعة
+    'طباعة': ['printing', 'طباعة', 'طباعه', 'طبع'],
+    'طباعه': ['printing', 'طباعة', 'طباعه', 'طبع'],
+    'طبع': ['printing', 'طباعة', 'طباعه', 'طبع'],
+    'printing': ['printing', 'طباعة', 'طباعه', 'طبع'],
+    
+    // شموع
+    'شموع': ['candles', 'شموع', 'شمع', 'شمعة'],
+    'شمع': ['candles', 'شموع', 'شمع', 'شمعة'],
+    'شمعة': ['candles', 'شموع', 'شمع', 'شمعة'],
+    'candles': ['candles', 'شموع', 'شمع', 'شمعة'],
+    
+    // خرز
+    'خرز': ['beads', 'خرز', 'خرزات'],
+    'خرزات': ['beads', 'خرز', 'خرزات'],
+    'beads': ['beads', 'خرز', 'خرزات'],
+    
+    // صابون
+    'صابون': ['soap', 'صابون', 'صابونة'],
+    'صابونة': ['soap', 'صابون', 'صابونة'],
+    'soap': ['soap', 'صابون', 'صابونة'],
+    
+    // بوكسات هدايا
+    'بوكسات': ['gift_boxes', 'gift boxes', 'بوكسات', 'بوكسات هدايا', 'هدايا', 'بوكس'],
+    'بوكس': ['gift_boxes', 'gift boxes', 'بوكسات', 'بوكسات هدايا', 'هدايا', 'بوكس'],
+    'هدايا': ['gift_boxes', 'gift boxes', 'بوكسات', 'بوكسات هدايا', 'هدايا', 'بوكس'],
+    'gift_boxes': ['gift_boxes', 'gift boxes', 'بوكسات', 'بوكسات هدايا', 'هدايا', 'بوكس'],
+    'gift boxes': ['gift_boxes', 'gift boxes', 'بوكسات', 'بوكسات هدايا', 'هدايا', 'بوكس'],
+    
+    // تنسيق حفلات
+    'تنسيق': ['event_planning', 'event planning', 'تنسيق', 'تنسيق حفلات', 'حفلات'],
+    'حفلات': ['event_planning', 'event planning', 'تنسيق', 'تنسيق حفلات', 'حفلات'],
+    'event_planning': ['event_planning', 'event planning', 'تنسيق', 'تنسيق حفلات', 'حفلات'],
+    'event planning': ['event_planning', 'event planning', 'تنسيق', 'تنسيق حفلات', 'حفلات'],
+    
+    // مكرمية
+    'مكرمية': ['macrame', 'مكرمية', 'مكرميه'],
+    'مكرميه': ['macrame', 'مكرمية', 'مكرميه'],
+    'macrame': ['macrame', 'مكرمية', 'مكرميه'],
+    
+    // كونكريت
+    'كونكريت': ['concrete', 'كونكريت', 'كونكريتي'],
+    'كونكريتي': ['concrete', 'كونكريت', 'كونكريتي'],
+    'concrete': ['concrete', 'كونكريت', 'كونكريتي'],
+    
+    // فن الورق
+    'ورق': ['paper_art', 'paper art', 'ورق', 'فن الورق'],
+    'فن الورق': ['paper_art', 'paper art', 'ورق', 'فن الورق'],
+    'paper_art': ['paper_art', 'paper art', 'ورق', 'فن الورق'],
+    'paper art': ['paper_art', 'paper art', 'ورق', 'فن الورق'],
+    
+    // مسمار و خيط
+    'مسمار': ['string_art', 'string art', 'مسمار', 'مسمار و خيط', 'خيط'],
+    'خيط': ['string_art', 'string art', 'مسمار', 'مسمار و خيط', 'خيط'],
+    'string_art': ['string_art', 'string art', 'مسمار', 'مسمار و خيط', 'خيط'],
+    'string art': ['string_art', 'string art', 'مسمار', 'مسمار و خيط', 'خيط'],
+    
+    // ريزن
+    'ريزن': ['resin', 'ريزن', 'ريزين'],
+    'ريزين': ['resin', 'ريزن', 'ريزين'],
+    'resin': ['resin', 'ريزن', 'ريزين'],
+    
+    // ديكورات منزلية
+    'ديكور': ['homedecor', 'home decor', 'ديكور', 'ديكورات', 'ديكورات منزلية'],
+    'ديكورات': ['homedecor', 'home decor', 'ديكور', 'ديكورات', 'ديكورات منزلية'],
+    'homedecor': ['homedecor', 'home decor', 'ديكور', 'ديكورات', 'ديكورات منزلية'],
+    'home decor': ['homedecor', 'home decor', 'ديكور', 'ديكورات', 'ديكورات منزلية']
+};
+
+// =======================
+// ✅ دالة البحث مع الترجمة التلقائية
+// =======================
+function getSearchVariants(searchTerm) {
+    const lower = searchTerm.toLowerCase().trim();
+    const variants = new Set([lower]);
+    
+    // ابحث في القاموس
+    if (categoryTranslations[lower]) {
+        categoryTranslations[lower].forEach(variant => {
+            variants.add(variant.toLowerCase());
+        });
+    }
+    
+    // ابحث أيضاً عن الكلمات المشابهة
+    for (const [key, values] of Object.entries(categoryTranslations)) {
+        if (lower.includes(key) || key.includes(lower)) {
+            values.forEach(variant => variants.add(variant.toLowerCase()));
+        }
+    }
+    
+    return Array.from(variants);
+}
+
+// =======================
 // Preload Adjacent Images
 // =======================
 function preloadAdjacentImages(productKey, currentIdx) {
@@ -301,7 +415,7 @@ function fuzzyMatch(text, searchTerm, maxDistance = 2) {
 }
 
 // =======================
-// Search Products Function (مع البحث في الأقسام)
+// ✅ Search Products Function (مع الترجمة الذكية)
 // =======================
 async function searchProducts() {
     const searchTerm = getUrlParameter('search-term');
@@ -328,18 +442,27 @@ async function searchProducts() {
 
         const products = await response.json();
         const searchLower = searchTerm.toLowerCase().trim();
+        
+        // ✅ الحصول على جميع الترجمات والمتغيرات
+        const searchVariants = getSearchVariants(searchLower);
+        
+        console.log('🔍 البحث عن:', searchTerm);
+        console.log('✅ المتغيرات:', searchVariants);
 
-        // البحث في: الاسم، الوصف، اسم البائع، والقسم (category)
+        // ✅ البحث في: الاسم، الوصف، اسم البائع، والقسم (مع الترجمة)
         const scoredResults = products.filter(product => {
             const productName = (product.product_name || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
             const username = (product.username || '').toLowerCase();
-            const category = (product.category || '').toLowerCase(); // إضافة القسم
+            const category = (product.category || '').toLowerCase();
 
-            return productName.includes(searchLower) ||
-                description.includes(searchLower) ||
-                username.includes(searchLower) ||
-                category.includes(searchLower); // البحث في القسم
+            // ابحث عن أي من المتغيرات في أي حقل
+            return searchVariants.some(variant => 
+                productName.includes(variant) ||
+                description.includes(variant) ||
+                username.includes(variant) ||
+                category.includes(variant)
+            );
         }).map(product => {
             const productName = (product.product_name || '').toLowerCase();
             const description = (product.description || '').toLowerCase();
@@ -348,42 +471,47 @@ async function searchProducts() {
 
             let score = 0;
 
-            // الأولوية للاسم
-            if (productName === searchLower) score += 100;
-            else if (productName.startsWith(searchLower)) score += 80;
-            else if (productName.includes(searchLower)) score += 50;
+            // ✅ البحث بجميع المتغيرات والترجمات
+            searchVariants.forEach(variant => {
+                // الأولوية للاسم
+                if (productName === variant) score += 100;
+                else if (productName.startsWith(variant)) score += 80;
+                else if (productName.includes(variant)) score += 50;
 
-            // ثم القسم
-            if (category === searchLower) score += 70;
-            else if (category.includes(searchLower)) score += 40;
+                // ثم القسم
+                if (category === variant) score += 70;
+                else if (category.includes(variant)) score += 40;
 
-            // ثم الوصف
-            if (description.includes(searchLower)) score += 20;
+                // ثم الوصف
+                if (description.includes(variant)) score += 20;
 
-            // وأخيراً اسم البائع
-            if (username.includes(searchLower)) score += 10;
+                // وأخيراً اسم البائع
+                if (username.includes(variant)) score += 10;
 
-            const nameMatches = (productName.match(new RegExp(searchLower, 'g')) || []).length;
-            const descMatches = (description.match(new RegExp(searchLower, 'g')) || []).length;
-            const categoryMatches = (category.match(new RegExp(searchLower, 'g')) || []).length;
-            
-            score += (nameMatches * 5) + (descMatches * 2) + (categoryMatches * 3);
+                const nameMatches = (productName.match(new RegExp(variant, 'g')) || []).length;
+                const descMatches = (description.match(new RegExp(variant, 'g')) || []).length;
+                const categoryMatches = (category.match(new RegExp(variant, 'g')) || []).length;
+                
+                score += (nameMatches * 5) + (descMatches * 2) + (categoryMatches * 3);
+            });
 
             return { product, score };
         }).sort((a, b) => b.score - a.score);
 
         let exactResults = scoredResults;
         
-        // إذا لم توجد نتائج، جرب البحث الضبابي
+        // ✅ إذا لم توجد نتائج، جرب البحث الضبابي (مع الترجمات)
         if (exactResults.length === 0) {
             exactResults = products.filter(product => {
                 const productName = (product.product_name || '').toLowerCase();
                 const description = (product.description || '').toLowerCase();
                 const category = (product.category || '').toLowerCase();
                 
-                return fuzzyMatch(productName, searchLower) || 
-                       fuzzyMatch(description, searchLower) ||
-                       fuzzyMatch(category, searchLower);
+                return searchVariants.some(variant =>
+                    fuzzyMatch(productName, variant) || 
+                    fuzzyMatch(description, variant) ||
+                    fuzzyMatch(category, variant)
+                );
             }).map(product => {
                 return { product, score: 25 };
             });
@@ -514,8 +642,9 @@ async function searchProducts() {
     }
 }
 
+
 // =======================
-// Lazy Loading باستخدام Intersection Observer (ذكي وسريع)
+// ✅ Lazy Loading الذكي باستخدام Intersection Observer
 // =======================
 function initIntersectionObserver() {
     const lazyImages = document.querySelectorAll('img.lazy');
@@ -551,7 +680,7 @@ function initIntersectionObserver() {
             }
         });
     }, {
-        // تحميل الصور قبل ظهورها بـ 400px (حوالي 1-2 صف من المنتجات)
+        // ✅ تحميل الصور قبل ظهورها بـ 400px (حوالي 8 منتجات)
         rootMargin: '400px 0px',
         threshold: 0.01
     });
@@ -562,9 +691,6 @@ function initIntersectionObserver() {
     });
 }
 
-// =======================
-// Update Heart State
-// =======================
 function updateHeartState(heartIcon, imagePath) {
     if (!heartIcon) return;
     
@@ -590,7 +716,7 @@ function updateAllHearts() {
     const allCards = document.querySelectorAll('.product-card');
     allCards.forEach(card => {
         const heart = card.querySelector('.heart-icon');
-        const onclick = heart?.getAttribute('onclick');
+        const onclick = heart.getAttribute('onclick');
         
         if (onclick) {
             const match = onclick.match(/toggleWishlist\(event,\s*'[^']*',\s*'[^']*',\s*'([^']*)'/);
@@ -602,11 +728,8 @@ function updateAllHearts() {
     });
 }
 
-// =======================
-// Initialize
-// =======================
 document.addEventListener('DOMContentLoaded', function() {
-    searchProducts();
+    loadProducts();
     setTimeout(updateAllHearts, 100);
     
     window.addEventListener('wishlistUpdated', updateAllHearts);
@@ -620,17 +743,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (lightbox) {
         lightbox.addEventListener('click', function(e) {
             if (e.target === lightbox) {
-                search_closeLightbox();
+                products_closeLightbox();
             }
         });
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                search_closeLightbox();
+                products_closeLightbox();
             }
         });
     }
     
-    window.closeLightbox = search_closeLightbox;
-    window.changeImage = search_changeImage;
+    window.closeLightbox = products_closeLightbox;
+    window.changeImage = products_changeImage;
 });
