@@ -435,7 +435,7 @@ async function searchProducts() {
         if (searchQuery) searchQuery.textContent = 'الرجاء إدخال كلمة للبحث';
         if (productsGrid) productsGrid.innerHTML = '<div class="no-products">لم تقم بإدخال أي كلمة للبحث</div>';
         return;
-    }
+    } 
 
     if (!searchTerm) {
         if (searchTitle) searchTitle.textContent = 'البحث';
