@@ -761,4 +761,4 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.closeLightbox = search_closeLightbox;
     window.changeImage = search_changeImage;
-});
+}); 
