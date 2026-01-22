@@ -585,5 +585,59 @@
             "users/Amirösä_Gifts/products/11-3.png",
             "users/Amirösä_Gifts/products/11-4.png"
         ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "تعليقات سيارة",
+        "description": "مطرزة وجه او وجهين",
+        "category": "embroidery",
+        "images": [
+            "users/عالمي الصغير/products/1-1.png"
+        ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "سناسل",
+        "description": "سناسل او بورتكليهات معدنية",
+        "category": "embroidery",
+        "images": [
+            "users/عالمي الصغير/products/2-1.png"
+        ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "تطريز ملابس",
+        "description": "تطريز على كافة انو الملابس ( مراييل طبية ، كنزات، شالات ، ديارة بيبي ، طواقي) وكل شي بيخطر ع بالكم",
+        "category": "embroidery",
+        "images": [
+            "users/عالمي الصغير/products/3-1.png"
+        ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "بورتكليهات خشب",
+        "description": "بورتكليهات خشب مفردة او كوبلز بتصاميم حسب الطلب",
+        "category": "embroidery",
+        "images": [
+            "users/عالمي الصغير/products/4-1.png"
+        ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "باقات ورد",
+        "description": "باقات ورد ساتان لكل المناسبات",
+        "category": "flowers",
+        "images": [
+            "users/عالمي الصغير/products/5-1.png"
+        ]
+    },
+    {
+        "username": "عالمي الصغير",
+        "product_name": "طارات مطرزة",
+        "description": "طارات بتصميم حسب الطلب موجود عدة مقاسات وهدية ابدية معنوية قيمة بتلبي كل المناسبات",
+        "category": "embroidery",
+        "images": [
+            "users/عالمي الصغير/products/6-1.png"
+        ]
     }
 ]

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>عالمي الصغير - الملف الشخصي</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="../../style/profile.css">
+<link rel="stylesheet" href="../../style/header.css">
+<link rel="icon" type="image/png" href="/images/tab-logo.png">
+
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">
+        <a href="../../pages/home.html" class="logo-link">
+            <img src="../../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
+        </a>
+    </div>
+ 
+    <nav class="nav-center">
+        <ul class="nav-list">
+            <li><a href="../../pages/home.html">الرئيسية</a></li>
+            <li><a href="../../pages/about.html">حول المنصة</a></li>
+            <li><a href="../../pages/contact.html">تواصل معنا</a></li>
+        </ul>
+    </nav>
+    
+    <div class="search-icon-container">
+        <button id="search-open-btn" class="search-btn" aria-label="Open search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="wishlist-icon-container">
+        <a href="../../pages/wishlist.html" class="wishlist-link" aria-label="Wishlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span class="wishlist-count" id="wishlist-count">0</span>
+        </a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div id="search-popup" class="search-popup hidden">
+        <div class="search-popup-content">
+            <button id="search-close-btn" class="close-btn">✕</button>
+            <form id="search-form" action="../../pages/search.html" method="get">
+                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
+                <button type="submit" class="search-submit-btn">بحث</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="../../pages/home.html">الرئيسية</a></li>
+            <li><a href="../../pages/about.html">حول المنصة</a></li>
+            <li><a href="../../pages/contact.html">تواصل معنا</a></li>
+        </ul>
+    </div>
+</header>
+
+<div class="profile-wrapper">
+    <div class="profile-card">
+        <div class="profile-cover-box">
+            <img src="images/cover.png" alt="Cover">
+        </div>
+
+        <div class="profile-image-box">
+            <img src="images/profile.png" alt="Profile">
+        </div>
+
+        <div class="profile-info-box">
+            <div class="name-and-social">
+                <h1>عالمي الصغير</h1>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=100086650604645&mibextid=ZbWKwL" target="_blank">
+                        <div class="icon facebook">
+                            <img src="https://img.icons8.com/?size=100&id=118497&format=png&color=ffffff">
+                            <span class="tooltip">Facebook</span>
+                        </div>
+                    </a>
+                    <a href="https://wa.me/963938073590" target="_blank">
+                        <div class="icon whatsapp">
+                            <img src="https://img.icons8.com/?size=100&id=16713&format=png&color=ffffff">
+                            <span class="tooltip">WhatsApp</span>
+                        </div>
+                    </a>
+                    <a href="https://www.instagram.com/my_small_world2003" target="_blank">
+                        <div class="icon instagram">
+                            <img src="https://img.icons8.com/?size=100&id=BrU2BBoRXiWq&format=png&color=ffffff">
+                            <span class="tooltip">Instagram</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <p>dddddddddddddddddddddddddddd</p>
+        </div>
+    </div>
+
+    <div class="products-container">
+    
+    <div class="product-card" data-category="embroidery">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'تعليقات سيارة', 'users/عالمي الصغير/products/1-1.png', 'embroidery')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/1-1.png" alt="تعليقات سيارة" class="product-image">
+        <div class="product-info">
+            <h3>تعليقات سيارة</h3>
+            <p>مطرزة وجه او وجهين</p>
+        </div>
+    </div>
+        <div class="product-card" data-category="embroidery">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'سناسل', 'users/عالمي الصغير/products/2-1.png', 'embroidery')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/2-1.png" alt="سناسل" class="product-image">
+        <div class="product-info">
+            <h3>سناسل</h3>
+            <p>سناسل او بورتكليهات معدنية</p>
+        </div>
+    </div>
+        <div class="product-card" data-category="embroidery">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'تطريز ملابس', 'users/عالمي الصغير/products/3-1.png', 'embroidery')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/3-1.png" alt="تطريز ملابس" class="product-image">
+        <div class="product-info">
+            <h3>تطريز ملابس</h3>
+            <p>تطريز على كافة انو الملابس ( مراييل طبية ، كنزات، شالات ، ديارة بيبي ، طواقي) وكل شي بيخطر ع بالكم</p>
+        </div>
+    </div>
+        <div class="product-card" data-category="embroidery">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'بورتكليهات خشب', 'users/عالمي الصغير/products/4-1.png', 'embroidery')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/4-1.png" alt="بورتكليهات خشب" class="product-image">
+        <div class="product-info">
+            <h3>بورتكليهات خشب</h3>
+            <p>بورتكليهات خشب مفردة او كوبلز بتصاميم حسب الطلب</p>
+        </div>
+    </div>
+        <div class="product-card" data-category="flowers">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'باقات ورد', 'users/عالمي الصغير/products/5-1.png', 'flowers')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/5-1.png" alt="باقات ورد" class="product-image">
+        <div class="product-info">
+            <h3>باقات ورد</h3>
+            <p>باقات ورد ساتان لكل المناسبات</p>
+        </div>
+    </div>
+        <div class="product-card" data-category="embroidery">
+        <div class="heart-icon" onclick="toggleWishlist(event, 'عالمي الصغير', 'طارات مطرزة', 'users/عالمي الصغير/products/6-1.png', 'embroidery')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+        </div>
+        <img src="products/6-1.png" alt="طارات مطرزة" class="product-image">
+        <div class="product-info">
+            <h3>طارات مطرزة</h3>
+            <p>طارات بتصميم حسب الطلب موجود عدة مقاسات وهدية ابدية معنوية قيمة بتلبي كل المناسبات</p>
+        </div>
+    </div>
+    
+</div>
+</div>
+
+<div id="lightbox" class="lightbox">
+    <button class="close-btn" onclick="closeLightbox()">×</button>
+    <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+    <img id="lightbox-img">
+    <button class="next" onclick="changeImage(1)">&#10095;</button>
+</div>
+
+<script>
+// تعريف productImages قبل تحميل app.js - هذا مهم جداً!
+window.productImages = window.productImages || {};
+
+// إضافة صور المنتجات
+productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u062a\u0639\u0644\u064a\u0642\u0627\u062a \u0633\u064a\u0627\u0631\u0629|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/1-1.png|||embroidery"] = ["products/1-1.png"];productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u0633\u0646\u0627\u0633\u0644|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/2-1.png|||embroidery"] = ["products/2-1.png"];productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u062a\u0637\u0631\u064a\u0632 \u0645\u0644\u0627\u0628\u0633|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/3-1.png|||embroidery"] = ["products/3-1.png"];productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u0628\u0648\u0631\u062a\u0643\u0644\u064a\u0647\u0627\u062a \u062e\u0634\u0628|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/4-1.png|||embroidery"] = ["products/4-1.png"];productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u0628\u0627\u0642\u0627\u062a \u0648\u0631\u062f|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/5-1.png|||flowers"] = ["products/5-1.png"];productImages["\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631|||\u0637\u0627\u0631\u0627\u062a \u0645\u0637\u0631\u0632\u0629|||users/\u0639\u0627\u0644\u0645\u064a \u0627\u0644\u0635\u063a\u064a\u0631/products/6-1.png|||embroidery"] = ["products/6-1.png"];
+// ربط الصور بالـ onclick
+document.addEventListener('DOMContentLoaded', function() {
+    const productCards = document.querySelectorAll('.product-card');
+    
+    productCards.forEach((card) => {
+        const img = card.querySelector('.product-image');
+        const heartIcon = card.querySelector('.heart-icon');
+        
+        if (!img || !heartIcon) return;
+        
+        const onclick = heartIcon.getAttribute('onclick');
+        const match = onclick.match(/toggleWishlist\(event,\s*'([^']+)',\s*'([^']+)',\s*'([^']+)',\s*'([^']*)'\)/);
+        
+        if (match) {
+            const [_, username, productName, image, category] = match;
+            const productKey = `${username}|||${productName}|||${image}|||${category}`;
+            
+            if (productImages[productKey]) {
+                img.style.cursor = 'pointer';
+                img.onclick = () => window.openLightbox(productKey, 0);
+            }
+        }
+    });
+});
+</script>
+
+<script src="../../js/app.js"></script>
+<script src="../../js/search.js"></script>
+<script src="../../js/profile.js"></script>
+
+</body>
+</html>
