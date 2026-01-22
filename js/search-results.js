@@ -429,7 +429,7 @@ async function searchProducts() {
     } else {
         document.title = 'البحث | حرفجية';
     }
-
+    
     if (!searchTerm) {
         if (searchTitle) searchTitle.textContent = 'البحث';
         if (searchQuery) searchQuery.textContent = 'الرجاء إدخال كلمة للبحث';
