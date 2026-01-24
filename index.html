@@ -57,10 +57,10 @@
     </script>
 
     <!-- Redirect بدون www -->
-    <script>
-        if (location.hostname === "harafjya.com") {
-            location.href = location.href.replace("harafjya.com", "www.harafjya.com");
-        }
-    </script>
+   <script>
+if (location.hostname === "harafjya.com") {
+    location.replace("https://www.harafjya.com" + location.pathname + location.search);
+}
+</script>
 
 </head>
