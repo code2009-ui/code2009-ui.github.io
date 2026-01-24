@@ -52,15 +52,20 @@
     }
     </script>
 
-    <!-- Redirect واحد فقط (بدون www → مع www) -->
-    <script>
-    if (location.hostname === "harafjya.com") {
-        location.replace("https://www.harafjya.com" + location.pathname + location.search);
-    }
-    </script>
+
 </head>
 
 <body>
-    <!-- محتوى الصفحة أو include الصفحة الرئيسية -->
-</body>
+<script>
+(function () {
+    if (location.hostname === "harafjya.com") {
+        location.replace(
+            "https://www.harafjya.com" +
+            location.pathname +
+            location.search +
+            location.hash
+        );
+    }
+})();
+</script></body>
 </html>
