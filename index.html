@@ -3,80 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/images/tab-logo.png">
 
-    <!-- Primary SEO (Syria Only) -->
-    <title>حرفجية | Harafjya – منصة لأصحاب المشاريع و الهدايا اليدوية في سوريا</title>
-    <meta name="description" content="A platform for entrepreneurs and handmade gifts in Syria. – حرفجية | Harafjya ">
+    <title>حرفجية | Harafjya – منصة لأصحاب المشاريع والهدايا اليدوية في سوريا</title>
+
+    <meta name="description" content="حرفجية | Harafjya منصة تجمع أصحاب المشاريع والهدايا اليدوية داخل سوريا وتوصلهم بالزبائن.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://www.harafjya.com/">
+    <meta http-equiv="content-language" content="ar-SY">
 
-    <!-- Geo Targeting (Important) -->
+    <!-- Canonical (الصفحة التي تظهر في Google) -->
+    <link rel="canonical" href="https://www.harafjya.com/pages/home.html">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/tab-logo.png">
+
+    <!-- Geo Targeting -->
     <meta name="geo.region" content="SY">
     <meta name="geo.placename" content="Syria">
     <meta name="geo.position" content="35.0000;38.0000">
     <meta name="ICBM" content="35.0000, 38.0000">
 
-    <!-- Language -->
-    <meta http-equiv="content-language" content="ar-SY">
-
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="حرفجية – منصة لأصحاب المشاريع و الهدايا اليدوية في سوريا">
-    <meta property="og:description" content="harafjya – A platform for entrepreneurs and handmade gifts in Syria">
-    <meta property="og:url" content="https://www.harafjya.com/">
+    <meta property="og:title" content="حرفجية – منصة لأصحاب المشاريع والهدايا اليدوية في سوريا">
+    <meta property="og:description" content="منصة سورية لدعم الحرفيين وأصحاب المشاريع اليدوية.">
+    <meta property="og:url" content="https://www.harafjya.com/pages/home.html">
     <meta property="og:image" content="https://www.harafjya.com/images/tab-logo.png">
     <meta property="og:locale" content="ar_SY">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="حرفجية | Harafjya سوريا">
-    <meta name="twitter:description" content="اكتشف خدمات الحرفيين داخل سوريا فقط.">
+    <meta name="twitter:title" content="حرفجية | Harafjya">
+    <meta name="twitter:description" content="اكتشف أعمال الحرفيين داخل سوريا.">
     <meta name="twitter:image" content="https://www.harafjya.com/images/tab-logo.png">
 
-    <!-- Structured Data (Syria Focused) -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "حرفجية",
       "alternateName": "Harafjya",
-      "url": "https://www.harafjya.com/",
+      "url": "https://www.harafjya.com/pages/home.html",
+      "inLanguage": "ar-SY",
       "areaServed": {
         "@type": "Country",
         "name": "Syria"
-      },
-      "inLanguage": "ar-SY",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://www.harafjya.com/pages/home.html?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     }
     </script>
 
-    <!-- Redirect بدون www -->
+    <!-- Redirect واحد فقط (بدون www → مع www) -->
     <script>
     if (location.hostname === "harafjya.com") {
         location.replace("https://www.harafjya.com" + location.pathname + location.search);
     }
     </script>
-
-    <!-- النقل التلقائي للصفحة الرئيسية -->
-    <meta http-equiv="refresh" content="0; url=/pages/home.html">
 </head>
 
 <body>
-    <!-- رسالة احتياطية في حال لم يعمل النقل التلقائي -->
-    <p style="text-align: center; margin-top: 50px; font-family: Arial;">
-        جاري التحويل إلى الصفحة الرئيسية...
-        <br><br>
-        <a href="/pages/home.html">اضغط هنا إذا لم يتم التحويل تلقائياً</a>
-    </p>
-
-    <script>
-        // نقل فوري بواسطة JavaScript (أسرع)
-        window.location.href = "/pages/home.html";
-    </script>
+    <!-- محتوى الصفحة أو include الصفحة الرئيسية -->
 </body>
 </html>
