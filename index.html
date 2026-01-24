@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,9 +19,6 @@
 
     <!-- Language -->
     <meta http-equiv="content-language" content="ar-SY">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/images/tab-logo.png">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
@@ -57,10 +56,27 @@
     </script>
 
     <!-- Redirect بدون www -->
-   <script>
-if (location.hostname === "harafjya.com") {
-    location.replace("https://www.harafjya.com" + location.pathname + location.search);
-}
-</script>
+    <script>
+    if (location.hostname === "harafjya.com") {
+        location.replace("https://www.harafjya.com" + location.pathname + location.search);
+    }
+    </script>
 
+    <!-- النقل التلقائي للصفحة الرئيسية -->
+    <meta http-equiv="refresh" content="0; url=/pages/home.html">
 </head>
+
+<body>
+    <!-- رسالة احتياطية في حال لم يعمل النقل التلقائي -->
+    <p style="text-align: center; margin-top: 50px; font-family: Arial;">
+        جاري التحويل إلى الصفحة الرئيسية...
+        <br><br>
+        <a href="/pages/home.html">اضغط هنا إذا لم يتم التحويل تلقائياً</a>
+    </p>
+
+    <script>
+        // نقل فوري بواسطة JavaScript (أسرع)
+        window.location.href = "/pages/home.html";
+    </script>
+</body>
+</html>
