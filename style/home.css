@@ -7,7 +7,7 @@ body {
     width: calc(100% - 40px);
     max-width: 1150px;
     height: 250px;
-    background-image: url('../images/banner.png');
+    background-image: url('../images/panner.png');
     background-size: cover;
     background-position: center;
     border-radius: 20px;
@@ -15,7 +15,7 @@ body {
 }
 @media (max-width: 359px) {
     .big_img {
-        background-image: url('../images/banner.png');
+        background-image: url('../images/panner1.png');
         height: 160px;
         width: calc(100% - 24px);
         margin: 0 auto 32px auto;
