@@ -371,6 +371,57 @@ function wishlist_initLazyLoading() {
 }
 
 // =======================
+// تحديث جميع القلوب لمنتج معين
+// =======================
+function updateHeartIconsForProduct(productKey, isActive) {
+    const heartIcons = document.querySelectorAll('.heart-icon');
+    
+    heartIcons.forEach(heart => {
+        const onclick = heart.getAttribute('onclick');
+        if (!onclick) return;
+        
+        const match = onclick.match(/toggleWishlist\(event,\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)'\)/);
+        if (!match) return;
+        
+        const [, username, productName, image, category] = match;
+        const key = `${username}|||${productName}|||${image}|||${category}`;
+        
+        if (key === productKey) {
+            if (isActive) {
+                heart.classList.add('active');
+            } else {
+                heart.classList.remove('active');
+            }
+        }
+    });
+}
+
+// =======================
+// تحديث حالة جميع القلوب في الصفحة
+// =======================
+function updateAllHeartIcons() {
+    const favorites = getFavorites();
+    const heartIcons = document.querySelectorAll('.heart-icon');
+    
+    heartIcons.forEach(heart => {
+        const onclick = heart.getAttribute('onclick');
+        if (!onclick) return;
+        
+        const match = onclick.match(/toggleWishlist\(event,\s*'([^']*)',\s*'([^']*)',\s*'([^']*)',\s*'([^']*)'\)/);
+        if (!match) return;
+        
+        const [, username, productName, image, category] = match;
+        const key = `${username}|||${productName}|||${image}|||${category}`;
+        
+        if (favorites.includes(key)) {
+            heart.classList.add('active');
+        } else {
+            heart.classList.remove('active');
+        }
+    });
+}
+
+// =======================
 // Toggle Wishlist مع أنيميشن الحذف
 // =======================
 function toggleWishlist(event, username, productName, image, category) {
@@ -384,39 +435,47 @@ function toggleWishlist(event, username, productName, image, category) {
     const productCard = heartIcon.closest('.product-card');
     
     if (favs.includes(key)) {
-        // إزالة من المفضلة مع أنيميشن
+        // إزالة من المفضلة
         favs = favs.filter(k => k !== key);
         
-        // إضافة كلاس الأنيميشن
+        // تحديث جميع القلوب لهذا المنتج في الصفحة
+        updateHeartIconsForProduct(key, false);
+        
         if (productCard) {
             productCard.classList.add('removing');
-            
-            // إزالة العنصر بعد انتهاء الأنيميشن
             setTimeout(() => {
                 const isWishlistPage = document.getElementById('wishlistGrid') !== null;
                 if (isWishlistPage && typeof loadWishlistProducts === 'function') {
                     loadWishlistProducts();
                 }
-            }, 500); // نفس مدة الأنيميشن في CSS
+            }, 500);
         }
     } else {
         // إضافة للمفضلة
         favs.push(key);
-        heartIcon.classList.add('active', 'animating');
+        
+        // تحديث جميع القلوب لهذا المنتج في الصفحة
+        updateHeartIconsForProduct(key, true);
+        
+        heartIcon.classList.add('animating');
         setTimeout(() => heartIcon.classList.remove('animating'), 600);
     }
     
     localStorage.setItem('wishlist', JSON.stringify(favs));
-    
-    // تحديث العدد في الهيدر
-    const countEl = document.getElementById('wishlist-count');
-    if (countEl) {
-        countEl.textContent = favs.length;
-        countEl.style.display = favs.length > 0 ? 'flex' : 'none';
-    }
+    updateWishlistCount();
 }
 
 window.toggleWishlist = toggleWishlist;
+
+// =======================
+// تحديث القلوب عند تغيير localStorage من تاب آخر
+// =======================
+window.addEventListener('storage', function(e) {
+    if (e.key === 'wishlist') {
+        updateAllHeartIcons();
+        updateWishlistCount();
+    }
+});
 
 // =======================
 // عند تحميل صفحة الـ Wishlist
