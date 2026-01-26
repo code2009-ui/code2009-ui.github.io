@@ -639,5 +639,68 @@
         "images": [
             "users/عالمي الصغير/products/6-1.png"
         ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "شموع عطرية",
+        "description": "شموع عطرية بأشكال ورود",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/1-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "كأس شمع",
+        "description": "كأس من الشمع مزين بالقلوب",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/2-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "هدايا حب",
+        "description": "شمعة بشكل وردة",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/3-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "توزيعات شمع",
+        "description": "توزيعات شمع بيبي ملاك",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/4-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "شمع كريسمس",
+        "description": "شمع شجرة الميلاد",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/5-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "كؤوس شمع",
+        "description": "",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/6-1.png"
+        ]
+    },
+    {
+        "username": "Loly Candles",
+        "product_name": "باقة ورود من الشمع",
+        "description": "باقة ورود من الشمع بألوان و اشكال مختلفة",
+        "category": "Candles",
+        "images": [
+            "users/Loly Candles/products/7-1.png"
+        ]
     }
 ]
