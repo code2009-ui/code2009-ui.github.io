@@ -3,6 +3,18 @@ body {
     color-scheme: light only;
 }   
 
+.seo-brand {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1px;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  color: transparent;
+  pointer-events: none;
+}
+
 .big_img {
     width: calc(100% - 40px);
     max-width: 1150px;
