@@ -702,5 +702,61 @@
         "images": [
             "users/Loly Candles/products/7-1.png"
         ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "محفظة بطاقات",
+        "description": "جلد طبيعي بقري صناعة وخياطة يدوية اربع جيب بطاقات قابلة للتوسعة مع جيبتين للبطاقات أو النقود",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/1-1.png"
+        ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "محفظة يد نسائية",
+        "description": "جلد طبيعي بقري صناعة وخياطة يدوية تأتي باحجام متعددة وعدة جيب",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/2-1.jpeg",
+            "users/Shadi Handmade/products/2-2.jpeg"
+        ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "جزدان علبة دخان",
+        "description": "جزدان علبة دخان مع قداحة كروسين ملبسة جلد طبيعي بقري صناعة وخياطة يدوية",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/3-1.jpeg"
+        ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "محفظة جيب رجالية",
+        "description": "جلد طبيعي بقري صناعة وخياطة يدوية جيب خاص بالنقود مع اربع جيب للبطاقات",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/4-1.jpeg"
+        ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "علاقة مفاتيح مع صورة",
+        "description": "جلد طبيعي بقري صناعة يدوية",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/5-1.png",
+            "users/Shadi Handmade/products/5-2.png"
+        ]
+    },
+    {
+        "username": "Shadi Handmade",
+        "product_name": "حقيبة كتف رجالية",
+        "description": "جلد طبيعي بقري صناعة يدوية تصميم انيق وعملي بسعة ممتازة وجودة عالية",
+        "category": "Engraving",
+        "images": [
+            "users/Shadi Handmade/products/6-1.jpeg"
+        ]
     }
 ]
