@@ -6,74 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/home.css">
     <link rel="stylesheet" href="../style/header.css">
-<link rel="icon" type="image/png" href="/images/tab-logo.png">
-<meta name="description" content="منصة للهدايا و أشغال يدوية في سوريا">
+    <link rel="icon" type="image/png" href="/images/tab-logo.png">
+    <meta name="description" content="منصة للهدايا و أشغال يدوية في سوريا">
 
 
 </head>
 
 <body>
-<header class="header">
-    <div class="logo">
-        <a href="home.html" class="logo-link">
-            <img src="../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
-        </a>
-    </div>
- 
-    <nav class="nav-center">
-        <ul class="nav-list">
-            <li><a href="./home.html">الرئيسية</a></li>
-            <li><a href="./about.html">حول المنصة</a></li>
-            <li><a href="./contact.html">تواصل معنا</a></li>
-        </ul>
-    </nav>
-    
-    <div class="search-icon-container">
-        <button id="search-open-btn" class="search-btn" aria-label="Open search">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.35-4.35"></path>
-            </svg>
-        </button>
-    </div>
-
-    <div class="wishlist-icon-container">
-        <a href="wishlist.html" class="wishlist-link" aria-label="Wishlist">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-            <span class="wishlist-count" id="wishlist-count">0</span>
-        </a>
-    </div>
-
-    <div class="hamburger" id="hamburger">
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
-
-    <div id="search-popup" class="search-popup hidden">
-        <div class="search-popup-content">
-            <button id="search-close-btn" class="close-btn">✕</button>
-            <form id="search-form" action="search.html" method="get">
-                <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required autocomplete="off">
-                <button type="submit" class="search-submit-btn">بحث</button>
-            </form>
+    <header class="header">
+        <div class="logo">
+            <a href="home.html" class="logo-link">
+                <img src="../images/logo.png" alt="Logo" style="height: 50px; width: auto;">
+            </a>
         </div>
-    </div>
-    
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="./home.html">الرئيسية</a></li>
-            <li><a href="./about.html">حول المنصة</a></li>
-            <li><a href="./contact.html">تواصل معنا</a></li>
-        </ul>
-    </div>
-</header>
-<h1 class="seo-brand">حرفجية</h1>
 
-<div class="big_img"></div>
-    
+        <nav class="nav-center">
+            <ul class="nav-list">
+                <li><a href="./home.html">الرئيسية</a></li>
+                <li><a href="./about.html">حول المنصة</a></li>
+                <li><a href="./contact.html">تواصل معنا</a></li>
+            </ul>
+        </nav>
+
+        <div class="search-icon-container">
+            <button id="search-open-btn" class="search-btn" aria-label="Open search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="wishlist-icon-container">
+            <a href="wishlist.html" class="wishlist-link" aria-label="Wishlist">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                    </path>
+                </svg>
+                <span class="wishlist-count" id="wishlist-count">0</span>
+            </a>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="search-popup" class="search-popup hidden">
+            <div class="search-popup-content">
+                <button id="search-close-btn" class="close-btn">✕</button>
+                <form id="search-form" action="search.html" method="get">
+                    <input type="text" name="search-term" id="search-popup-field" placeholder="ابحث عن منتج..." required
+                        autocomplete="off">
+                    <button type="submit" class="search-submit-btn">بحث</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="./home.html">الرئيسية</a></li>
+                <li><a href="./about.html">حول المنصة</a></li>
+                <li><a href="./contact.html">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </header>
+    <h1 class="seo-brand">حرفجية</h1>
+
+    <div class="big_img"></div>
+
     <section class="overview">
         <h1>أقسامنا</h1>
     </section>
@@ -98,6 +103,10 @@
         <a href="./products.html?category=Candles" class="category">
             <img src="../images/candles.jpeg" alt="">
             <div class="overlay">شموع<br>Candles</div>
+        </a>
+        <a href="./products.html?category=Engraving" class="category">
+            <img src="../images/engraving.jpeg" alt="">
+            <div class="overlay">نقش وحفر<br>Engraving & Carving</div>
         </a>
         <a href="./products.html?category=string_art" class="category">
             <img src="../images/string_art.jpeg" alt="">
@@ -146,7 +155,7 @@
 
 
 
-        
+
     </section>
 
     <script>
@@ -209,7 +218,7 @@
             revealOnScrollMobile();
             revealOnScrollDesktop();
         });
-        
+
         // Header scroll effect
         window.addEventListener('scroll', function () {
             const header = document.querySelector('.header');
@@ -267,11 +276,11 @@
 
             function typeText() {
                 currentText = texts[index];
-                
+
                 if (!isDeleting) {
                     document.title = currentText.substring(0, charIndex + 1);
                     charIndex++;
-                    
+
                     if (charIndex === currentText.length) {
                         isDeleting = true;
                         setTimeout(typeText, 3000);
@@ -280,7 +289,7 @@
                 } else {
                     document.title = currentText.substring(0, charIndex - 1);
                     charIndex--;
-                    
+
                     if (charIndex === 0) {
                         isDeleting = false;
                         index = (index + 1) % texts.length;
@@ -289,22 +298,23 @@
                         return;
                     }
                 }
-                
+
                 const speed = isDeleting ? 400 : 400;
                 setTimeout(typeText, speed);
             }
 
-            window.onload = function() {
+            window.onload = function () {
                 if (isDesktop()) {
                     document.title = ".";
                     setTimeout(typeText, 800);
-                } 
+                }
             };
         }
     </script>
-    
-<script src="../js/search.js"></script>
+
+    <script src="../js/search.js"></script>
     <script src="../js/wishlist.js"></script>
 
 </body>
+
 </html>
