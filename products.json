@@ -814,5 +814,68 @@
         "images": [
             "users/m.e_event2024/products/6-1.png"
         ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "شنتة لولو خامة تقيلة مبطنة مع ورود سيراميك و ألماس",
+        "description": "قياس القطعة (عرض×طول×قاعدة) (18×13×4.5) - مدة تنفيذ الطلب 5-7 أيام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/1-1.png",
+            "users/إبرة و ريشة/products/1-2.png"
+        ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "لوحة فراشة",
+        "description": "الوان اكريليك على كانفس مع ورد و لولو و احجار ملونة - مقاس 30×30 - مدة تنفيذ الطلب 5-7 ايام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/2-1.png",
+            "users/إبرة و ريشة/products/2-2.png"
+        ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "بورتوكليه كريستال زجاج",
+        "description": "مدة تنفيذ الطلب 5-7 أيام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/3-1.png",
+            "users/إبرة و ريشة/products/3-2.png",
+            "users/إبرة و ريشة/products/3-3.png",
+            "users/إبرة و ريشة/products/3-4.png"
+        ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "حافظة محارم كريستال أكريليك او لولو خامة تقيلة",
+        "description": "لقياس (6×11.5×23) (سماكة×ارتفاع×عرض) - مدة تنفيذ الطلب 5-7 أيام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/4-1.png",
+            "users/إبرة و ريشة/products/4-2.png"
+        ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "شنتة كريستال زجاج نقشة Snake مبطنة",
+        "description": "قياس القطعة 12×21×5 (طول×عرض× قاعدة) - معها ايد طويلة و ايد قصيرة - ارتفاع الايد 52cm و بتتقصر - مدة تنفيذ الطلب 5-7 أيام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/5-1.png",
+            "users/إبرة و ريشة/products/5-2.png",
+            "users/إبرة و ريشة/products/5-3.png"
+        ]
+    },
+    {
+        "username": "إبرة و ريشة",
+        "product_name": "سيت تلت قطع كريستال اكريليك",
+        "description": "قياس منظمة الفراشي (7.5×9) - قياس منظمة قلام الحمرة (4.5×9) - قياس المراية (17×19.5) - مدة تنفيذ الطلب 5-7 ايام",
+        "category": "Beads",
+        "images": [
+            "users/إبرة و ريشة/products/6-1.png",
+            "users/إبرة و ريشة/products/6-2.png"
+        ]
     }
 ]
