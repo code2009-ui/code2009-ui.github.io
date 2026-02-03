@@ -1026,5 +1026,59 @@
             "users/Nour KD/products/6-1.png",
             "users/Nour KD/products/6-2.png"
         ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "عقد خرز بفراشة",
+        "description": "عقد يدوي من الخرز الملوّن مع تعليقة فراشة.",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/1-1.png"
+        ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "علبة مناديل خرز",
+        "description": "علبة مناديل مغطاة بالخرز ومصنوعة يدويًا.",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/2-1.png"
+        ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "فانوس خرز ديكوري",
+        "description": "فانوس ديكور من الخرز لشمعة أو إضاءة خفيفة.",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/3-1.png"
+        ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "ميدالية مفاتيح حرف",
+        "description": "ميدالية خرز يدوية على شكل احرف",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/4-1.png"
+        ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "ميدالية مفاتيح هلال",
+        "description": "ميدالية مفاتيح بتصميم هلال من الخرز.",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/5-1.png"
+        ]
+    },
+    {
+        "username": "maryam.star2025",
+        "product_name": "بروش كرز خرز",
+        "description": "بروش يدوي على شكل كرز من الخرز.",
+        "category": "Beads",
+        "images": [
+            "users/maryam.star2025/products/6-1.png"
+        ]
     }
 ]
