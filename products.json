@@ -1080,5 +1080,69 @@
         "images": [
             "users/maryam.star2025/products/6-1.png"
         ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "علبتين بليكسي بغطاء خشب وزخرفة صدف",
+        "description": "علبتين بليكسي أنيقة بغطاء خشبي، مزينة بزخرفة صدف بسيطة.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/1-1.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "تعليقة سيارة خشب وصدف",
+        "description": "تعليقة سيارة مصنوعة من الخشب ومزينة بالصدف.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/2-1.jpeg",
+            "users/fanna_ty/products/2-2.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "بروش ياسمينة خشب وصدف",
+        "description": "بروش على شكل ياسمينة مصنوع من الخشب ومزين بالصدف.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/3-1.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "علبة بليكسي رمضان كريم",
+        "description": "تصميم رمضاني مكتوب عليه “رمضان كريم”، بقياس 40 سم.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/4-1.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "اسوارة ياسمينة",
+        "description": "اسوارة مزينة بحبل ولولو لتصميم أنيق وبسيط.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/5-1.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "علبة بليكسي بغطاء خشبي",
+        "description": "علبة مزينة بالصدف على شكل هلال ونجمة.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/6-1.jpeg"
+        ]
+    },
+    {
+        "username": "fanna_ty",
+        "product_name": "حقيبة يد خشبية",
+        "description": "حقيبة مصنوعة من خشب الجوز ومزينة بالصدف.",
+        "category": "Engraving",
+        "images": [
+            "users/fanna_ty/products/7-1.jpeg"
+        ]
     }
 ]
