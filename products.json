@@ -1254,5 +1254,68 @@
             "users/crochet ranim/products/6-1.png",
             "users/crochet ranim/products/6-2.png"
         ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "حقيبة كريستال",
+        "description": "حقيبة يد مصنوعة من حبات الكريستال بلون أسود ملكي أنيق",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/1-1.png"
+        ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "حقيبة الأفعى",
+        "description": "صممت بتصميم عصري جريئ - بقاعدة من الكريستال البلاستك - وقبضة يد من حبات الكريستال الزجاج اللامعة",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/2-1.png",
+            "users/lams_a2003/products/2-2.png",
+            "users/lams_a2003/products/2-3.png"
+        ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "حقيبة لؤلؤ",
+        "description": "حقيبة مصنوعة من حبات الؤلؤ بألوان جذابة وتموج جميل يعكس ذوق فريد",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/3-1.png",
+            "users/lams_a2003/products/3-2.png",
+            "users/lams_a2003/products/3-3.png"
+        ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "حقيبة الؤلؤ",
+        "description": "بالوان جميلة جذابة تناسب اطلالتك",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/4-1.png"
+        ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "مضايف فاخرة",
+        "description": "مضايف فاخرة بتصميم أنيق تناسب كهدية جميلة لمولد",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/5-1.png",
+            "users/lams_a2003/products/5-2.png",
+            "users/lams_a2003/products/5-3.png",
+            "users/lams_a2003/products/5-4.png",
+            "users/lams_a2003/products/5-5.png",
+            "users/lams_a2003/products/5-6.png"
+        ]
+    },
+    {
+        "username": "lams_a2003",
+        "product_name": "بورتكليه",
+        "description": "بورتكليه بالوان مختلفة لتناسب ذوقك وجميع الاحرف لتناسب حرفك",
+        "category": "Beads",
+        "images": [
+            "users/lams_a2003/products/6-1.png"
+        ]
     }
 ]
