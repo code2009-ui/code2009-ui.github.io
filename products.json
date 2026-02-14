@@ -1317,5 +1317,68 @@
         "images": [
             "users/lams_a2003/products/6-1.png"
         ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "طقم دافئ للمنزل",
+        "description": "حرام ملوّن (167×120 سم) + غطاء مخدة (42×42 سم) + غطاء علبة محارم",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/1-1.png",
+            "users/Galora/products/1-2.png",
+            "users/Galora/products/1-3.png",
+            "users/Galora/products/1-4.png"
+        ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "كفوف ولحشة Galora",
+        "description": "اللحشة طول 210 سم × العرض 24 سم",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/2-1.png",
+            "users/Galora/products/2-2.png"
+        ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "كفوف ولحشة",
+        "description": "اللحشة طول 2 متر × العرض 52 سم",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/3-1.png",
+            "users/Galora/products/3-2.png"
+        ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "كفوف فيكتوريا الرومانسية",
+        "description": "تصميم أنيق وناعم يناسب جميع الأذواق",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/4-1.png",
+            "users/Galora/products/4-2.png"
+        ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "الشال الزهري",
+        "description": "شال أنيق وناعم بلون زهري جذاب",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/5-1.png",
+            "users/Galora/products/5-2.png"
+        ]
+    },
+    {
+        "username": "Galora",
+        "product_name": "شال",
+        "description": "شال ناعم وأنيق بلون أخضر جذاب",
+        "category": "Crochet",
+        "images": [
+            "users/Galora/products/6-1.png",
+            "users/Galora/products/6-2.png",
+            "users/Galora/products/6-3.png"
+        ]
     }
 ]
