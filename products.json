@@ -1380,5 +1380,67 @@
             "users/Galora/products/6-2.png",
             "users/Galora/products/6-3.png"
         ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "شمعة مرطبان التوت",
+        "description": "شمع الصويا وشمع عسل النحل المعطر وشمع الجل",
+        "category": "Candles",
+        "images": [
+            "users/my_sweets_candle_soap/products/1-1.png",
+            "users/my_sweets_candle_soap/products/1-2.png"
+        ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "طقم زفاف كونكريت",
+        "description": "طقم كونكريت زفاف من مادة صلبة قابلة للغسل وشمعة العروس والعريس من شمع الصويا وشمع عسل النحل المعطر",
+        "category": "Concrete",
+        "images": [
+            "users/my_sweets_candle_soap/products/2-1.png",
+            "users/my_sweets_candle_soap/products/2-2.png"
+        ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "طقم كونكريت مكتبي",
+        "description": "من مادة صلبة قابلة للغسل وشمعة كتاب من شمع الصويا وشمع عسل النحل المعطر",
+        "category": "Concrete",
+        "images": [
+            "users/my_sweets_candle_soap/products/3-1.png",
+            "users/my_sweets_candle_soap/products/3-2.png"
+        ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "طقم كونكريت الباربي",
+        "description": "من مادة صلبة قابلة للغسل وشمعة كب كيك من شمع الصويا وشمع عسل النحل المعطر",
+        "category": "Concrete",
+        "images": [
+            "users/my_sweets_candle_soap/products/4-1.png",
+            "users/my_sweets_candle_soap/products/4-2.png"
+        ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "طقم كونكريت كوب قهوة وبسكويت",
+        "description": "من مادة صلبة قابلة للغسل وشمع الصويا وشمع عسل النحل المعطر",
+        "category": "Concrete",
+        "images": [
+            "users/my_sweets_candle_soap/products/5-1.png",
+            "users/my_sweets_candle_soap/products/5-2.png"
+        ]
+    },
+    {
+        "username": "my_sweets_candle_soap",
+        "product_name": "شمعة تارت التوت الازرق",
+        "description": "من شمع الصويا وشمع عسل النحل المعطر",
+        "category": "Candles",
+        "images": [
+            "users/my_sweets_candle_soap/products/6-1.jpeg",
+            "users/my_sweets_candle_soap/products/6-1.png",
+            "users/my_sweets_candle_soap/products/6-2.jpeg",
+            "users/my_sweets_candle_soap/products/6-2.png"
+        ]
     }
 ]
